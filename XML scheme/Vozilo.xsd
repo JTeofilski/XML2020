@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified"
+    targetNamespace="http://www.ftn.uns.ac.rs/vozilo" xmlns:vozilo="http://www.ftn.uns.ac.rs/vozilo">
+    <xs:element name="Vozilo" type="vozilo:TVozilo"/>
+    <xs:complexType name="TVozilo">
+        <xs:sequence>
+            <xs:element name="identifikacioniBroj" type="xs:long"/>
+            <xs:element name="klasaVozila" type="vozilo:TKlasaVozila"/>
+            <xs:element name="markaVozila" type="vozilo:TMarkaVozila"/>
+            <xs:element name="modelVozila" type="vozilo:TModelVozila"/>
+            <xs:element name="vrstaGoriva" type="vozilo:TVrstaGoriva"/>
+            <xs:element name="tipMenjaca" type="vozilo:TTipMenjaca"/>
+            <xs:element name="slika" maxOccurs="unbounded" type="vozilo:TSlika"/>
+            <xs:element name="predjenaKilometraza" type="xs:float"/>
+            <xs:element name="brojSedistaZaDecu" type="xs:positiveInteger"/>
+            <xs:element name="planiranaKilometraza" type="xs:float"/>
+            <xs:element name="collisiondamageWaiver" type="xs:boolean"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="TKlasaVozila">
+        <xs:sequence>
+            <xs:element name="nazivKlase" type="xs:string"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="TMarkaVozila">
+        <xs:sequence>
+            <xs:element name="nazivMarke" type="xs:string"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="TModelVozila">
+        <xs:sequence>
+            <xs:element name="nazivModela" type="xs:string"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="TVrstaGoriva">
+        <xs:sequence>
+            <xs:element name="nazivVrsteGoriva" type="xs:string"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="TTipMenjaca">
+        <xs:sequence>
+            <xs:element name="nazivTipaMenjaca" type="xs:string"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="TSlika">
+        <xs:sequence>
+            <xs:element name="slika" type="xs:base64Binary"/>
+        </xs:sequence>
+    </xs:complexType>
+</xs:schema>
