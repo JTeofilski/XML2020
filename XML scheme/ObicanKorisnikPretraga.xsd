@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified"
+    targetNamespace=" http://www.ftn.uns.ac.rs/pretraga"
+    xmlns:korisnici="http://www.ftn.uns.ac.rs/korisnici"
+    xmlns:pretraga="http://www.ftn.uns.ac.rs/pretraga"
+    xmlns:vozilo="http://www.ftn.uns.ac.rs/vozilo">
+    <xs:import namespace="http://www.ftn.uns.ac.rs/vozilo" schemaLocation="Vozilo.xsd"/>
+    <xs:import namespace="http://www.ftn.uns.ac.rs/korisnici" schemaLocation="Korisnici.xsd"/>
+    <xs:element name="Pretraga">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="mestoPreuzimanja" type="korisnici:TAdresa"/>
+                <xs:element name="datumPreuzimanja" type="xs:dateTime"/>
+                <xs:element name="datumPovratka" type="xs:dateTime"/>
+                <xs:element name="naprednaPretraga">
+                    <xs:complexType>
+                        <xs:complexContent>
+                            <xs:extension base="vozilo:TVozilo">
+                                <xs:sequence>
+                                    <xs:element name="cenaOd" type="xs:positiveInteger"/>
+                                    <xs:element name="cenaDo" type="xs:positiveInteger"/>
+                                </xs:sequence>
+                            </xs:extension>
+                        </xs:complexContent>
+                    </xs:complexType>
+                </xs:element>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+</xs:schema>
