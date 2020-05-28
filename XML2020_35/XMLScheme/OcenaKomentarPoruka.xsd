@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified"
+    targetNamespace="http://www.ftn.uns.ac.rs/ocenakomentarporuka"
+    xmlns:okp="http://www.ftn.uns.ac.rs/ocenakomentarporuka">
+    <xs:element name="Ocena">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="identifikacioniBroj" type="xs:long"/>
+                <xs:element name="vrednostOcene">
+                    <xs:simpleType>
+                        <xs:restriction base="xs:positiveInteger">
+                            <xs:maxInclusive value="5"/>
+                        </xs:restriction>
+                    </xs:simpleType>
+                </xs:element>
+                <xs:element name="kreatorOceneID" type="xs:long"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="Komentar">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="identifikacioniBroj" type="xs:long"/>
+                <xs:element name="kreatorKomentaraID" type="xs:long"/>
+                <xs:element name="tekstKomentara" type="xs:string"/>
+                <xs:element name="datumVremeKreiranja" type="xs:dateTime"/>
+                <xs:element name="statusKomentara">
+                    <xs:simpleType>
+                        <xs:restriction base="xs:string">
+                            <xs:pattern value="odobren|neodobren"/>
+                        </xs:restriction>
+                    </xs:simpleType>
+                </xs:element>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="Poruka">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="identifikacioniBroj" type="xs:long"/>
+                <xs:element name="kreatorPorukeID" type="xs:long"/>
+                <xs:element name="primalacPorukeID" type="xs:long"/>
+                <xs:element name="tekstPoruke" type="xs:string"/>
+                <xs:element name="datumVremeKreiranja" type="xs:dateTime"/>
+                <xs:element name="zahtevZaIznajmljivanjeID" type="xs:long"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+</xs:schema>

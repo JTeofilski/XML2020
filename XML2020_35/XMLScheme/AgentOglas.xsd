@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified"
+    targetNamespace="http://www.ftn.uns.ac.rs/oglas" xmlns:oglas="http://www.ftn.uns.ac.rs/oglas">
+    <xs:element name="Oglas">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="voziloID" type="xs:long"/>
+                <xs:element name="voziloSlodobnoOd" type="xs:dateTime"/>
+                <xs:element name="voziloSlobodnoDo" type="xs:dateTime"/>
+                <xs:element name="cenovnikID" type="xs:long"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+</xs:schema>
