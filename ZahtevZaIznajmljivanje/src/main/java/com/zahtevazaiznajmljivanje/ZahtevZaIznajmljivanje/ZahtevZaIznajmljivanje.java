@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class ZahtevZaIznajmljivanje {
 	@GetMapping(value="/zahtevzaiznajmljivanjemetoda")
 	public String ispis() {
-		return "ispis iz zahteva za iznajmljivanje";
+		return "Ispis iz zahteva za iznajmljivanje";
 	}
 	
 
