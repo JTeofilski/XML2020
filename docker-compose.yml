@@ -1,0 +1,137 @@
+version: '2'
+services:
+ eureka-service:
+  image: eureka-app
+  build: ./Eureka
+  restart: unless-stopped
+  container_name: eureka
+  ports: 
+    - 8761:8761
+ zuul:
+  environment:
+    EUREKA_PATH: http://eureka-service:8761/eureka
+  image: zuul-app
+  build: ./Zuul
+  restart: unless-stopped
+  container_name: zuul
+  depends_on:
+    - eureka-service
+  ports: 
+    - 2020:2020 
+ komentar:
+  environment:
+    EUREKA_PATH: http://eureka-service:8761/eureka
+  image: komentar-app
+  build: ./Komentar
+  restart: unless-stopped
+  container_name: komentar
+  depends_on:
+    - eureka-service
+  links: 
+    - eureka-service 
+ ocena:
+  environment:
+    EUREKA_PATH: http://eureka-service:8761/eureka
+  image: ocena-app
+  build: ./Ocena
+  restart: unless-stopped
+  container_name: ocena
+  depends_on:
+    - eureka-service
+  links: 
+    - eureka-service 
+ adminservis:
+  environment:
+    EUREKA_PATH: http://eureka-service:8761/eureka
+  image: adminservis-app
+  build: ./AdminServis
+  restart: unless-stopped
+  container_name: adminservis
+  depends_on:
+    - eureka-service
+  links: 
+    - eureka-service 
+
+ izvestaj:
+  environment:
+    EUREKA_PATH: http://eureka-service:8761/eureka
+  image: izvestaj-app
+  build: ./Izvestaj
+  restart: unless-stopped
+  container_name: izvestaj
+  depends_on:
+    - eureka-service
+  links: 
+    - eureka-service 
+
+ login:
+  environment:
+    EUREKA_PATH: http://eureka-service:8761/eureka
+  image: login-app
+  build: ./Login
+  restart: unless-stopped
+  container_name: login
+  depends_on:
+    - eureka-service
+  links: 
+    - eureka-service 
+  
+ oglas:
+  environment:
+    EUREKA_PATH: http://eureka-service:8761/eureka
+  image: oglas-app
+  build: ./Oglas
+  restart: unless-stopped
+  container_name: oglas
+  depends_on:
+    - eureka-service
+  links: 
+    - eureka-service 
+  
+ poruka:
+  environment:
+    EUREKA_PATH: http://eureka-service:8761/eureka
+  image: poruka-app
+  build: ./Poruka
+  restart: unless-stopped
+  container_name: poruka
+  depends_on:
+    - eureka-service
+  links: 
+    - eureka-service 
+
+ pretraga:
+  environment:
+    EUREKA_PATH: http://eureka-service:8761/eureka
+  image: pretraga-app
+  build: ./Pretraga
+  restart: unless-stopped
+  container_name: pretraga
+  depends_on:
+    - eureka-service
+  links: 
+    - eureka-service 
+
+ registracija:
+  environment:
+    EUREKA_PATH: http://eureka-service:8761/eureka
+  image: registracija-app
+  build: ./Registracija
+  restart: unless-stopped
+  container_name: registracija
+  depends_on:
+    - eureka-service
+  links: 
+    - eureka-service 
+
+ zahtevzaiznajmljivanje:
+  environment:
+    EUREKA_PATH: http://eureka-service:8761/eureka
+  image: zahtevzaiznajmljivanje-app
+  build: ./ZahtevZaIznajmljivanje
+  restart: unless-stopped
+  container_name: zahtevzaiznajmljivanje
+  depends_on:
+    - eureka-service
+  links: 
+    - eureka-service 
