@@ -20,9 +20,6 @@ import jakarta.xml.bind.annotation.XmlAccessorType;
 import jakarta.xml.bind.annotation.XmlElement;
 import jakarta.xml.bind.annotation.XmlSeeAlso;
 import jakarta.xml.bind.annotation.XmlType;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
 
 
 
@@ -65,9 +62,7 @@ import lombok.NoArgsConstructor;
     Agent.class,
     RegistrovaniKorisnik.class
 })
-@Data
-@AllArgsConstructor
-@NoArgsConstructor
+
 @Entity
 @Table(name = "Korisnici_TBL")
 public class TKorisnik {
