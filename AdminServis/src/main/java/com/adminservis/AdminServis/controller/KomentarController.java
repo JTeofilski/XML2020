@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
@@ -22,6 +23,15 @@ public class KomentarController {
 	
 	@GetMapping
 	public ModelAndView findAll() {
+		List<Komentar> komentari=service.findAll();
+		return new ModelAndView("adminKomentari","komentari", komentari);
+		
+	}
+	
+	
+	@GetMapping("/odobri/{id}")
+	public ModelAndView update(@PathVariable int id) {
+		service.update(id);
 		List<Komentar> komentari=service.findAll();
 		return new ModelAndView("adminKomentari","komentari", komentari);
 		

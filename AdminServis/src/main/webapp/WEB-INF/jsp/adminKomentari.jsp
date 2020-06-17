@@ -9,9 +9,27 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
 <title>Komentari : View all</title>
+<style>
+table, th, td {
+  border: 1px solid black;
+}
+
+body {	
+	background: linear-gradient(90deg, #fafbfc, #00FFFF);
+}
+
+.container{
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+}
+
+</style>
 </head>
 
 <body>
+	<div class="container">
 		<table>
 			<thead>
 				<tr>
@@ -30,12 +48,20 @@
 						
 						<td><c:out value="${komentar.tekstKomentara}" /></td>
 						<td><c:out value="${komentar.statusKomentara}" /></td>
+						<td>
+							<c:if test="${komentar.statusKomentara=='neodobren'}">
+							<form action="/adminservisapp/adminservlet/komentari/odobri/${komentar.identifikacioniBroj}" method="get">
+								<input type="submit" value="Odobri"></input>
+							</form>
+						</c:if>
+						</td>
 						
 						
 					</tr>
 				</c:forEach>
 			</tbody>
 		</table>
+	</div>
 
 </body>
 
