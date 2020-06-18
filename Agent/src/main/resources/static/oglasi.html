@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+	<head>
+	<script src="scripts/jquery-3.2.1.min.js"></script>
+		<script src="scripts/tether.min.js"></script>
+		<script src="scripts/bootstrap.min.js"></script>
+		
+		<meta charset="UTF-8">
+		<title>Dodavanje oglasa</title>
+		<script type="text/javascript">
+		$(document).ready(function() {
+		$("#add").click(function(){
+			
+			            formData=JSON.stringify({
+			            	voziloSlodobnoOd:$("#input-form [name='pocetak']").val(),
+			            	voziloSlodobnoDo:$("#input-form [name='kraj']").val()
+			                
+			            });
+				       $.ajax({
+				        url: "http://localhost:8080/oglasi/dodaj", 
+				   		type: "POST",
+				   		data: formData,
+				   		//saljemo json i ocekujemo json nazad
+				   		contentType: "application/json",
+				   		datatype: 'json',
+				    	   success: function(data){
+				    		   
+				    		  
+				    		   newRow = 
+										"<tr>"
+											//+ "<td class=\"name\">" + data.name + "</td>"
+											//+ "<td class=\"number\">" + data.number + "</td>"
+											
+										+ "</tr>"
+										
+									$("#oglas").append(newRow)
+									
+									
+				    	   }
+				      
+				       });
+				      
+				    
+				        
+				        });
+		  });
+		</script>
+	</head>
+	<body>
+		<div class="reg-parent"> <!-- mora da postoji parent div da bi child div bio u sredini -->
+			<div class="reg">
+				<form id="input-form">
+					<div class="vertically">
+						<label class="col-3">Vozilo je slobodno od:</label>
+						<input class="col-9 form-control" type="text" name="pocetak" placeholder="Unesite datum">
+					</div>
+					
+				    <div class="vertically">
+						<label class="col-3">Vozilo je slobodno do:</label>
+						<input class="col-9 form-control"type="text" name="kraj" placeholder="Unesite datum isteka">
+					</div>
+					<div class="vertically">
+						<button type="button" id="add" class="btn btn-primary col-3">Potvrda</button>
+					</div>
+				</form>
+			</div>
+		</div>
+		<h3 id="oglasNaslov"></h3>
+		<table id="oglas" class = "table" style="width: 1200px">
+			<tr class="header">
+				<th>naziv</th>
+				<th>broj</th>
+			</tr>
+			</table>
+	</body>
+</html>
