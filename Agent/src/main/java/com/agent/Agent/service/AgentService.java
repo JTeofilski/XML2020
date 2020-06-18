@@ -1,5 +1,7 @@
 package com.agent.Agent.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,8 +15,12 @@ public class AgentService {
 	private AgentRepository agentrepository;
 
 	public Oglas dodavanje(Oglas noviOglas) {
+		return agentrepository.save(noviOglas);
+	}
+	
+	public List<Oglas> findAll() {
+		return agentrepository.findAll();
 		
-	return agentrepository.save(noviOglas);
 	}
 	
 }

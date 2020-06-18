@@ -5,6 +5,21 @@
 		<script src="scripts/tether.min.js"></script>
 		<script src="scripts/bootstrap.min.js"></script>
 		
+		<style>
+			table, th, td {
+  				border: 1px solid black;
+			}
+			body {	
+				background: linear-gradient(45deg, #fafbfc, #00FFFF);
+			}
+
+			.container{
+				position: absolute;
+				left: 10%;
+				
+			}
+		</style>
+		
 		<meta charset="UTF-8">
 		<title>Dodavanje oglasa</title>
 		<script type="text/javascript">
@@ -13,8 +28,7 @@
 			
 			            formData=JSON.stringify({
 			            	voziloSlodobnoOd:$("#input-form [name='pocetak']").val(),
-			            	voziloSlodobnoDo:$("#input-form [name='kraj']").val()
-			                
+			            	voziloSlobodnoDo:$("#input-form [name='kraj']").val()
 			            });
 				       $.ajax({
 				        url: "http://localhost:8080/oglasi/dodaj", 
@@ -28,8 +42,11 @@
 				    		  
 				    		   newRow = 
 										"<tr>"
-											//+ "<td class=\"name\">" + data.name + "</td>"
-											//+ "<td class=\"number\">" + data.number + "</td>"
+											+ "<td>" + data.agentID + "</td>"
+											+ "<td>" + data.voziloID + "</td>"
+											+ "<td>" + data.cenovnikID + "</td>"
+											+ "<td>" + data.voziloSlodobnoOd + "</td>"
+											+ "<td>" + data.voziloSlobodnoDo + "</td>"
 											
 										+ "</tr>"
 										
@@ -39,15 +56,41 @@
 				    	   }
 				      
 				       });
-				      
-				    
-				        
-				        });
+				 });
 		  });
+		
+		
+		</script>
+		<script>
+		$(document).ready(function() {
+			 $.ajax({
+			        url: "http://localhost:8080/oglasi/nadji", 
+			   		type: "GET",
+			   		contentType: "application/json",
+			   		datatype: 'json',
+			    	   success: function(data){	   
+			    		  for (var i=0; i<data.length; i++){
+			    		   newRow = 
+									"<tr>"
+										+ "<td>" + data[i].agentID + "</td>"
+										+ "<td>" + data[i].voziloID + "</td>"
+										+ "<td>" + data[i].cenovnikID + "</td>"
+										+ "<td>" + data[i].voziloSlodobnoOd + "</td>"
+										+ "<td>" + data[i].voziloSlobodnoDo + "</td>"
+									+ "</tr>"
+									
+								$("#oglas").append(newRow)						
+			    	   }
+			    	   }
+			      
+			       });
+			 });
+			
 		</script>
 	</head>
 	<body>
-		<div class="reg-parent"> <!-- mora da postoji parent div da bi child div bio u sredini -->
+	<div class="container">
+		<div class="reg-parent "> <!-- mora da postoji parent div da bi child div bio u sredini -->
 			<div class="reg">
 				<form id="input-form">
 					<div class="vertically">
@@ -57,7 +100,7 @@
 					
 				    <div class="vertically">
 						<label class="col-3">Vozilo je slobodno do:</label>
-						<input class="col-9 form-control"type="text" name="kraj" placeholder="Unesite datum isteka">
+						<input class="col-9 form-control" type="text" name="kraj" placeholder="Unesite datum isteka">
 					</div>
 					<div class="vertically">
 						<button type="button" id="add" class="btn btn-primary col-3">Potvrda</button>
@@ -66,11 +109,15 @@
 			</div>
 		</div>
 		<h3 id="oglasNaslov"></h3>
-		<table id="oglas" class = "table" style="width: 1200px">
+		<table id="oglas" class = "table " style= "width:700px">
 			<tr class="header">
-				<th>naziv</th>
-				<th>broj</th>
+				<th>id agenta</th>
+				<th>id vozila</th>
+				<th>id cenovnika</th>
+				<th>slobodno vozilo od</th>
+				<th>slobodno vozilo do</th>
 			</tr>
 			</table>
+		</div>
 	</body>
 </html>

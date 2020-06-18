@@ -32,8 +32,11 @@ public class AgentController {
 		noviOglas.setCenovnikID(1);
 		noviOglas.setVoziloID(1);
 		service.dodavanje(noviOglas);
-		
 		return new ResponseEntity<Oglas>(noviOglas, HttpStatus.OK);
-		
+	}
+	
+	@GetMapping("/nadji")
+	public ResponseEntity<List<Oglas>> findAll(){
+		return new ResponseEntity<List<Oglas>>(service.findAll(), HttpStatus.OK);
 	}
 }
