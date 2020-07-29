@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified"
+    targetNamespace="http://www.ftn.uns.ac.rs/vozilo" xmlns:vozilo="http://www.ftn.uns.ac.rs/vozilo">
+    <xs:element name="Vozilo">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="identifikacioniBroj" type="xs:long"/>
+                <xs:element name="klasaVozila" type="xs:string"/>
+                <xs:element name="nazivKlase" type="xs:string"/>
+                <xs:element name="nazivMarke" type="xs:string"/>
+                <xs:element name="nazivModela" type="xs:string"/>
+                <xs:element name="nazivVrsteGoriva" type="xs:string"/>
+                <xs:element name="nazivTipaMenjaca" type="xs:string"/>
+                <xs:element name="slika" type="xs:base64Binary" maxOccurs="unbounded"/>
+                <xs:element name="predjenaKilometraza" type="xs:float"/>
+                <xs:element name="brojSedistaZaDecu" type="xs:positiveInteger"/>
+                <xs:element name="ogranicenjeKilometraze" type="xs:float"/>
+                <xs:element name="collisiondamageWaiver" type="xs:boolean"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+</xs:schema>

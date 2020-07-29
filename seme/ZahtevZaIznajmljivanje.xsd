@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified"
+    targetNamespace="http://www.ftn.uns.ac.rs/zahtevzaiznajmljivanje"
+    xmlns:zzi="http://www.ftn.uns.ac.rs/zahtevzaiznajmljivanje"
+    xmlns:izvestaj="http://www.ftn.uns.ac.rs/izvestaj" xmlns:oglas="http://www.ftn.uns.ac.rs/oglas">
+    <xs:import namespace="http://www.ftn.uns.ac.rs/oglas" schemaLocation="AgentOglas.xsd"/>
+    <xs:import namespace="http://www.ftn.uns.ac.rs/izvestaj" schemaLocation="AgentIzvestaj.xsd"/>
+    <xs:element name="ZahtevZaIznajmljivanje">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="identifikacioniBroj" type="xs:long"/>
+                <xs:element maxOccurs="unbounded" ref="oglas:Oglas"/>
+                <xs:element name="registrovaniKorisnkID" type="xs:long"/>
+                <xs:element default="PENDING" name="statusIznajmljivanja">
+                    <xs:simpleType>
+                        <xs:restriction base="xs:string">
+                            <xs:pattern value="PENDING|PAID|CANCELED"/>
+                        </xs:restriction>
+                    </xs:simpleType>
+                </xs:element>
+                <xs:element name="datumOD" type="xs:dateTime"/>
+                <xs:element name="datumDO" type="xs:dateTime"/>
+                <xs:element name="bundle" type="xs:boolean"/>
+                <xs:element name="ukupnaCena" type="xs:float"/>
+                <xs:element ref="izvestaj:Izvestaj"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+</xs:schema>

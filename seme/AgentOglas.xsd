@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified"
+    targetNamespace="http://www.ftn.uns.ac.rs/oglas" xmlns:oglas="http://www.ftn.uns.ac.rs/oglas"
+    xmlns:cenovnik="http://www.ftn.uns.ac.rs/cenovnik"
+    xmlns:okp="http://www.ftn.uns.ac.rs/ocenakomentarporuka"
+    xmlns:vozilo="http://www.ftn.uns.ac.rs/vozilo">
+    <xs:import namespace="http://www.ftn.uns.ac.rs/vozilo" schemaLocation="Vozilo.xsd"/>
+    <xs:import namespace="http://www.ftn.uns.ac.rs/cenovnik" schemaLocation="Cenovnik.xsd"/>
+    <xs:import namespace="http://www.ftn.uns.ac.rs/ocenakomentarporuka"
+        schemaLocation="OcenaKomentarPoruka.xsd"/>
+    <xs:element name="Oglas">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element maxOccurs="1" minOccurs="1" ref="vozilo:Vozilo"/>
+                <xs:element name="voziloSlodobnoOd" type="xs:dateTime"/>
+                <xs:element name="voziloSlobodnoDo" type="xs:dateTime"/>
+                <xs:element ref="cenovnik:Cenovnik"/>
+                <xs:element maxOccurs="unbounded" minOccurs="0" ref="okp:Ocena"/>
+                <xs:element maxOccurs="unbounded" minOccurs="0" ref="okp:Komentar"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+</xs:schema>

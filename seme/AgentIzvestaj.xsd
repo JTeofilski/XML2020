@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified"
+    targetNamespace="http://www.ftn.uns.ac.rs/izvestaj"
+    xmlns:izvestaj="http://www.ftn.uns.ac.rs/izvestaj">
+    <xs:element name="Izvestaj">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="identifikacioniBroj" type="xs:long"/>
+                <xs:element name="brojPredjenihKilometara" type="xs:positiveInteger"/>
+                <xs:element name="slodobanTekst" type="xs:string"/>
+                <xs:element name="voziloID" type="xs:long"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+</xs:schema>
