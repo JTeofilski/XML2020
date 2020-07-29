@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified"
+    targetNamespace="http://www.ftn.uns.ac.rs/cenovnik"
+    xmlns:cenovnik="http://www.ftn.uns.ac.rs/cenovnik">
+    <xs:element name="Cenovnik">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="identifikacioniBroj" type="xs:long"/>
+                <xs:element name="cenaZaDan" type="xs:positiveInteger"/>
+                <xs:element minOccurs="0" name="cenaViseOd30" type="xs:positiveInteger"/>
+                <xs:element minOccurs="0" name="cenaPoKilometruZaOgranicenuKilometrazu"
+                    type="xs:positiveInteger"/>
+                <xs:element minOccurs="0" name="cenaCDW" type="xs:positiveInteger"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+</xs:schema>

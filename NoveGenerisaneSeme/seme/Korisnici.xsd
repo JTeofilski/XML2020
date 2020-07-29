@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified"
+    targetNamespace="http://www.ftn.uns.ac.rs/korisnici"
+    xmlns:korisnici="http://www.ftn.uns.ac.rs/korisnici"
+    xmlns:oglas="http://www.ftn.uns.ac.rs/oglas" xmlns:izvestaj="http://www.ftn.uns.ac.rs/izvestaj"
+    xmlns:okp="http://www.ftn.uns.ac.rs/ocenakomentarporuka"
+    xmlns:zzi="http://www.ftn.uns.ac.rs/zahtevzaiznajmljivanje">
+    <xs:import namespace="http://www.ftn.uns.ac.rs/oglas" schemaLocation="AgentOglas.xsd"/>
+    <xs:import namespace="http://www.ftn.uns.ac.rs/ocenakomentarporuka"
+        schemaLocation="OcenaKomentarPoruka.xsd"/>
+    <xs:import namespace="http://www.ftn.uns.ac.rs/zahtevzaiznajmljivanje"
+        schemaLocation="ZahtevZaIznajmljivanje.xsd"/>
+    <xs:import namespace="http://www.ftn.uns.ac.rs/izvestaj" schemaLocation="AgentIzvestaj.xsd"/>
+    <xs:element name="RegistrovaniKorisnik">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="identifikacioniBroj" type="xs:long"/>
+                <xs:element name="korisnickoIme" type="xs:string"/>
+                <xs:element name="lozinka" type="xs:string"/>
+                <xs:element name="ime" type="xs:string"/>
+                <xs:element name="prezime" type="xs:string"/>
+                <xs:element name="email" type="xs:string"/>
+                <xs:element name="adresa" type="xs:string" minOccurs="1"/>
+                <xs:element name="status">
+                    <xs:simpleType>
+                        <xs:restriction base="xs:string">
+                            <xs:pattern value="aktivan|blokiran|uklonjen"/>
+                        </xs:restriction>
+                    </xs:simpleType>
+                </xs:element>
+                <xs:element maxOccurs="3" minOccurs="0" ref="oglas:Oglas"/>
+                <xs:element maxOccurs="unbounded" minOccurs="0" ref="okp:Ocena"/>
+                <xs:element maxOccurs="unbounded" minOccurs="0" ref="okp:Komentar"/>
+                <xs:element maxOccurs="unbounded" minOccurs="0" ref="okp:Poruka"/>
+                <xs:element maxOccurs="unbounded" minOccurs="0" ref="zzi:ZahtevZaIznajmljivanje"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="Agent">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="identifikacioniBroj" type="xs:long"/>
+                <xs:element name="korisnickoIme" type="xs:string"/>
+                <xs:element name="lozinka" type="xs:string"/>
+                <xs:element name="ime" type="xs:string"/>
+                <xs:element name="prezime" type="xs:string"/>
+                <xs:element name="email" type="xs:string"/>
+                <xs:element name="adresa" type="xs:string"/>
+                <xs:element maxOccurs="unbounded" minOccurs="0" ref="oglas:Oglas"/>
+                <xs:element maxOccurs="unbounded" minOccurs="0" ref="izvestaj:Izvestaj"/>
+                <xs:element maxOccurs="unbounded" minOccurs="0" ref="okp:Komentar"/>
+                <xs:element maxOccurs="unbounded" minOccurs="0" ref="okp:Poruka"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="Firma">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="naziv" type="xs:string"/>
+                <xs:element name="adresa" type="xs:string"/>
+                <xs:element name="telefon" type="xs:string"/>
+                <xs:element name="poslovniMaticniBroj" type="xs:string"/>
+                <xs:element maxOccurs="unbounded" minOccurs="0" ref="oglas:Oglas"/>
+                <xs:element maxOccurs="unbounded" minOccurs="0" ref="izvestaj:Izvestaj"/>
+                <xs:element maxOccurs="unbounded" minOccurs="0" ref="okp:Komentar"/>
+                <xs:element maxOccurs="unbounded" minOccurs="0" ref="okp:Poruka"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="Administrator">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="identifikacioniBroj" type="xs:long"/>
+                <xs:element name="korisnickoIme" type="xs:string"/>
+                <xs:element name="lozinka" type="xs:string"/>
+                <xs:element name="ime" type="xs:string"/>
+                <xs:element name="prezime" type="xs:string"/>
+                <xs:element name="email" type="xs:string"/>
+                <xs:element name="adresa" type="xs:string"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+</xs:schema>
