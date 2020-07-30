@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+	<head>
+	<script src="scripts/jquery-3.2.1.min.js"></script>
+		<script src="scripts/tether.min.js"></script>
+		<script src="scripts/bootstrap.min.js"></script>
+		
+		<style>
+			table, th, td {
+  				border: 1px solid black;
+			}
+			body {	
+				background: linear-gradient(45deg, #fafbfc, #00FFFF);
+			}
+
+			.container{
+				position: absolute;
+				left: 10%;
+				
+			}
+		</style>
+		
+		<meta charset="UTF-8">
+		<title>Spisak oglasa</title>
+		<script>
+		$(document).ready(function() {
+			 $.ajax({
+			        url: "http://localhost:2020/pretragaapp/oglasi/sviOglasi", 
+			   		type: "GET",
+			   		contentType: "application/json",
+			   		datatype: 'json',
+			    	   success: function(data){	   
+			    		  for (var i=0; i<data.length; i++){
+			    		   newRow = 
+									"<tr>"
+									
+										+ "<td>" + data[i].vozilo.identifikacioniBroj + "</td>"
+										+ "<td>" + data[i].vozilo.klasaVozila + "</td>"
+										+ "<td>" + data[i].vozilo.nazivKlase+ "</td>"
+										
+									+ "</tr>"
+									
+								$("#oglas").append(newRow)						
+			    	   }
+			    	   }
+			      
+			       });
+			 });
+			
+		</script>
+	</head>
+	<body>
+		<h3 id="oglasNaslov">Spisak oglasa</h3>
+		<table id="oglas" class = "table " style= "width:700px">
+			<tr class="header">
+			
+				<th>id vozila</th>
+				<th>klasa vozila</th>
+				<th>naziv klase</th>
+				
+			</tr>
+			</table>
+	</body>
+</html>
