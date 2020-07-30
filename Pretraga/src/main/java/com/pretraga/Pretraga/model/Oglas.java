@@ -85,13 +85,17 @@ public class Oglas {
     @ManyToOne
     protected Vozilo vozilo;
     
+    @ManyToOne
+    protected Agent agent;
+    
     
 
-    public Oglas(long identifikacioniBroj, Vozilo vozilo, XMLGregorianCalendar voziloSlodobnoOd,
+    public Oglas(long identifikacioniBroj, Vozilo vozilo, Agent agent, XMLGregorianCalendar voziloSlodobnoOd,
 			XMLGregorianCalendar voziloSlobodnoDo, Cenovnik cenovnik) {
 		super();
 		this.identifikacioniBroj = identifikacioniBroj;
 		this.vozilo = vozilo;
+		this.agent = agent;
 		//this.voziloSlodobnoOd = voziloSlodobnoOd;
 		//this.voziloSlobodnoDo = voziloSlobodnoDo;
 		//this.cenovnik = cenovnik;
@@ -130,6 +134,19 @@ public class Oglas {
         this.vozilo = value;
     }
 
+
+
+	public Agent getAgent() {
+		return agent;
+	}
+
+
+
+	public void setAgent(Agent agent) {
+		this.agent = agent;
+	}
+
+    
     /**
      * Gets the value of the voziloSlodobnoOd property.
      * 
