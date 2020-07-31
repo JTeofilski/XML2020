@@ -1,5 +1,6 @@
 package com.pretraga.Pretraga.controller;
 
+import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -33,13 +34,14 @@ public class OglasController {
 		
 		return new ResponseEntity<List<Oglas>>(oglasi, HttpStatus.OK);
 	}
-	 @RequestMapping(value="/pretraga/{adresa}", method=RequestMethod.GET)
+	 @RequestMapping(value="/pretraga/{adresa}/{voziloSlobodnoOd}/{voziloSlobodnoDo}", method=RequestMethod.GET)
 	  	@ResponseBody
-	  	public ResponseEntity<List<Oglas>> search(@PathVariable("adresa") String adresa){
+	  	public ResponseEntity<List<Oglas>> search(@PathVariable("adresa") String adresa, @PathVariable("voziloSlobodnoOd") Date slobodnoOd, @PathVariable("voziloSlobodnoDo") Date slobodnoDo){
 	  		List<Oglas> oglasi = oglasService.findAll();
 	  		List<Oglas> oglasiPretraga = new ArrayList<Oglas>();
+	  		System.out.println("pretraga  " + java.time.LocalDate.now());
 	  		for(int i=0; i<oglasi.size(); i++) {
-	  			if(oglasi.get(i).getAgent().getAdresa().equals(adresa)){
+	  			if(oglasi.get(i).getAgent().getAdresa().equals(adresa)&&oglasi.get(i).getVoziloSlobodnoOd().compareTo(slobodnoOd)<=0&&oglasi.get(i).getVoziloSlobodnoDo().compareTo(slobodnoDo)>=0&&slobodnoOd.compareTo(slobodnoDo)<0){
 	  				oglasiPretraga.add(oglasi.get(i));
 	  			}
 	  			

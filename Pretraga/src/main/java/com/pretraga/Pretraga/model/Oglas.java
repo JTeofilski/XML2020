@@ -8,6 +8,9 @@
 
 package com.pretraga.Pretraga.model;
 
+import java.sql.Date;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -67,12 +70,13 @@ public class Oglas {
 	protected long identifikacioniBroj;
 	
     
-  //  @XmlElement(namespace = "http://www.ftn.uns.ac.rs/oglas", required = true)
-   // @XmlSchemaType(name = "dateTime")
+     @XmlElement(namespace = "http://www.ftn.uns.ac.rs/oglas", required = true)
+     @XmlSchemaType(name = "dateTime")
+     protected java.sql.Date voziloSlobodnoOd;
    // protected XMLGregorianCalendar voziloSlodobnoOd;
-  //  @XmlElement(namespace = "http://www.ftn.uns.ac.rs/oglas", required = true)
-   // @XmlSchemaType(name = "dateTime")
-   // protected XMLGregorianCalendar voziloSlobodnoDo;
+    @XmlElement(namespace = "http://www.ftn.uns.ac.rs/oglas", required = true)
+    @XmlSchemaType(name = "dateTime")
+    protected java.sql.Date voziloSlobodnoDo;
    // @XmlElement(name = "Cenovnik", namespace = "http://www.ftn.uns.ac.rs/cenovnik", required = true)
    // protected Cenovnik cenovnik;
    // @XmlElement(name = "Ocena", namespace = "http://www.ftn.uns.ac.rs/ocenakomentarporuka")
@@ -88,16 +92,26 @@ public class Oglas {
     @ManyToOne
     protected Agent agent;
     
+   /* private final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd");
     
+   // private final SimpleDateFormat DATE_TIME_FORMAT = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+     
+    private java.sql.Date parseDate(String date) {
+        try {
+            return new Date(DATE_FORMAT.parse(date).getTime());
+        } catch (ParseException e) {
+            throw new IllegalArgumentException(e);
+        }
+    }*/
 
-    public Oglas(long identifikacioniBroj, Vozilo vozilo, Agent agent, XMLGregorianCalendar voziloSlodobnoOd,
-			XMLGregorianCalendar voziloSlobodnoDo, Cenovnik cenovnik) {
+    public Oglas(long identifikacioniBroj, Vozilo vozilo, Agent agent, Date voziloSlodobnoOd,
+			Date voziloSlobodnoDo, Cenovnik cenovnik) {
 		super();
 		this.identifikacioniBroj = identifikacioniBroj;
 		this.vozilo = vozilo;
 		this.agent = agent;
-		//this.voziloSlodobnoOd = voziloSlodobnoOd;
-		//this.voziloSlobodnoDo = voziloSlobodnoDo;
+		this.voziloSlobodnoOd = voziloSlodobnoOd;
+		this.voziloSlobodnoDo = voziloSlobodnoDo;
 		//this.cenovnik = cenovnik;
 	}
     
@@ -144,6 +158,26 @@ public class Oglas {
 
 	public void setAgent(Agent agent) {
 		this.agent = agent;
+	}
+
+	public java.sql.Date getVoziloSlobodnoOd() {
+		return voziloSlobodnoOd;
+	}
+
+	public void setVoziloSlobodnoOd(java.sql.Date voziloSlobodnoOd) {
+		this.voziloSlobodnoOd = voziloSlobodnoOd;
+	}
+
+
+
+	public java.sql.Date getVoziloSlobodnoDo() {
+		return voziloSlobodnoDo;
+	}
+
+
+
+	public void setVoziloSlobodnoDo(java.sql.Date voziloSlobodnoDo) {
+		this.voziloSlobodnoDo = voziloSlobodnoDo;
 	}
 
     
