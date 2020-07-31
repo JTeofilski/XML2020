@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Detalji</title>
+ <link rel="stylesheet" href="detPrikaz.css">
+<script src="scripts/jquery-3.2.1.min.js"></script>
+		<script src="scripts/tether.min.js"></script>
+		<script src="scripts/bootstrap.min.js"></script>
+<script>
+var params = window.location.search.split('?')[1];
+var value =  params.split('=')[1];
+console.log(value);
+
+$(document).ready(function() {
+	 $.ajax({
+	        url: "http://localhost:2020/pretragaapp/oglas/"+value, 
+	   		type: "GET",
+	   		contentType: "application/json",
+	   		datatype: 'json',
+	    	   success: function(data){	   
+	    		 
+	    		   $("#idoglasa").append(data.vozilo.identifikacioniBroj)	
+	    		   $("#marka").append(data.vozilo.nazivMarke)
+	    		   $("#model").append(data.vozilo.nazivModela)
+	    		   $("#gorivo").append(data.vozilo.nazivVrsteGoriva)
+	    		   $("#menjac").append(data.vozilo.nazivTipaMenjaca)
+	    		   $("#klasa").append(data.vozilo.nazivKlase)
+	    		   //cena
+	    		   $("#kilometraza").append(data.vozilo.predjenaKilometraza)
+	    		   $("#ogranicenjekm").append(data.vozilo.ogranicenjeKilometraze)
+	    		   if(data.vozilo.collisiondamageWaiver==true)
+	    			   $("#cdw").append("da")
+	    		   else
+	    			   $("#cdw").append("ne")
+	    		   $("#deca").append(data.vozilo.brojSedistaZaDecu)
+
+
+
+	    	   
+	    	   }
+	 });
+});
+
+
+</script>
+</head>
+<body>
+	<div class="flex-container">
+
+
+		<div  class="ex1">
+		<h3 >Detalji oglasa</h3>
+		
+		<div>
+			<label>Id oglasa:</label>
+			<label id='idoglasa'></label>
+		</div>
+		<div>
+			<label>Marka automobila:</label>
+			<label id='marka'></label>
+		</div>
+		<div>
+			<label>Model automobila:</label>
+			<label id='model'></label>
+		</div>
+		<div>
+			<label>Vrsta goriva:</label>
+			<label id='gorivo'></label>
+		</div>
+		<div>
+			<label>Tip menjaca:</label>
+			<label id='menjac'></label>
+		</div>
+		<div>
+			<label>Klasa automobila:</label>
+			<label id='klasa'></label>
+		</div>
+		<div>
+			<label>Predjena kilometraza:</label>
+			<label id='kilometraza'></label>
+		</div>
+		<div>
+			<label>Ogranicenje kilometraze:</label>
+			<label id='ogranicenjekm'></label>
+		</div>
+		<div>
+			<label>Collision Damage Waiver:</label>
+			<label id='cdw'></label>
+		</div>
+		<div>
+			<label>Broj sedista za decu:</label>
+			<label id='deca'></label>
+		</div>
+		</div>
+		
+		<div>
+			<img height="420" width="500" src="https://www.autocar.co.uk/sites/autocar.co.uk/files/styles/body-image/public/1-corvette-stingray-c8-2019-fd-hr-hero-front_0.jpg?itok=SEYe_vLy">
+		</div>
+</div>
+
+
+
+
+
+</body>
+</html>
