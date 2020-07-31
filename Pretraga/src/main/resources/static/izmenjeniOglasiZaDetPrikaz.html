@@ -38,8 +38,9 @@
 			    		  for (var i=0; i<data.length; i++){
 			    		   newRow = 
 									"<tr>"
-									
-										+ "<td>" + "<a id='link' href='#' onclick='Fja("+data[i].vozilo.identifikacioniBroj+")'>" + data[i].vozilo.identifikacioniBroj+"</a>"+"</td>"
+										+ "<td>" + "<a id='link' href='#' onclick='Fja("+data[i].identifikacioniBroj+")'>" + data[i].identifikacioniBroj+"</a>"+"</td>"
+
+										+ "<td>" + data[i].vozilo.identifikacioniBroj+"</a>"+"</td>"
 										+ "<td>" + data[i].vozilo.klasaVozila + "</td>"
 										+ "<td>" + data[i].vozilo.nazivKlase + "</td>"
 										+ "<td>" + data[i].voziloSlobodnoOd + "</td>"
@@ -107,7 +108,7 @@ function goBack() {
 		
 		<table id="oglas" class = "table " style= "width:700px">
 			<tr class="header">
-			
+				<th>id oglasa</th>
 				<th>id vozila</th>
 				<th>klasa vozila</th>
 				<th>naziv klase</th>

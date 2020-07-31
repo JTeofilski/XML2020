@@ -20,7 +20,8 @@ $(document).ready(function() {
 	   		datatype: 'json',
 	    	   success: function(data){	   
 	    		 
-	    		   $("#idoglasa").append(data.vozilo.identifikacioniBroj)	
+	    		   $("#idoglasa").append(data.identifikacioniBroj)	
+	    		   $("#idvozila").append(data.vozilo.identifikacioniBroj)	
 	    		   $("#marka").append(data.vozilo.nazivMarke)
 	    		   $("#model").append(data.vozilo.nazivModela)
 	    		   $("#gorivo").append(data.vozilo.nazivVrsteGoriva)
@@ -55,6 +56,10 @@ $(document).ready(function() {
 		<div>
 			<label>Id oglasa:</label>
 			<label id='idoglasa'></label>
+		</div>
+		<div>
+			<label>Id vozila:</label>
+			<label id='idvozila'></label>
 		</div>
 		<div>
 			<label>Marka automobila:</label>

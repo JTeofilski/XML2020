@@ -180,6 +180,12 @@ public class Oglas {
 		this.voziloSlobodnoDo = voziloSlobodnoDo;
 	}
 
+
+
+	public long getIdentifikacioniBroj() {
+		return identifikacioniBroj;
+	}
+
     
     /**
      * Gets the value of the voziloSlodobnoOd property.
