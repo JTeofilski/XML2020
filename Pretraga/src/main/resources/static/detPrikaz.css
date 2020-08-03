@@ -1,11 +1,20 @@
 .flex-container {
   display: flex;
   flex-direction: row;
+  margin-top:50px;
 }
 
 div.ex1 {
-  width:200px;
-  margin: auto;
+  width:400px;
+ 
  
 }
 
+img {
+    transition:transform 0.25s ease;
+}
+
+img:hover {
+    
+    transform:scale(3);
+}

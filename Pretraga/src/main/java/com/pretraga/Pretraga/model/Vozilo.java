@@ -93,7 +93,7 @@ public class Vozilo {
     @XmlElement(namespace = "http://www.ftn.uns.ac.rs/vozilo", required = true)
     protected String nazivTipaMenjaca;
     //@XmlElement(namespace = "http://www.ftn.uns.ac.rs/vozilo", required = true)
-   // protected List<byte[]> slika;
+    protected String slike;
     @XmlElement(namespace = "http://www.ftn.uns.ac.rs/vozilo")
     protected float predjenaKilometraza;
     @XmlElement(namespace = "http://www.ftn.uns.ac.rs/vozilo", required = true)
@@ -402,5 +402,17 @@ public class Vozilo {
     public void setCollisiondamageWaiver(boolean value) {
         this.collisiondamageWaiver = value;
     }
+
+
+
+	public String getSlike() {
+		return slike;
+	}
+
+
+
+	public void setSlike(String slike) {
+		this.slike = slike;
+	}
 
 }

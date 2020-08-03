@@ -4,6 +4,7 @@
 	<script src="scripts/jquery-3.2.1.min.js"></script>
 		<script src="scripts/tether.min.js"></script>
 		<script src="scripts/bootstrap.min.js"></script>
+		<script src="scripts/fje.js"></script>
 		
 		<style>
 			table, th, td {
@@ -34,7 +35,7 @@
 			    		  for (var i=0; i<data.length; i++){
 			    		   newRow = 
 									"<tr>"
-									
+										+ "<td>" + "<a id='link' href='#' onclick='Fja("+data[i].identifikacioniBroj+")'>" + data[i].identifikacioniBroj+"</a>"+"</td>"
 										+ "<td>" + data[i].vozilo.identifikacioniBroj + "</td>"
 										+ "<td>" + data[i].vozilo.klasaVozila + "</td>"
 										+ "<td>" + data[i].vozilo.nazivKlase + "</td>"
@@ -70,7 +71,8 @@
 						 
 						 newRow = 
 								"<tr>"
-								
+									+ "<td>" + "<a id='link' href='#' onclick='Fja("+data[i].identifikacioniBroj+")'>" + data[i].identifikacioniBroj+"</a>"+"</td>"
+
 									+ "<td>" + data[i].vozilo.identifikacioniBroj + "</td>"
 									+ "<td>" + data[i].vozilo.klasaVozila + "</td>"
 									+ "<td>" + data[i].vozilo.nazivKlase + "</td>"
@@ -101,6 +103,7 @@ function goBack() {
 		<table id="oglas" class = "table " style= "width:700px">
 			<tr class="header">
 			
+				<th>id oglasa</th>
 				<th>id vozila</th>
 				<th>klasa vozila</th>
 				<th>naziv klase</th>

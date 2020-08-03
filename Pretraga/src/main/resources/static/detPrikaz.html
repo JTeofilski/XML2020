@@ -14,7 +14,7 @@ console.log(value);
 
 $(document).ready(function() {
 	 $.ajax({
-	        url: "http://localhost:2020/pretragaapp/oglas/"+value, 
+	        url: "http://localhost:2020/pretragaapp/oglasi/"+value, 
 	   		type: "GET",
 	   		contentType: "application/json",
 	   		datatype: 'json',
@@ -35,8 +35,11 @@ $(document).ready(function() {
 	    		   else
 	    			   $("#cdw").append("ne")
 	    		   $("#deca").append(data.vozilo.brojSedistaZaDecu)
-
-
+	    		   var temp = data.vozilo.slike
+	    		   var slike= temp.split(';')
+	    		   for (i=0; i<slike.length; i++){
+	    			   	$("#slika").append("<img height='100' width='150' src='"+slike[i]+"'>")
+	    		   }
 
 	    	   
 	    	   }
@@ -99,8 +102,7 @@ $(document).ready(function() {
 		</div>
 		</div>
 		
-		<div>
-			<img height="420" width="500" src="https://www.autocar.co.uk/sites/autocar.co.uk/files/styles/body-image/public/1-corvette-stingray-c8-2019-fd-hr-hero-front_0.jpg?itok=SEYe_vLy">
+		<div id='slika'>
 		</div>
 </div>
 

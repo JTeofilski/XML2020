@@ -60,4 +60,11 @@ public class OglasController {
 	  		
 	  		return new ResponseEntity<List<Oglas>>(oglasiPretraga, HttpStatus.OK);
 	  	}
+	 
+		@RequestMapping(method=RequestMethod.GET, value = "/{id}")
+		public ResponseEntity<Oglas> dobaviOglasPoId(@PathVariable("id") Long id){
+			Oglas oglas = oglasService.findOne(id);	
+			System.out.println(id);
+			return new ResponseEntity<Oglas>(oglas, HttpStatus.OK);
+		}
 }
