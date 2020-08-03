@@ -1,6 +1,9 @@
 package com.pretraga.Pretraga.controller;
 
 import java.sql.Date;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -39,10 +42,18 @@ public class OglasController {
 	  	public ResponseEntity<List<Oglas>> search(@PathVariable("adresa") String adresa, @PathVariable("voziloSlobodnoOd") Date slobodnoOd, @PathVariable("voziloSlobodnoDo") Date slobodnoDo){
 	  		List<Oglas> oglasi = oglasService.findAll();
 	  		List<Oglas> oglasiPretraga = new ArrayList<Oglas>();
-	  		System.out.println("pretraga  " + java.time.LocalDate.now());
+	  		System.out.println("pretraga  " + java.time.LocalDateTime.now());
+	  		ZoneId defaultZoneId = ZoneId.systemDefault();
+	  		LocalDate sada = java.time.LocalDate.now();
+	  		java.util.Date date = Date.from(sada.atStartOfDay(ZoneId.systemDefault()).toInstant());
+	  		
 	  		for(int i=0; i<oglasi.size(); i++) {
 	  			if(oglasi.get(i).getAgent().getAdresa().equals(adresa)&&oglasi.get(i).getVoziloSlobodnoOd().compareTo(slobodnoOd)<=0&&oglasi.get(i).getVoziloSlobodnoDo().compareTo(slobodnoDo)>=0&&slobodnoOd.compareTo(slobodnoDo)<0){
-	  				oglasiPretraga.add(oglasi.get(i));
+	  				if(date.compareTo(slobodnoOd)<=2) {
+	  				   System.out.println("izaberite ...");
+	  				}else{
+	  				   oglasiPretraga.add(oglasi.get(i));
+	  			}
 	  			}
 	  			
 	  		}
