@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script src="scripts/jquery-3.2.1.min.js"></script>
+		<script src="scripts/tether.min.js"></script>
+		<script src="scripts/bootstrap.min.js"></script>
+		<script src="scripts/fje.js"></script>
+		<script src="js/oglas.js" type="text/javascript"></script>
+<script>
+var params = window.location.search.split('?')[1];
+var value =  params.split('=')[1];
+		$(document).ready(function() {
+			 $.ajax({
+			        url: "http://localhost:2020/pretragaapp/oglasi/korpa/"+value, 
+			   		type: "GET",
+			   		contentType: "application/json",
+			   		datatype: 'json',
+			    	   success: function(data){	   
+			    		  for (var i=0; i<data.length; i++){
+			    		   newRow = 
+									"<tr>"
+										+ "<td>" + "<a id='link' href='#' onclick='Fja("+data[i].identifikacioniBroj+")'>" + data[i].identifikacioniBroj+"</a>"+"</td>"
+										+ "<td>" + data[i].vozilo.identifikacioniBroj + "</td>"
+										+ "<td>" + data[i].vozilo.klasaVozila + "</td>"
+										+ "<td>" + data[i].vozilo.nazivKlase + "</td>"
+										+ "<td>" + data[i].voziloSlobodnoOd + "</td>"
+										+ "<td>" + data[i].voziloSlobodnoDo + "</td>"
+										+ "<td>" + data[i].agent.ime + "</td>"
+										+ "<td>" + " <button onclick='Korpafja("+data[i].identifikacioniBroj+")'>Korpa</button>" + " </td>"
+											
+									+ "</tr>"
+									
+								$("#oglas").append(newRow)						
+			    	   }
+			    	   }
+			      
+			       });
+		});
+		
+</script>
+</head>
+<body>
+
+<table id="oglas" class = "table " style= "width:700px">
+			<tr class="header">
+				<th>id oglasa</th>
+				<th>id vozila</th>
+				<th>klasa vozila</th>
+				<th>naziv klase</th>
+				<th>vozilo slobodno od</th>
+				<th>vozilo slobodno do</th>
+				<th>ime agenta</th>
+				
+			</tr>
+			</table>
+</body>
+</html>

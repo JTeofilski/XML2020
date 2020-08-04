@@ -6,7 +6,7 @@
 //
 
 
-package com.pretraga.Pretraga.model;
+package com.zahtevazaiznajmljivanje.ZahtevZaIznajmljivanje.model;
 
 import java.sql.Date;
 import java.text.ParseException;
@@ -15,9 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -96,11 +94,7 @@ public class Oglas {
     @ManyToOne
     protected Agent agent;
     
-    @ManyToMany( fetch = FetchType.LAZY,
-            cascade = {
-                    CascadeType.PERSIST,
-                    CascadeType.MERGE
-                },mappedBy = "oglasi")
+    @ManyToMany(mappedBy = "oglasi")
     protected Set<Korpa> korpe;
     
    /* private final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd");

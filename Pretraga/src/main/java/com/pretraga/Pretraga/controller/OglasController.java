@@ -6,6 +6,7 @@ import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -83,4 +84,11 @@ public class OglasController {
 			System.out.println(id);
 			return new ResponseEntity<Oglas>(oglas, HttpStatus.OK);
 		}
+		
+		@RequestMapping(method=RequestMethod.GET, value="/korpa/{id}")
+		public ResponseEntity<Set<Oglas>> izKorpe(@PathVariable("id") Long id){
+			Set<Oglas> oglasiIzKorpe= oglasService.izKorpe(id);
+			return new ResponseEntity<Set<Oglas>>(oglasiIzKorpe, HttpStatus.OK);
+		}
+		
 }

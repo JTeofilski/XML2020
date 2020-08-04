@@ -1,6 +1,7 @@
 package com.pretraga.Pretraga.service;
 
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -8,7 +9,9 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.pretraga.Pretraga.model.Korpa;
 import com.pretraga.Pretraga.model.Oglas;
+import com.pretraga.Pretraga.repository.KorpaRepository;
 import com.pretraga.Pretraga.repository.OglasRepository;
 
 @Transactional
@@ -17,6 +20,8 @@ public class OglasServiceImpl implements OglasService{
 
 	@Autowired 
 	private OglasRepository oglasRepository;
+	@Autowired
+	private KorpaRepository korpaRepository;
 	
 	@Override
 	public Page<Oglas> findOglas(String criteria, Pageable pageable) {
@@ -52,6 +57,20 @@ public class OglasServiceImpl implements OglasService{
 	public List<Oglas> save(List<Oglas> oglasi) {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	@Override
+	public Set<Oglas> izKorpe(Long id) {
+		// TODO: Proslediti tacan id korpe
+		Korpa korpa= korpaRepository.findByIdentifikacioniBroj((long) 1);
+		Oglas oglas = oglasRepository.findByIdentifikacioniBroj(id);
+		
+		System.out.println("nasao korpu");
+		korpa.getOglas().add(oglas);
+		//oglas.getKorpe().add(korpa);
+		//korpaRepository.save(korpa);
+		
+		return korpa.getOglas();
 	}
 
 }

@@ -4,18 +4,20 @@
 // Any modifications to this file will be lost upon recompilation of the source schema. 
 // Generated on: 2020.07.29 at 08:14:42 PM CEST 
 //
+
+
 package com.registracija.Registracija.model;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToOne;
+import javax.persistence.OneToMany;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
@@ -40,18 +42,10 @@ import javax.xml.bind.annotation.XmlType;
  *         &lt;element name="prezime" type="{http://www.w3.org/2001/XMLSchema}string"/>
  *         &lt;element name="email" type="{http://www.w3.org/2001/XMLSchema}string"/>
  *         &lt;element name="adresa" type="{http://www.w3.org/2001/XMLSchema}string"/>
- *         &lt;element name="status">
- *           &lt;simpleType>
- *             &lt;restriction base="{http://www.w3.org/2001/XMLSchema}string">
- *               &lt;pattern value="aktivan|blokiran|uklonjen"/>
- *             &lt;/restriction>
- *           &lt;/simpleType>
- *         &lt;/element>
- *         &lt;element ref="{http://www.ftn.uns.ac.rs/oglas}Oglas" maxOccurs="3" minOccurs="0"/>
- *         &lt;element ref="{http://www.ftn.uns.ac.rs/ocenakomentarporuka}Ocena" maxOccurs="unbounded" minOccurs="0"/>
+ *         &lt;element ref="{http://www.ftn.uns.ac.rs/oglas}Oglas" maxOccurs="unbounded" minOccurs="0"/>
+ *         &lt;element ref="{http://www.ftn.uns.ac.rs/izvestaj}Izvestaj" maxOccurs="unbounded" minOccurs="0"/>
  *         &lt;element ref="{http://www.ftn.uns.ac.rs/ocenakomentarporuka}Komentar" maxOccurs="unbounded" minOccurs="0"/>
  *         &lt;element ref="{http://www.ftn.uns.ac.rs/ocenakomentarporuka}Poruka" maxOccurs="unbounded" minOccurs="0"/>
- *         &lt;element ref="{http://www.ftn.uns.ac.rs/zahtevzaiznajmljivanje}ZahtevZaIznajmljivanje" maxOccurs="unbounded" minOccurs="0"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
  *   &lt;/complexContent>
@@ -69,16 +63,14 @@ import javax.xml.bind.annotation.XmlType;
     "prezime",
     "email",
     "adresa",
-    "status",
     "oglas",
-    "ocena",
+    "izvestaj",
     "komentar",
-    "poruka",
-    "zahtevZaIznajmljivanje"
+    "poruka"
 })
-@XmlRootElement(name = "RegistrovaniKorisnik")
+@XmlRootElement(name = "Agent")
 @Entity
-public class RegistrovaniKorisnik {
+public class Agent {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -95,33 +87,18 @@ public class RegistrovaniKorisnik {
     protected String email;
     @XmlElement(required = true)
     protected String adresa;
-    @XmlElement(required = true)
-    protected String status;
+    
     @XmlElement(name = "Oglas", namespace = "http://www.ftn.uns.ac.rs/oglas")
-   // protected List<Oglas> oglas;
-   // @XmlElement(name = "Ocena", namespace = "http://www.ftn.uns.ac.rs/ocenakomentarporuka")
-   // protected List<Ocena> ocena;
-   // @XmlElement(name = "Komentar", namespace = "http://www.ftn.uns.ac.rs/ocenakomentarporuka")
-   // protected List<Komentar> komentar;
-   // @XmlElement(name = "Poruka", namespace = "http://www.ftn.uns.ac.rs/ocenakomentarporuka")
-   // protected List<Poruka> poruka;
-   // @XmlElement(name = "ZahtevZaIznajmljivanje", namespace = "http://www.ftn.uns.ac.rs/zahtevzaiznajmljivanje")
-   // protected List<ZahtevZaIznajmljivanje> zahtevZaIznajmljivanje;
+    @OneToMany(mappedBy="agent")
+    protected Set<Oglas> oglasi= new HashSet<Oglas>();
+  //  @XmlElement(name = "Izvestaj", namespace = "http://www.ftn.uns.ac.rs/izvestaj")
+  //  protected List<Izvestaj> izvestaj;
+  //  @XmlElement(name = "Komentar", namespace = "http://www.ftn.uns.ac.rs/ocenakomentarporuka")
+  //  protected List<Komentar> komentar;
+  //  @XmlElement(name = "Poruka", namespace = "http://www.ftn.uns.ac.rs/ocenakomentarporuka")
+  //  protected List<Poruka> poruka;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "korpa_id", referencedColumnName = "id")
-    private Korpa korpa;
-    
-    
-    public Korpa getKorpa() {
-		return korpa;
-	}
-
-	public void setKorpa(Korpa korpa) {
-		this.korpa = korpa;
-	}
-
-	/**
+    /**
      * Gets the value of the identifikacioniBroj property.
      * 
      */
@@ -129,23 +106,7 @@ public class RegistrovaniKorisnik {
         return identifikacioniBroj;
     }
 
-    public RegistrovaniKorisnik(String korisnickoIme, String lozinka, String ime, String prezime, String email,
-			String adresa) {
-		super();
-		this.korisnickoIme = korisnickoIme;
-		this.lozinka = lozinka;
-		this.ime = ime;
-		this.prezime = prezime;
-		this.email = email;
-		this.adresa = adresa;
-	}
-
-	public RegistrovaniKorisnik() {
-		super();
-		// TODO Auto-generated constructor stub
-	}
-
-	/**
+    /**
      * Sets the value of the identifikacioniBroj property.
      * 
      */
@@ -298,30 +259,6 @@ public class RegistrovaniKorisnik {
     }
 
     /**
-     * Gets the value of the status property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
-     */
-    public String getStatus() {
-        return status;
-    }
-
-    /**
-     * Sets the value of the status property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
-     */
-    public void setStatus(String value) {
-        this.status = value;
-    }
-
-    /**
      * Gets the value of the oglas property.
      * 
      * <p>
@@ -351,34 +288,34 @@ public class RegistrovaniKorisnik {
     }*/
 
     /**
-     * Gets the value of the ocena property.
+     * Gets the value of the izvestaj property.
      * 
      * <p>
      * This accessor method returns a reference to the live list,
      * not a snapshot. Therefore any modification you make to the
      * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the ocena property.
+     * This is why there is not a <CODE>set</CODE> method for the izvestaj property.
      * 
      * <p>
      * For example, to add a new item, do as follows:
      * <pre>
-     *    getOcena().add(newItem);
+     *    getIzvestaj().add(newItem);
      * </pre>
      * 
      * 
      * <p>
      * Objects of the following type(s) are allowed in the list
-     * {@link Ocena }
+     * {@link Izvestaj }
      * 
      * 
      */
- /*   public List<Ocena> getOcena() {
-        if (ocena == null) {
-            ocena = new ArrayList<Ocena>();
+  /*  public List<Izvestaj> getIzvestaj() {
+        if (izvestaj == null) {
+            izvestaj = new ArrayList<Izvestaj>();
         }
-        return this.ocena;
-    }
-*/
+        return this.izvestaj;
+    }*/
+
     /**
      * Gets the value of the komentar property.
      * 
@@ -401,13 +338,13 @@ public class RegistrovaniKorisnik {
      * 
      * 
      */
- /*   public List<Komentar> getKomentar() {
+/*    public List<Komentar> getKomentar() {
         if (komentar == null) {
             komentar = new ArrayList<Komentar>();
         }
         return this.komentar;
-    }
-*/
+    }*/
+
     /**
      * Gets the value of the poruka property.
      * 
@@ -430,40 +367,11 @@ public class RegistrovaniKorisnik {
      * 
      * 
      */
-  /*  public List<Poruka> getPoruka() {
+ /*   public List<Poruka> getPoruka() {
         if (poruka == null) {
             poruka = new ArrayList<Poruka>();
         }
         return this.poruka;
-    }
-*/
-    /**
-     * Gets the value of the zahtevZaIznajmljivanje property.
-     * 
-     * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the zahtevZaIznajmljivanje property.
-     * 
-     * <p>
-     * For example, to add a new item, do as follows:
-     * <pre>
-     *    getZahtevZaIznajmljivanje().add(newItem);
-     * </pre>
-     * 
-     * 
-     * <p>
-     * Objects of the following type(s) are allowed in the list
-     * {@link ZahtevZaIznajmljivanje }
-     * 
-     * 
-     */
- /*   public List<ZahtevZaIznajmljivanje> getZahtevZaIznajmljivanje() {
-        if (zahtevZaIznajmljivanje == null) {
-            zahtevZaIznajmljivanje = new ArrayList<ZahtevZaIznajmljivanje>();
-        }
-        return this.zahtevZaIznajmljivanje;
-    }
-*/
+    }*/
+
 }

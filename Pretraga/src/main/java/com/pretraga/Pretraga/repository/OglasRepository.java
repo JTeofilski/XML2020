@@ -6,4 +6,6 @@ import com.pretraga.Pretraga.model.Oglas;
 
 public interface OglasRepository extends JpaRepository<Oglas, Long>{
 
+	
+	Oglas findByIdentifikacioniBroj (Long id);
 }

@@ -4,7 +4,7 @@
 // Any modifications to this file will be lost upon recompilation of the source schema. 
 // Generated on: 2020.07.29 at 08:14:42 PM CEST 
 //
-package com.registracija.Registracija.model;
+package com.zahtevazaiznajmljivanje.ZahtevZaIznajmljivanje.model;
 
 import java.util.ArrayList;
 import java.util.List;

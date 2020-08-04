@@ -1,0 +1,57 @@
+package com.zahtevazaiznajmljivanje.ZahtevZaIznajmljivanje.model;
+
+import java.util.Set;
+
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.OneToOne;
+import javax.persistence.JoinColumn;
+
+
+@Entity
+public class Korpa {
+	
+	
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	protected Long identifikacioniBroj;
+	
+	@OneToOne(mappedBy = "korpa")
+    protected RegistrovaniKorisnik registrovaniKorisnik;
+	
+	@ManyToMany ()
+	protected Set<Oglas> oglasi;
+
+	public Korpa() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
+	public Korpa(RegistrovaniKorisnik registrovaniKorisnik) {
+		super();
+		this.registrovaniKorisnik = registrovaniKorisnik;
+	}
+
+	public RegistrovaniKorisnik getRegistrovaniKorisnik() {
+		return registrovaniKorisnik;
+	}
+
+	public void setRegistrovaniKorisnik(RegistrovaniKorisnik registrovaniKorisnik) {
+		this.registrovaniKorisnik = registrovaniKorisnik;
+	}
+
+	public Set<Oglas> getOglas() {
+		return oglasi;
+	}
+
+	public void setOglas(Set<Oglas> oglas) {
+		this.oglasi = oglas;
+	}
+	
+	
+
+}
