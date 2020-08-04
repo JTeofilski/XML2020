@@ -8,6 +8,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,8 +19,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.pretraga.Pretraga.model.Korpa;
 import com.pretraga.Pretraga.model.Oglas;
 import com.pretraga.Pretraga.repository.OglasRepository;
+import com.pretraga.Pretraga.service.KorpaService;
 import com.pretraga.Pretraga.service.OglasService;
 
 @RestController
@@ -29,7 +33,8 @@ public class OglasController {
 	private OglasService oglasService;
 	
 	@Autowired
-	private OglasRepository oglasRepository;
+	private KorpaService korpaService;
+	
 	
 	@RequestMapping(method=RequestMethod.GET, value = "/sviOglasi")
 	public ResponseEntity<List<Oglas>> getAds(){
@@ -82,12 +87,22 @@ public class OglasController {
 		public ResponseEntity<Oglas> dobaviOglasPoId(@PathVariable("id") Long id){
 			Oglas oglas = oglasService.findOne(id);	
 			System.out.println(id);
+			HttpSession sesija = null;
+			sesija.setAttribute("attr", 1);
 			return new ResponseEntity<Oglas>(oglas, HttpStatus.OK);
 		}
 		
 		@RequestMapping(method=RequestMethod.GET, value="/korpa/{id}")
 		public ResponseEntity<Set<Oglas>> izKorpe(@PathVariable("id") Long id){
-			Set<Oglas> oglasiIzKorpe= oglasService.izKorpe(id);
+			Korpa korpa= korpaService.findOne((long)1);
+			if(id!=0) {
+				
+				Oglas oglas = oglasService.findOne(id);
+				//korpa.addOglas(oglas);
+				korpa.getOglas().add(oglas);
+				korpaService.save(korpa);
+			}
+			Set<Oglas> oglasiIzKorpe= korpa.getOglas();
 			return new ResponseEntity<Set<Oglas>>(oglasiIzKorpe, HttpStatus.OK);
 		}
 		

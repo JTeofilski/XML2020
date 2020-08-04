@@ -23,5 +23,5 @@ public interface OglasService {
 	
 	List<Oglas> save(List<Oglas> oglasi);
 	
-	Set<Oglas> izKorpe(Long id);
+	
 }

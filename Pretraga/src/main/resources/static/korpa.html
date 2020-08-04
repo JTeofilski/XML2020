@@ -10,7 +10,10 @@
 		<script src="js/oglas.js" type="text/javascript"></script>
 <script>
 var params = window.location.search.split('?')[1];
-var value =  params.split('=')[1];
+if(params==null)
+	value=0;
+else
+	var value =  params.split('=')[1];
 		$(document).ready(function() {
 			 $.ajax({
 			        url: "http://localhost:2020/pretragaapp/oglasi/korpa/"+value, 
@@ -28,7 +31,6 @@ var value =  params.split('=')[1];
 										+ "<td>" + data[i].voziloSlobodnoOd + "</td>"
 										+ "<td>" + data[i].voziloSlobodnoDo + "</td>"
 										+ "<td>" + data[i].agent.ime + "</td>"
-										+ "<td>" + " <button onclick='Korpafja("+data[i].identifikacioniBroj+")'>Korpa</button>" + " </td>"
 											
 									+ "</tr>"
 									
@@ -42,8 +44,10 @@ var value =  params.split('=')[1];
 </script>
 </head>
 <body>
+<h1>Korpa</h1>
+<h3>Oglasi u korpi:</h3>
 
-<table id="oglas" class = "table " style= "width:700px">
+<table id="oglas" class = "table " style= "width:700px" border="1px">
 			<tr class="header">
 				<th>id oglasa</th>
 				<th>id vozila</th>

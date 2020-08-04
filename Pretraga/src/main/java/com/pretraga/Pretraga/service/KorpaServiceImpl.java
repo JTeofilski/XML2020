@@ -17,8 +17,18 @@ public class KorpaServiceImpl implements KorpaService {
 	
 	@Autowired
 	private KorpaRepository repository;
-	@Autowired
-	private OglasRepository oglasrepository;
+
+	
+	@Override
+	public Korpa findOne(Long id) {
+		return repository.findByIdentifikacioniBroj(id);
+	}
+
+
+	@Override
+	public Korpa save(Korpa korpa) {	
+		return repository.save(korpa);
+	}
 	
 	
 

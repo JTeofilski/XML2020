@@ -6,7 +6,9 @@ import com.pretraga.Pretraga.model.Oglas;
 public interface KorpaService {
 	
 	
+	Korpa findOne(Long id);
 	
+	Korpa save(Korpa korpa);
 	
 	
 

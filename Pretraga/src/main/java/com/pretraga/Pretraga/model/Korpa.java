@@ -57,7 +57,15 @@ public class Korpa {
 	public void setOglas(Set<Oglas> oglas) {
 		this.oglasi = oglas;
 	}
-	
+
+	public Long getIdentifikacioniBroj() {
+		return identifikacioniBroj;
+	}
+
+	public void setIdentifikacioniBroj(Long identifikacioniBroj) {
+		this.identifikacioniBroj = identifikacioniBroj;
+	}
+
 	
 
 }

@@ -59,18 +59,5 @@ public class OglasServiceImpl implements OglasService{
 		return null;
 	}
 
-	@Override
-	public Set<Oglas> izKorpe(Long id) {
-		// TODO: Proslediti tacan id korpe
-		Korpa korpa= korpaRepository.findByIdentifikacioniBroj((long) 1);
-		Oglas oglas = oglasRepository.findByIdentifikacioniBroj(id);
-		
-		System.out.println("nasao korpu");
-		korpa.getOglas().add(oglas);
-		//oglas.getKorpe().add(korpa);
-		//korpaRepository.save(korpa);
-		
-		return korpa.getOglas();
-	}
 
 }

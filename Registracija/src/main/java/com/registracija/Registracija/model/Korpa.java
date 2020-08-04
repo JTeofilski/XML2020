@@ -2,7 +2,9 @@ package com.registracija.Registracija.model;
 
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -23,7 +25,11 @@ public class Korpa {
 	@OneToOne(mappedBy = "korpa")
     protected RegistrovaniKorisnik registrovaniKorisnik;
 	
-	@ManyToMany ()
+	@ManyToMany (fetch = FetchType.LAZY,
+            cascade = {
+                    CascadeType.PERSIST,
+                    CascadeType.MERGE
+                })
 	protected Set<Oglas> oglasi;
 
 	public Korpa() {
@@ -51,7 +57,15 @@ public class Korpa {
 	public void setOglas(Set<Oglas> oglas) {
 		this.oglasi = oglas;
 	}
-	
+
+	public Long getIdentifikacioniBroj() {
+		return identifikacioniBroj;
+	}
+
+	public void setIdentifikacioniBroj(Long identifikacioniBroj) {
+		this.identifikacioniBroj = identifikacioniBroj;
+	}
+
 	
 
 }

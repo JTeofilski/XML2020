@@ -31,6 +31,8 @@ import javax.xml.bind.annotation.XmlSchemaType;
 import javax.xml.bind.annotation.XmlType;
 import javax.xml.datatype.XMLGregorianCalendar;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 
 /**
  * <p>Java class for anonymous complex type.
@@ -96,11 +98,13 @@ public class Oglas {
     @ManyToOne
     protected Agent agent;
     
+    
     @ManyToMany( fetch = FetchType.LAZY,
             cascade = {
                     CascadeType.PERSIST,
                     CascadeType.MERGE
                 },mappedBy = "oglasi")
+    @JsonIgnore
     protected Set<Korpa> korpe;
     
    /* private final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd");
