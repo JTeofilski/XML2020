@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.registracija.Registracija.model.Korpa;
 import com.registracija.Registracija.model.RegistrovaniKorisnik;
 import com.registracija.Registracija.service.RegistrovaniKorisnikService;
 
@@ -33,8 +34,13 @@ public class RegistrovaniKorisnikController {
 		userSaved.setLozinka(korisnik.getLozinka());
 		userSaved.setAdresa(korisnik.getAdresa());
 		userSaved.setStatus("ulogovan");
-		korisnikService.save(userSaved);
 		
+		korisnikService.save(userSaved);
+		Korpa korpa= new Korpa();
+		System.out.println("id korisnika: "+userSaved.getIdentifikacioniBroj());
+		korpa.setIdentifikacioniBroj(userSaved.getIdentifikacioniBroj());
+		userSaved.setKorpa(korpa);
+		korisnikService.save(userSaved);
 		httpSession.setAttribute("ulogovan", userSaved);
 		return new ResponseEntity<>( userSaved, HttpStatus.OK);
 	}

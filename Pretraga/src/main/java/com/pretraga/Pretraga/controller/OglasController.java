@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.pretraga.Pretraga.model.Korpa;
 import com.pretraga.Pretraga.model.Oglas;
+import com.pretraga.Pretraga.model.RegistrovaniKorisnik;
 import com.pretraga.Pretraga.repository.OglasRepository;
 import com.pretraga.Pretraga.service.KorpaService;
 import com.pretraga.Pretraga.service.OglasService;
@@ -36,6 +37,7 @@ public class OglasController {
 	@Autowired
 	private KorpaService korpaService;
 	
+
 	
 	@RequestMapping(method=RequestMethod.GET, value = "/sviOglasi")
 	public ResponseEntity<List<Oglas>> getAds(){
@@ -87,20 +89,41 @@ public class OglasController {
 		@RequestMapping(method=RequestMethod.GET, value = "/{id}")
 		public ResponseEntity<Oglas> dobaviOglasPoId(@PathVariable("id") Long id){
 			Oglas oglas = oglasService.findOne(id);	
-			System.out.println(id);
-			HttpSession sesija = null;
-			sesija.setAttribute("attr", 1);
 			return new ResponseEntity<Oglas>(oglas, HttpStatus.OK);
 		}
 		
-		@RequestMapping(method=RequestMethod.GET, value="/korpa/{id}")
-		public ResponseEntity<Set<Oglas>> izKorpe(@PathVariable("id") Long id){
-			Korpa korpa= korpaService.findOne((long)1);
+		@RequestMapping(method=RequestMethod.GET, value="/korpa/{id}/{korid}")
+		public ResponseEntity<Set<Oglas>> izKorpe(@PathVariable("id") Long id,@PathVariable("korid") Long korid){
+			Korpa korpa= korpaService.findOne(korid);
+			//korpa.setIdentifikacioniBroj(korid);
+			
+			//Korpa korpa= korpaService.findOne((long)1);
+			//RegistrovaniKorisnik rk=(RegistrovaniKorisnik) httpSession.getAttribute("ulogovan");
+			System.out.println("korisnik cont: "+korid);
 			if(id!=0) {
 				
 				Oglas oglas = oglasService.findOne(id);
 				//korpa.addOglas(oglas);
 				korpa.getOglas().add(oglas);
+				korpaService.save(korpa);
+			}
+			Set<Oglas> oglasiIzKorpe= korpa.getOglas();
+			return new ResponseEntity<Set<Oglas>>(oglasiIzKorpe, HttpStatus.OK);
+		}
+		
+		@RequestMapping(method=RequestMethod.DELETE, value="/korpa/{id}/{korid}")
+		public ResponseEntity<Set<Oglas>> brisanje(@PathVariable("id") Long id,@PathVariable("korid") Long korid){
+			Korpa korpa= korpaService.findOne(korid);
+			//korpa.setIdentifikacioniBroj(korid);
+			
+			//Korpa korpa= korpaService.findOne((long)1);
+			//RegistrovaniKorisnik rk=(RegistrovaniKorisnik) httpSession.getAttribute("ulogovan");
+			System.out.println("korisnik cont: "+korid);
+			if(id!=0) {
+				
+				Oglas oglas = oglasService.findOne(id);
+				//korpa.addOglas(oglas);
+				korpa.getOglas().remove(oglas);
 				korpaService.save(korpa);
 			}
 			Set<Oglas> oglasiIzKorpe= korpa.getOglas();

@@ -33,6 +33,8 @@
 		<meta charset="UTF-8">
 		<title>Spisak oglasa</title>
 		<script>
+		var params = window.location.search.split('?')[1];
+		var korid =  params.split('=')[1];
 		$(document).ready(function() {
 			 $.ajax({
 			        url: "http://localhost:2020/pretragaapp/oglasi/sviOglasi", 
@@ -50,7 +52,7 @@
 										+ "<td>" + data[i].voziloSlobodnoOd + "</td>"
 										+ "<td>" + data[i].voziloSlobodnoDo + "</td>"
 										+ "<td>" + data[i].agent.ime + "</td>"
-										+ "<td>" + " <button onclick='Korpafja("+data[i].identifikacioniBroj+")'>Korpa</button>" + " </td>"
+										+ "<td>" + " <button onclick='Korpafja("+data[i].identifikacioniBroj+","+korid+")'>Korpa</button>" + " </td>"
 											
 									+ "</tr>"
 									
@@ -155,14 +157,26 @@
 			
 		</script>
 		<script>
+function Link(){
+	window.location.href = "http://localhost:2020/pretragaapp/korpa.html?id="+0+"&korid="+korid;
+
+}
+		
 function goBack() {
   //window.location.href="http://localhost:2020/pretragaapp/oglasi.html"
 }
+
+
 </script>
+<style>
+a:hover {
+  color: red;
+}
+</style>
 	</head>
 	<body>
 		<h3 id="oglasNaslov">Spisak oglasa</h3>
-		<a href="korpa.html">Korpa</a>
+		<a href="#" onclick=Link()>Korpa</a>
 		<table id="oglas" class = "table " style= "width:700px">
 			<tr class="header">
 				<th>id oglasa</th>

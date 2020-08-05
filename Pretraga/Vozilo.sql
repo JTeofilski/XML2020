@@ -12,5 +12,5 @@ insert into "public"."oglas" ("vozilo_identifikacioni_broj", "agent_identifikaci
 insert into "public"."oglas" ("vozilo_identifikacioni_broj", "agent_identifikacioni_broj", "vozilo_slobodno_od", "vozilo_slobodno_do") values(2, 3, '10/8/2020', '11/8/2020');
 
 
-insert into "public"."korpa" ("identifikacioni_broj") values(1)
+--insert into "public"."korpa" ("identifikacioni_broj") values(1)
 

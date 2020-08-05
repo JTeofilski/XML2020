@@ -19,7 +19,7 @@ public class Korpa {
 	
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	//@GeneratedValue(strategy = GenerationType.AUTO)
 	protected Long identifikacioniBroj;
 	
 	@OneToOne(mappedBy = "korpa")
