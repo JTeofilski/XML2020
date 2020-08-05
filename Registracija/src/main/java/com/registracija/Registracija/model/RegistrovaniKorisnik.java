@@ -22,6 +22,8 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
+import org.springframework.context.annotation.Scope;
+
 
 /**
  * <p>Java class for anonymous complex type.
@@ -78,6 +80,7 @@ import javax.xml.bind.annotation.XmlType;
 })
 @XmlRootElement(name = "RegistrovaniKorisnik")
 @Entity
+@Scope("session")
 public class RegistrovaniKorisnik {
 
 	@Id

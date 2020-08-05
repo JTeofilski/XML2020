@@ -102,9 +102,21 @@
 		  		 var nazivMarke = document.getElementById("marka").value;
 		  		 var nazivModela = document.getElementById("model").value;
 		  		var nazivVrsteGoriva = document.getElementById("gorivo").value;
+		  		var nazivKlase = document.getElementById("klasa").value;
+		  		var nazivTipaMenjaca = document.getElementById("menjac").value;
+		  		var brojSedistaZaDecu = document.getElementById("sedista").value;
+		  		var predjenaKilometraza = document.getElementById("predjenaKilometraza").value;
+		  		
+		  		if(document.getElementById("da").checked==true){
+		  			
+		  			var collisiondamageWaiver = true;
+		  		}else{
+		  			var collisiondamageWaiver = false;
+		  			
+		  		}
 		  		
 		  		$.ajax({
-					url: "http://localhost:2020/pretragaapp/oglasi/naprednaPretraga/" + adresa + "/" + voziloSlobodnoOd+ "/" + voziloSlobodnoDo+ "/" + nazivMarke + "/" + nazivModela + "/" + nazivVrsteGoriva
+					url: "http://localhost:2020/pretragaapp/oglasi/naprednaPretraga/" + adresa + "/" + voziloSlobodnoOd+ "/" + voziloSlobodnoDo+ "/" + nazivMarke + "/" + nazivModela + "/" + nazivVrsteGoriva + "/" + nazivKlase + "/" + nazivTipaMenjaca + "/" + brojSedistaZaDecu + "/" + predjenaKilometraza + "/" + collisiondamageWaiver
 		  		}).then(function(data) {	
 		  			$("#oglas").empty();
 		  			for(i=0; i<data.length; i++){
@@ -126,8 +138,8 @@
 									+ "<td>" + data[i].vozilo.nazivMarke + "</td>"
 									+ "<td>" + data[i].vozilo.nazivModela + "</td>"
 									+ "<td>" + data[i].vozilo.nazivVrsteGoriva + "</td>"
-									+ "<td>" + data[i].vozilo.slika + "</td>"
 									+ "<td>" + data[i].agent.ime + "</td>"
+									
 									
 								+ "</tr>"
 								
@@ -180,10 +192,18 @@ function goBack() {
 		<input type="text" class="form-control" id="marka" name="marka" placeholder = "Unesite marku vozila">
 		<input type="text" class="form-control" id="model" name="model" placeholder = "Unesite model vozila">
 		<input type="text" class="form-control" id="gorivo" name="gorivo" placeholder = "Unesite vrstu goriva">
+		<input type="text" class="form-control" id="klasa" name="klasa" placeholder = "Unesite klasu vozila">
+		<input type="text" class="form-control" id="menjac" name="menjac" placeholder = "Unesite tip menjaca">
+		<input type="text" class="form-control" id="sedista" name="sedista" placeholder = "Unesite broj sedista za decu">
+		<input type="text" class="form-control" id="predjenaKilometraza" name="predjenaKilometraza" placeholder = "Unesite predjenu kilometrazu"><br>
+		<label>Collision Damage Waiver</label>
+		<input type="radio" name="colors" id="da">da
+        <input type="radio" name="colors" id="ne">ne<br>
 		<button type="button" id="naprednaPretraga">napredna pretraga</button>
 		</div>
 		</form>
 		<button onclick="goBack()">Go Back</button>
-		
+  
+</form>
 	</body>
 </html>

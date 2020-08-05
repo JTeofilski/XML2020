@@ -1,5 +1,6 @@
 package com.pretraga.Pretraga.controller;
 
+import java.math.BigInteger;
 import java.sql.Date;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -66,14 +67,14 @@ public class OglasController {
 	  		
 	  		return new ResponseEntity<List<Oglas>>(oglasiPretraga, HttpStatus.OK);
 	  	}
-	 @RequestMapping(value="/naprednaPretraga/{adresa}/{voziloSlobodnoOd}/{voziloSlobodnoDo}/{nazivMarke}/{nazivModela}/{nazivVrsteGoriva}", method=RequestMethod.GET)
+	 @RequestMapping(value="/naprednaPretraga/{adresa}/{voziloSlobodnoOd}/{voziloSlobodnoDo}/{nazivMarke}/{nazivModela}/{nazivVrsteGoriva}/{nazivKlase}/{nazivTipaMenjaca}/{brojSedistaZaDecu}/{predjenaKilometraza}/{collisiondamageWaiver}", method=RequestMethod.GET)
 	  	@ResponseBody
-	  	public ResponseEntity<List<Oglas>> searchNapredno(@PathVariable("adresa") String adresa, @PathVariable("voziloSlobodnoOd") Date slobodnoOd, @PathVariable("voziloSlobodnoDo") Date slobodnoDo, @PathVariable("nazivMarke") String marka, @PathVariable("nazivModela") String model, @PathVariable("nazivVrsteGoriva") String gorivo){
+	  	public ResponseEntity<List<Oglas>> searchNapredno(@PathVariable("adresa") String adresa, @PathVariable("voziloSlobodnoOd") Date slobodnoOd, @PathVariable("voziloSlobodnoDo") Date slobodnoDo, @PathVariable("nazivMarke") String marka, @PathVariable("nazivModela") String model, @PathVariable("nazivVrsteGoriva") String gorivo, @PathVariable("nazivKlase") String klasa, @PathVariable("nazivTipaMenjaca") String menjac, @PathVariable("brojSedistaZaDecu") BigInteger sedista, @PathVariable("predjenaKilometraza") float kilometraza, @PathVariable("collisiondamageWaiver") boolean collision){
 	  		List<Oglas> oglasi = oglasService.findAll();
 	  		List<Oglas> oglasiPretraga = new ArrayList<Oglas>();
-	  		
+	  		System.out.println("broj sedista " + sedista);
 	  		for(int i=0; i<oglasi.size(); i++) {
-	  			if(oglasi.get(i).getAgent().getAdresa().equals(adresa)&&oglasi.get(i).getVoziloSlobodnoOd().compareTo(slobodnoOd)<=0&&oglasi.get(i).getVoziloSlobodnoDo().compareTo(slobodnoDo)>=0&&slobodnoOd.compareTo(slobodnoDo)<0&&oglasi.get(i).getVozilo().getNazivMarke().equals(marka)&&oglasi.get(i).getVozilo().getNazivModela().equals(model)&&oglasi.get(i).getVozilo().getNazivVrsteGoriva().equals(gorivo)){
+	  			if(oglasi.get(i).getAgent().getAdresa().equals(adresa)&&oglasi.get(i).getVoziloSlobodnoOd().compareTo(slobodnoOd)<=0&&oglasi.get(i).getVoziloSlobodnoDo().compareTo(slobodnoDo)>=0&&slobodnoOd.compareTo(slobodnoDo)<0&&oglasi.get(i).getVozilo().getNazivMarke().equals(marka)&&oglasi.get(i).getVozilo().getNazivModela().equals(model)&&oglasi.get(i).getVozilo().getNazivVrsteGoriva().equals(gorivo)&&oglasi.get(i).getVozilo().getNazivKlase().equals(klasa)&&oglasi.get(i).getVozilo().getBrojSedistaZaDecu().equals(sedista)&&oglasi.get(i).getVozilo().getPredjenaKilometraza()==kilometraza&&oglasi.get(i).getVozilo().isCollisiondamageWaiver()==collision){
 	  				
 	  				   oglasiPretraga.add(oglasi.get(i));
 	  			

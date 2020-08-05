@@ -1,5 +1,6 @@
 package com.registracija.Registracija.controller;
 
+
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,10 +20,10 @@ public class RegistrovaniKorisnikController {
 
 	@Autowired
 	private RegistrovaniKorisnikService korisnikService;
-	private HttpSession session;
+	
 	
 	@RequestMapping(method=RequestMethod.POST, value = "/registracija", consumes="application/json")
-	public ResponseEntity<RegistrovaniKorisnik> registrovanje(@RequestBody RegistrovaniKorisnik korisnik){
+	public ResponseEntity<RegistrovaniKorisnik> registrovanje(@RequestBody RegistrovaniKorisnik korisnik, HttpSession httpSession){
 	
 		RegistrovaniKorisnik userSaved = new RegistrovaniKorisnik();
 		userSaved.setIme(korisnik.getIme());
@@ -31,9 +32,10 @@ public class RegistrovaniKorisnikController {
 		userSaved.setKorisnickoIme(korisnik.getKorisnickoIme());
 		userSaved.setLozinka(korisnik.getLozinka());
 		userSaved.setAdresa(korisnik.getAdresa());
+		userSaved.setStatus("ulogovan");
 		korisnikService.save(userSaved);
-		session = null;
-		session.setAttribute("ulogovan", userSaved);
+		
+		httpSession.setAttribute("ulogovan", userSaved);
 		return new ResponseEntity<>( userSaved, HttpStatus.OK);
 	}
 }
