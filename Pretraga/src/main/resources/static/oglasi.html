@@ -58,13 +58,14 @@
 										+ "<td>" + data[i].vozilo.nazivKlase + "</td>"
 										+ "<td>" + data[i].voziloSlobodnoOd + "</td>"
 										+ "<td>" + data[i].voziloSlobodnoDo + "</td>"
+										+ "<td>" + data[i].vozilo.predjenaKilometraza + "</td>"
 										+ "<td>" + "<img height='100' width='150' src='"+slike[0]+"'>" + "</td>"
 										+ "<td>" + " <button onclick='Korpafja("+data[i].identifikacioniBroj+","+korid+")'>Korpa</button>" + " </td>"
 											
 									+ "</tr>"
 									
 								$("#oglas").append(newRow)	
-								getData()
+								
 			    	   }
 			    	   }
 			      
@@ -93,7 +94,7 @@
 			    		   var slike= temp.split(';')
 			    		   
 					 if(data[i].agent.adresa){
-						 
+		
 						 newRow = 
 								"<tr>"
 									+ "<td>" + "<a id='link' href='#' onclick='Fja("+data[i].identifikacioniBroj+")'>" + data[i].identifikacioniBroj+"</a>"+"</td>"
@@ -102,7 +103,7 @@
 									+ "<td>" + data[i].vozilo.nazivKlase + "</td>"
 									+ "<td>" + "<img height='100' width='150' src='"+slike[0]+"'>" + "</td>"
 									+ "<td>" + data[i].agent.ime + "</td>"
-									
+									+ "<td>" + data[i].vozilo.predjenaKilometraza + "</td>"
 								+ "</tr>"
 								
 							$("#oglas").append(newRow)		
@@ -115,8 +116,8 @@
 			 $('#sort').on('change', function() {               
 		            if ($("#sort").val() != "") { 
 		            	var kriterijum = $(this).val();
-		            	alert(kriterijum)
-		                $.ajax({
+
+		              /*  $.ajax({
 		                	url: "http://localhost:2020/pretragaapp/oglasi/sortiranje/" + kriterijum,
 		                    type: 'GET',
 		                    success: function (data){                      
@@ -142,7 +143,37 @@
 										getData()
 					    	   }
 					    	   }
-		                });
+		                });*/
+		               if(kriterijum==="predjenaKilometraza"){
+		                	  var table, rows, switching, i, x, y, shouldSwitch;
+		                	  table = document.getElementById("oglas");
+		                	  switching = true;
+		                	 
+		                	  while (switching) {
+		                	    
+		                	    switching = false;
+		                	    rows = table.rows;
+		                	   
+		                	    for (i = 0; i < rows.length; i++) {
+		                	     
+		                	      shouldSwitch = false;
+		                	      
+		                	      x = rows[i].getElementsByTagName("TD")[6];
+		                	      y = rows[i + 1].getElementsByTagName("TD")[6];
+		                	     
+		                	      if (x.innerHTML > y.innerHTML) {
+		                	        
+		                	        shouldSwitch = true;
+		                	        break;
+		                	      }
+		                	    }
+		                	    if (shouldSwitch) {
+		                	     
+		                	      rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+		                	      switching = true;
+		                	    }
+		                	  }
+		               }
 		            }
 
 		        });
@@ -210,42 +241,7 @@
 			 });
 			
 		</script>
-		<script>
-		function getData() {
-
-			 var oTable = document.getElementById('oglas');
-
-			    //gets rows of table
-			    var rowLength = oTable.rows.length;
-
-			    //loops through rows    
-			    for (i = 1; i < rowLength; i++){
-
-			      //gets cells of current row  
-			       var oCells = oTable.rows.item(i).cells;
-
-			       //gets amount of cells of current row
-			       var cellLength = oCells.length;
-
-			       //loops through each cell in current row
-			    }
-
-			              // get your cell info here
-
-			              var cellVal = oCells.item(1).innerHTML;
-			              console.log(cellVal);
-			           
-			   
-		 }
-
-		 function printData(data) {
-		     for (i = 0; i < data.length; i++) {
-		         for (k = 0; k < data[i].items.length; k++) {
-		             console.log(data[i].items[k].inputValue);
-		         }
-		     }
-		 }
-</script>
+		
 		<script>
 function Link(){
 	window.location.href = "http://localhost:2020/pretragaapp/korpa.html?id="+0+"&korid="+korid;
@@ -275,6 +271,7 @@ a:hover {
 				<th>naziv klase</th>
 				<th>vozilo slobodno od</th>
 				<th>vozilo slobodno do</th>
+				<th>predjena kilometraza</th>
 				<th id="slika">slike</th>
 				<th>ime agenta</th>
 				

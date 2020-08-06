@@ -82,14 +82,13 @@ public class OglasController {
 	  	List<Vozilo> vozila = voziloRepository.findAll(Sort.by(Sort.Direction.ASC, kriterijum));
 		List<Oglas> oglasiSvi = oglasRepository.findAll(); 
 	  	List<Oglas> oglasi = new ArrayList<>();
-		 for(int i=0; i<vozila.size(); i++) {
-			for(int j=0; j<oglasiSvi.size(); j++) {
-				if(oglasiSvi.get(j).getVozilo().equals(vozila.get(i))) {
-					oglasi.add(oglasiSvi.get(j));
-				}
+	  	for(int j=0; j<vozila.size(); j++) {
+	  	for(int i=0; i<oglasiSvi.size(); i++) {
+			if(vozila.get(j).equals(oglasiSvi.get(j).getVozilo())) {
+				oglasi.add(oglasiSvi.get(j));
 			}
 		 }
-	  		
+	  	}
 	  		return new ResponseEntity<List<Oglas>>(oglasi, HttpStatus.OK);
 	  	}
 	 @RequestMapping(value="/naprednaPretraga/{adresa}/{voziloSlobodnoOd}/{voziloSlobodnoDo}/{nazivMarke}/{nazivModela}/{nazivVrsteGoriva}/{nazivKlase}/{nazivTipaMenjaca}/{brojSedistaZaDecu}/{predjenaKilometraza}/{collisiondamageWaiver}/{ogranicenjeKilometraze}", method=RequestMethod.GET)
