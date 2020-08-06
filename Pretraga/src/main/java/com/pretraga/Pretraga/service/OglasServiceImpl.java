@@ -6,6 +6,7 @@ import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -41,11 +42,6 @@ public class OglasServiceImpl implements OglasService{
 		return null;
 	}
 
-	@Override
-	public List<Oglas> findAll() {
-		// TODO Auto-generated method stub
-		return oglasRepository.findAll();
-	}
 
 	@Override
 	public Oglas save(Oglas oglas) {
@@ -57,6 +53,12 @@ public class OglasServiceImpl implements OglasService{
 	public List<Oglas> save(List<Oglas> oglasi) {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	@Override
+	public List<Oglas> findAll(Sort sort) {
+		// TODO Auto-generated method stub
+		return oglasRepository.findAll(sort);
 	}
 
 

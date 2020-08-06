@@ -5,6 +5,7 @@ import java.util.Set;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 
 import com.pretraga.Pretraga.model.Oglas;
 
@@ -17,7 +18,7 @@ public interface OglasService {
 	
 	Oglas getOglas(String name);
 	
-	List<Oglas> findAll();
+	List<Oglas> findAll(Sort sort);
 	
 	Oglas save(Oglas oglas);
 	

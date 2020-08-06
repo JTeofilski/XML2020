@@ -27,7 +27,9 @@
 			   position: relative;
 				
 			   }
-			
+			 #sort{
+  display:none;
+}
 		</style>
 		
 		<meta charset="UTF-8">
@@ -35,6 +37,7 @@
 		<script>
 		var params = window.location.search.split('?')[1];
 		var korid =  params.split('=')[1];
+		var data1;
 		$(document).ready(function() {
 			 $.ajax({
 			        url: "http://localhost:2020/pretragaapp/oglasi/sviOglasi", 
@@ -60,7 +63,8 @@
 											
 									+ "</tr>"
 									
-								$("#oglas").append(newRow)						
+								$("#oglas").append(newRow)	
+								getData()
 			    	   }
 			    	   }
 			      
@@ -70,9 +74,12 @@
 		  		 var voziloSlobodnoOd = document.getElementById("datumOd").value;
 		  		var voziloSlobodnoDo = document.getElementById("datumDo").value;
 		  		
+		  		
 		  		$.ajax({
 					url: "http://localhost:2020/pretragaapp/oglasi/pretraga/" + adresa + "/" + voziloSlobodnoOd + "/" + voziloSlobodnoDo
-		  		}).then(function(data) {	
+		  		}).then(function(data) {
+		  			data1  = data;
+		  			console.log(data1[0].identifikacioniBroj);
 		  			$("#oglas").empty();
 		  			for(i=0; i<data.length; i++){
 		  			/*	if(data.length<0){
@@ -99,12 +106,46 @@
 								+ "</tr>"
 								
 							$("#oglas").append(newRow)		
-						
+					document.getElementById("sort").style.display="grid";
 					 }
 		  			}
 					});
 					
 				});
+			 $('#sort').on('change', function() {               
+		            if ($("#sort").val() != "") { 
+		            	var kriterijum = $(this).val();
+		            	alert(kriterijum)
+		                $.ajax({
+		                	url: "http://localhost:2020/pretragaapp/oglasi/sortiranje/" + kriterijum,
+		                    type: 'GET',
+		                    success: function (data){                      
+		                    	 for (var i=0; i<data.length; i++){
+					    			  var temp = data[i].vozilo.slike
+						    		   var slike= temp.split(';')
+						    		 
+						    			   	//$("#slika").append("<img height='100' width='150' src='"+slike[0]+"'>")
+					    		   newRow = 
+											"<tr>"
+												+ "<td>" + "<a id='link' href='#' onclick='Fja("+data[i].identifikacioniBroj+")'>" + data[i].identifikacioniBroj+"</a>"+"</td>"
+												+ "<td>" + data[i].vozilo.identifikacioniBroj + "</td>"
+												+ "<td>" + data[i].vozilo.klasaVozila + "</td>"
+												+ "<td>" + data[i].vozilo.nazivKlase + "</td>"
+												+ "<td>" + data[i].voziloSlobodnoOd + "</td>"
+												+ "<td>" + data[i].voziloSlobodnoDo + "</td>"
+												+ "<td>" + "<img height='100' width='150' src='"+slike[0]+"'>" + "</td>"
+												+ "<td>" + " <button onclick='Korpafja("+data[i].identifikacioniBroj+","+korid+")'>Korpa</button>" + " </td>"
+													
+											+ "</tr>"
+											
+										$("#oglas").append(newRow)	
+										getData()
+					    	   }
+					    	   }
+		                });
+		            }
+
+		        });
 			 $("#naprednaPretraga").click(function() {
 				 var adresa = document.getElementById("adresa").value;
 		  		 var voziloSlobodnoOd = document.getElementById("datumOd").value;
@@ -116,7 +157,9 @@
 		  		var nazivTipaMenjaca = document.getElementById("menjac").value;
 		  		var brojSedistaZaDecu = document.getElementById("sedista").value;
 		  		var predjenaKilometraza = document.getElementById("predjenaKilometraza").value;
-		  		
+		  		var predjenaKilometraza = document.getElementById("predjenaKilometraza").value;
+		  		var ogranicenjeKilometraze = document.getElementById("ogranicenjeKilometraze").value;
+		  		//console.log(data1[0]);
 		  		if(document.getElementById("da").checked==true){
 		  			
 		  			var collisiondamageWaiver = true;
@@ -126,7 +169,7 @@
 		  		}
 		  		
 		  		$.ajax({
-					url: "http://localhost:2020/pretragaapp/oglasi/naprednaPretraga/" + adresa + "/" + voziloSlobodnoOd+ "/" + voziloSlobodnoDo+ "/" + nazivMarke + "/" + nazivModela + "/" + nazivVrsteGoriva + "/" + nazivKlase + "/" + nazivTipaMenjaca + "/" + brojSedistaZaDecu + "/" + predjenaKilometraza + "/" + collisiondamageWaiver
+					url: "http://localhost:2020/pretragaapp/oglasi/naprednaPretraga/" + adresa + "/" + voziloSlobodnoOd+ "/" + voziloSlobodnoDo+ "/" + nazivMarke + "/" + nazivModela + "/" + nazivVrsteGoriva + "/" + nazivKlase + "/" + nazivTipaMenjaca + "/" + brojSedistaZaDecu + "/" + predjenaKilometraza + "/" + collisiondamageWaiver + "/" + ogranicenjeKilometraze
 		  		}).then(function(data) {	
 		  			$("#oglas").empty();
 		  			for(i=0; i<data.length; i++){
@@ -168,6 +211,42 @@
 			
 		</script>
 		<script>
+		function getData() {
+
+			 var oTable = document.getElementById('oglas');
+
+			    //gets rows of table
+			    var rowLength = oTable.rows.length;
+
+			    //loops through rows    
+			    for (i = 1; i < rowLength; i++){
+
+			      //gets cells of current row  
+			       var oCells = oTable.rows.item(i).cells;
+
+			       //gets amount of cells of current row
+			       var cellLength = oCells.length;
+
+			       //loops through each cell in current row
+			    }
+
+			              // get your cell info here
+
+			              var cellVal = oCells.item(1).innerHTML;
+			              console.log(cellVal);
+			           
+			   
+		 }
+
+		 function printData(data) {
+		     for (i = 0; i < data.length; i++) {
+		         for (k = 0; k < data[i].items.length; k++) {
+		             console.log(data[i].items[k].inputValue);
+		         }
+		     }
+		 }
+</script>
+		<script>
 function Link(){
 	window.location.href = "http://localhost:2020/pretragaapp/korpa.html?id="+0+"&korid="+korid;
 
@@ -201,7 +280,14 @@ a:hover {
 				
 			</tr>
 			</table>
-			
+			<label for="sort">sortiranje po:</label>
+
+<select name="sort" id="sort">
+<option value="e"></option>
+  <option value="predjenaKilometraza">kilometrazi</option>
+  <option value="cena">ceni</option>
+  <option value="ocena">oceni</option>
+</select>
 			<form id="pretragaForma" style= "width:700px" class= "pretraga">
 		 <div class="container">
 		<input type="text" class="form-control" id="adresa" name="adresa" placeholder = "Unesite mesto sa kog zelite preuzeti vozilo">
@@ -221,7 +307,8 @@ a:hover {
 		<input type="text" class="form-control" id="klasa" name="klasa" placeholder = "Unesite klasu vozila">
 		<input type="text" class="form-control" id="menjac" name="menjac" placeholder = "Unesite tip menjaca">
 		<input type="text" class="form-control" id="sedista" name="sedista" placeholder = "Unesite broj sedista za decu">
-		<input type="text" class="form-control" id="predjenaKilometraza" name="predjenaKilometraza" placeholder = "Unesite predjenu kilometrazu"><br>
+		<input type="text" class="form-control" id="predjenaKilometraza" name="predjenaKilometraza" placeholder = "Unesite predjenu kilometrazu">
+		<input type="text" class="form-control" id="ogranicenjeKilometraze" name="ogranicenjeKilometraze" placeholder = "Unesite planiranu kilometrazu"><br>
 		<label>Collision Damage Waiver</label>
 		<input type="radio" name="colors" id="da">da
         <input type="radio" name="colors" id="ne">ne<br>
@@ -230,6 +317,6 @@ a:hover {
 		</form>
 		<button onclick="goBack()">Go Back</button>
   
-</form>
+
 	</body>
 </html>

@@ -12,6 +12,7 @@ import java.util.Set;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -23,7 +24,9 @@ import org.springframework.web.bind.annotation.RestController;
 import com.pretraga.Pretraga.model.Korpa;
 import com.pretraga.Pretraga.model.Oglas;
 import com.pretraga.Pretraga.model.RegistrovaniKorisnik;
+import com.pretraga.Pretraga.model.Vozilo;
 import com.pretraga.Pretraga.repository.OglasRepository;
+import com.pretraga.Pretraga.repository.VoziloRepository;
 import com.pretraga.Pretraga.service.KorpaService;
 import com.pretraga.Pretraga.service.OglasService;
 
@@ -37,11 +40,15 @@ public class OglasController {
 	@Autowired
 	private KorpaService korpaService;
 	
+	@Autowired
+	private OglasRepository oglasRepository;
 
+	@Autowired
+	private VoziloRepository voziloRepository;
 	
 	@RequestMapping(method=RequestMethod.GET, value = "/sviOglasi")
 	public ResponseEntity<List<Oglas>> getAds(){
-		List<Oglas> oglasi = oglasService.findAll();
+		List<Oglas> oglasi = oglasService.findAll(Sort.by(Sort.Direction.ASC, "identifikacioniBroj"));
 		
 		
 		return new ResponseEntity<List<Oglas>>(oglasi, HttpStatus.OK);
@@ -49,9 +56,9 @@ public class OglasController {
 	 @RequestMapping(value="/pretraga/{adresa}/{voziloSlobodnoOd}/{voziloSlobodnoDo}", method=RequestMethod.GET)
 	  	@ResponseBody
 	  	public ResponseEntity<List<Oglas>> search(@PathVariable("adresa") String adresa, @PathVariable("voziloSlobodnoOd") Date slobodnoOd, @PathVariable("voziloSlobodnoDo") Date slobodnoDo){
-	  		List<Oglas> oglasi = oglasService.findAll();
+	  		List<Oglas> oglasi = oglasService.findAll(Sort.by(Sort.Direction.ASC, "identifikacioniBroj"));
 	  		List<Oglas> oglasiPretraga = new ArrayList<Oglas>();
-	  		System.out.println("pretraga  " + java.time.LocalDateTime.now());
+	  		System.out.println("pretraga  " + oglasi.get(1).getVozilo().getNazivKlase());
 	  		ZoneId defaultZoneId = ZoneId.systemDefault();
 	  		LocalDate sada = java.time.LocalDate.now();
 	  		java.util.Date date = Date.from(sada.atStartOfDay(ZoneId.systemDefault()).toInstant());
@@ -69,14 +76,30 @@ public class OglasController {
 	  		
 	  		return new ResponseEntity<List<Oglas>>(oglasiPretraga, HttpStatus.OK);
 	  	}
-	 @RequestMapping(value="/naprednaPretraga/{adresa}/{voziloSlobodnoOd}/{voziloSlobodnoDo}/{nazivMarke}/{nazivModela}/{nazivVrsteGoriva}/{nazivKlase}/{nazivTipaMenjaca}/{brojSedistaZaDecu}/{predjenaKilometraza}/{collisiondamageWaiver}", method=RequestMethod.GET)
+	 @RequestMapping(value="/sortiranje/{kriterijum}", method=RequestMethod.GET)
 	  	@ResponseBody
-	  	public ResponseEntity<List<Oglas>> searchNapredno(@PathVariable("adresa") String adresa, @PathVariable("voziloSlobodnoOd") Date slobodnoOd, @PathVariable("voziloSlobodnoDo") Date slobodnoDo, @PathVariable("nazivMarke") String marka, @PathVariable("nazivModela") String model, @PathVariable("nazivVrsteGoriva") String gorivo, @PathVariable("nazivKlase") String klasa, @PathVariable("nazivTipaMenjaca") String menjac, @PathVariable("brojSedistaZaDecu") BigInteger sedista, @PathVariable("predjenaKilometraza") float kilometraza, @PathVariable("collisiondamageWaiver") boolean collision){
-	  		List<Oglas> oglasi = oglasService.findAll();
+	  	public ResponseEntity<List<Oglas>> sortiranje(@PathVariable("kriterijum") String kriterijum){
+	  	List<Vozilo> vozila = voziloRepository.findAll(Sort.by(Sort.Direction.ASC, kriterijum));
+		List<Oglas> oglasiSvi = oglasRepository.findAll(); 
+	  	List<Oglas> oglasi = new ArrayList<>();
+		 for(int i=0; i<vozila.size(); i++) {
+			for(int j=0; j<oglasiSvi.size(); j++) {
+				if(oglasiSvi.get(j).getVozilo().equals(vozila.get(i))) {
+					oglasi.add(oglasiSvi.get(j));
+				}
+			}
+		 }
+	  		
+	  		return new ResponseEntity<List<Oglas>>(oglasi, HttpStatus.OK);
+	  	}
+	 @RequestMapping(value="/naprednaPretraga/{adresa}/{voziloSlobodnoOd}/{voziloSlobodnoDo}/{nazivMarke}/{nazivModela}/{nazivVrsteGoriva}/{nazivKlase}/{nazivTipaMenjaca}/{brojSedistaZaDecu}/{predjenaKilometraza}/{collisiondamageWaiver}/{ogranicenjeKilometraze}", method=RequestMethod.GET)
+	  	@ResponseBody
+	  	public ResponseEntity<List<Oglas>> searchNapredno(@PathVariable("adresa") String adresa, @PathVariable("voziloSlobodnoOd") Date slobodnoOd, @PathVariable("voziloSlobodnoDo") Date slobodnoDo, @PathVariable("nazivMarke") String marka, @PathVariable("nazivModela") String model, @PathVariable("nazivVrsteGoriva") String gorivo, @PathVariable("nazivKlase") String klasa, @PathVariable("nazivTipaMenjaca") String menjac, @PathVariable("brojSedistaZaDecu") BigInteger sedista, @PathVariable("predjenaKilometraza") float kilometraza, @PathVariable("collisiondamageWaiver") boolean collision, @PathVariable("ogranicenjeKilometraze") float km){
+	  		List<Oglas> oglasi = oglasService.findAll(Sort.by(Sort.Direction.ASC, "identifikacioniBroj"));
 	  		List<Oglas> oglasiPretraga = new ArrayList<Oglas>();
 	  		System.out.println("broj sedista " + sedista);
 	  		for(int i=0; i<oglasi.size(); i++) {
-	  			if(oglasi.get(i).getAgent().getAdresa().equals(adresa)&&oglasi.get(i).getVoziloSlobodnoOd().compareTo(slobodnoOd)<=0&&oglasi.get(i).getVoziloSlobodnoDo().compareTo(slobodnoDo)>=0&&slobodnoOd.compareTo(slobodnoDo)<0&&oglasi.get(i).getVozilo().getNazivMarke().equals(marka)&&oglasi.get(i).getVozilo().getNazivModela().equals(model)&&oglasi.get(i).getVozilo().getNazivVrsteGoriva().equals(gorivo)&&oglasi.get(i).getVozilo().getNazivKlase().equals(klasa)&&oglasi.get(i).getVozilo().getBrojSedistaZaDecu().equals(sedista)&&oglasi.get(i).getVozilo().getPredjenaKilometraza()==kilometraza&&oglasi.get(i).getVozilo().isCollisiondamageWaiver()==collision){
+	  			if(oglasi.get(i).getAgent().getAdresa().equals(adresa)&&oglasi.get(i).getVoziloSlobodnoOd().compareTo(slobodnoOd)<=0&&oglasi.get(i).getVoziloSlobodnoDo().compareTo(slobodnoDo)>=0&&slobodnoOd.compareTo(slobodnoDo)<0&&oglasi.get(i).getVozilo().getNazivMarke().equals(marka)&&oglasi.get(i).getVozilo().getNazivModela().equals(model)&&oglasi.get(i).getVozilo().getNazivVrsteGoriva().equals(gorivo)&&oglasi.get(i).getVozilo().getNazivKlase().equals(klasa)&&oglasi.get(i).getVozilo().getBrojSedistaZaDecu().equals(sedista)&&oglasi.get(i).getVozilo().getPredjenaKilometraza()==kilometraza&&oglasi.get(i).getVozilo().isCollisiondamageWaiver()==collision&&oglasi.get(i).getVozilo().getOgranicenjeKilometraze()==km){
 	  				
 	  				   oglasiPretraga.add(oglasi.get(i));
 	  			
@@ -91,6 +114,7 @@ public class OglasController {
 			Oglas oglas = oglasService.findOne(id);	
 			return new ResponseEntity<Oglas>(oglas, HttpStatus.OK);
 		}
+		
 		
 		@RequestMapping(method=RequestMethod.GET, value="/korpa/{id}/{korid}")
 		public ResponseEntity<Set<Oglas>> izKorpe(@PathVariable("id") Long id,@PathVariable("korid") Long korid){
