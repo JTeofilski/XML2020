@@ -59,6 +59,7 @@
 										+ "<td>" + data[i].voziloSlobodnoOd + "</td>"
 										+ "<td>" + data[i].voziloSlobodnoDo + "</td>"
 										+ "<td>" + data[i].vozilo.predjenaKilometraza + "</td>"
+										+ "<td>" + data[i].cenovnik.cenaZaDan + "</td>"
 										+ "<td>" + "<img height='100' width='150' src='"+slike[0]+"'>" + "</td>"
 										+ "<td>" + " <button onclick='Korpafja("+data[i].identifikacioniBroj+","+korid+")'>Korpa</button>" + " </td>"
 											
@@ -104,6 +105,7 @@
 									+ "<td>" + "<img height='100' width='150' src='"+slike[0]+"'>" + "</td>"
 									+ "<td>" + data[i].agent.ime + "</td>"
 									+ "<td>" + data[i].vozilo.predjenaKilometraza + "</td>"
+									+ "<td>" + data[i].cenovnik.cenaZaDan + "</td>"
 								+ "</tr>"
 								
 							$("#oglas").append(newRow)		
@@ -161,6 +163,37 @@
 		                	      x = rows[i].getElementsByTagName("TD")[6];
 		                	      y = rows[i + 1].getElementsByTagName("TD")[6];
 		                	     
+		                	      if (x.innerHTML > y.innerHTML) {
+		                	        
+		                	        shouldSwitch = true;
+		                	        break;
+		                	      }
+		                	    }
+		                	    if (shouldSwitch) {
+		                	     
+		                	      rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+		                	      switching = true;
+		                	    }
+		                	  }
+		               }
+		                if(kriterijum==="cena"){
+		            	   
+		            	   var table, rows, switching, i, x, y, shouldSwitch;
+		                	  table = document.getElementById("oglas");
+		                	  switching = true;
+		                	 
+		                	  while (switching) {
+		                	    
+		                	    switching = false;
+		                	    rows = table.rows;
+		                	   
+		                	    for (i = 0; i < rows.length; i++) {
+		                	     
+		                	      shouldSwitch = false;
+		                	      
+		                	      x = rows[i].getElementsByTagName("TD")[7];
+		                	      y = rows[i + 1].getElementsByTagName("TD")[7];
+		                	     alert(x.innerHTML);
 		                	      if (x.innerHTML > y.innerHTML) {
 		                	        
 		                	        shouldSwitch = true;
@@ -272,6 +305,7 @@ a:hover {
 				<th>vozilo slobodno od</th>
 				<th>vozilo slobodno do</th>
 				<th>predjena kilometraza</th>
+				<th>cena za dan</th>
 				<th id="slika">slike</th>
 				<th>ime agenta</th>
 				

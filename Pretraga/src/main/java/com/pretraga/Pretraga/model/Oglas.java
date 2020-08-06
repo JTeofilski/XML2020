@@ -83,8 +83,9 @@ public class Oglas {
     @XmlElement(namespace = "http://www.ftn.uns.ac.rs/oglas", required = true)
     @XmlSchemaType(name = "dateTime")
     protected java.sql.Date voziloSlobodnoDo;
-   // @XmlElement(name = "Cenovnik", namespace = "http://www.ftn.uns.ac.rs/cenovnik", required = true)
-   // protected Cenovnik cenovnik;
+    @XmlElement(name = "Cenovnik", namespace = "http://www.ftn.uns.ac.rs/cenovnik", required = true)
+    @ManyToOne
+     protected Cenovnik cenovnik;
    // @XmlElement(name = "Ocena", namespace = "http://www.ftn.uns.ac.rs/ocenakomentarporuka")
    // protected List<Ocena> ocena;
    // @XmlElement(name = "Komentar", namespace = "http://www.ftn.uns.ac.rs/ocenakomentarporuka")
@@ -127,7 +128,7 @@ public class Oglas {
 		this.agent = agent;
 		this.voziloSlobodnoOd = voziloSlodobnoOd;
 		this.voziloSlobodnoDo = voziloSlobodnoDo;
-		//this.cenovnik = cenovnik;
+		this.cenovnik = cenovnik;
 	}
     
     
@@ -151,7 +152,19 @@ public class Oglas {
         return vozilo;
     }
 
-    /**
+    public Cenovnik getCenovnik() {
+		return cenovnik;
+	}
+
+
+
+	public void setCenovnik(Cenovnik cenovnik) {
+		this.cenovnik = cenovnik;
+	}
+
+
+
+	/**
      * Sets the value of the vozilo property.
      * 
      * @param value

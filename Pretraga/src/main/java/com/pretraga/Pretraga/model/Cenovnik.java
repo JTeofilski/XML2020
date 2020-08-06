@@ -9,17 +9,22 @@
 package com.pretraga.Pretraga.model;
 
 import java.math.BigInteger;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlSchemaType;
 import javax.xml.bind.annotation.XmlType;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 
 /**
@@ -74,21 +79,48 @@ public class Cenovnik {
     @XmlSchemaType(name = "positiveInteger")
     protected BigInteger cenaCDW;
 
-    public Cenovnik(long identifikacioniBroj, BigInteger cenaZaDan, BigInteger cenaViseOd30,
-			BigInteger cenaPoKilometruZaOgranicenuKilometrazu, BigInteger cenaCDW) {
+    @OneToMany(mappedBy = "cenovnik")
+    @JsonIgnore
+    protected Set<Oglas> oglasi= new HashSet<Oglas>();
+    
+    
+    public Cenovnik(BigInteger cenaZaDan, BigInteger cenaViseOd30,
+			BigInteger cenaPoKilometruZaOgranicenuKilometrazu, BigInteger cenaCDW, Set<Oglas> oglasi) {
 		super();
-		this.identifikacioniBroj = identifikacioniBroj;
+		//this.identifikacioniBroj = identifikacioniBroj;
 		this.cenaZaDan = cenaZaDan;
 		this.cenaViseOd30 = cenaViseOd30;
 		this.cenaPoKilometruZaOgranicenuKilometrazu = cenaPoKilometruZaOgranicenuKilometrazu;
 		this.cenaCDW = cenaCDW;
+		this.oglasi = oglasi;
 	}
-    
+    public Cenovnik(BigInteger cenaZaDan, BigInteger cenaViseOd30,
+			BigInteger cenaPoKilometruZaOgranicenuKilometrazu, Set<Oglas> oglasi) {
+		super();
+		//this.identifikacioniBroj = identifikacioniBroj;
+		this.cenaZaDan = cenaZaDan;
+		this.cenaViseOd30 = cenaViseOd30;
+		this.cenaPoKilometruZaOgranicenuKilometrazu = cenaPoKilometruZaOgranicenuKilometrazu;
+		//this.cenaCDW = cenaCDW;
+		this.oglasi = oglasi;
+	}
     
 
 	public Cenovnik() {
 		super();
 		// TODO Auto-generated constructor stub
+	}
+
+
+
+	public Set<Oglas> getOglasi() {
+		return oglasi;
+	}
+
+
+
+	public void setOglasi(Set<Oglas> oglasi) {
+		this.oglasi = oglasi;
 	}
 
 

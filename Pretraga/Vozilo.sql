@@ -8,10 +8,12 @@ insert into "public"."agent" ("korisnicko_ime", "lozinka", "ime", "prezime", "em
 insert into "public"."agent" ("korisnicko_ime", "lozinka", "ime", "prezime", "email", "adresa") values ('savka', '222', 'savanka', 'savic', 'ee', 'Novi Sad');
 insert into "public"."agent" ("korisnicko_ime", "lozinka", "ime", "prezime", "email", "adresa") values ('mitar', '333', 'janos', 'janic', 'ee', 'Novi Sad');
 
-insert into "public"."oglas" ("vozilo_identifikacioni_broj", "agent_identifikacioni_broj", "vozilo_slobodno_od", "vozilo_slobodno_do") values(1, 1, '8/1/2020', '8/9/2020');
-insert into "public"."oglas" ("vozilo_identifikacioni_broj", "agent_identifikacioni_broj", "vozilo_slobodno_od", "vozilo_slobodno_do") values(2, 2, '8/4/2020', '8/7/2020');
-insert into "public"."oglas" ("vozilo_identifikacioni_broj", "agent_identifikacioni_broj", "vozilo_slobodno_od", "vozilo_slobodno_do") values(3, 3, '8/3/2020', '8/20/2020');
+insert into "public"."cenovnik" ("cena_za_dan", "cena_vise_od30", "cena_po_kilometru_za_ogranicenu_kilometrazu") values(100, 500, 300);
+insert into "public"."cenovnik" ("cena_za_dan", "cena_vise_od30", "cena_po_kilometru_za_ogranicenu_kilometrazu") values(150, 500, 300);
 
+insert into "public"."oglas" ("vozilo_identifikacioni_broj", "agent_identifikacioni_broj", "vozilo_slobodno_od", "vozilo_slobodno_do", "cenovnik_identifikacioni_broj") values(1, 1, '8/1/2020', '8/9/2020', 1);
+insert into "public"."oglas" ("vozilo_identifikacioni_broj", "agent_identifikacioni_broj", "vozilo_slobodno_od", "vozilo_slobodno_do", "cenovnik_identifikacioni_broj") values(2, 2, '8/4/2020', '8/7/2020', 1);
+insert into "public"."oglas" ("vozilo_identifikacioni_broj", "agent_identifikacioni_broj", "vozilo_slobodno_od", "vozilo_slobodno_do", "cenovnik_identifikacioni_broj") values(3, 3, '8/3/2020', '8/20/2020', 2);
 
 --insert into "public"."korpa" ("identifikacioni_broj") values(1)
 
