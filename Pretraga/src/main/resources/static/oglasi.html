@@ -43,6 +43,10 @@
 			   		datatype: 'json',
 			    	   success: function(data){	   
 			    		  for (var i=0; i<data.length; i++){
+			    			  var temp = data[i].vozilo.slike
+				    		   var slike= temp.split(';')
+				    		 
+				    			   	//$("#slika").append("<img height='100' width='150' src='"+slike[0]+"'>")
 			    		   newRow = 
 									"<tr>"
 										+ "<td>" + "<a id='link' href='#' onclick='Fja("+data[i].identifikacioniBroj+")'>" + data[i].identifikacioniBroj+"</a>"+"</td>"
@@ -51,7 +55,7 @@
 										+ "<td>" + data[i].vozilo.nazivKlase + "</td>"
 										+ "<td>" + data[i].voziloSlobodnoOd + "</td>"
 										+ "<td>" + data[i].voziloSlobodnoDo + "</td>"
-										+ "<td>" + data[i].agent.ime + "</td>"
+										+ "<td>" + "<img height='100' width='150' src='"+slike[0]+"'>" + "</td>"
 										+ "<td>" + " <button onclick='Korpafja("+data[i].identifikacioniBroj+","+korid+")'>Korpa</button>" + " </td>"
 											
 									+ "</tr>"
@@ -78,6 +82,9 @@
 									+ "</tr>"
 								$("#oglas").append(newRow)
 		  				}*/
+		  				var temp = data[i].vozilo.slike
+			    		   var slike= temp.split(';')
+			    		   
 					 if(data[i].agent.adresa){
 						 
 						 newRow = 
@@ -86,6 +93,7 @@
 									+ "<td>" + data[i].vozilo.identifikacioniBroj + "</td>"
 									+ "<td>" + data[i].vozilo.klasaVozila + "</td>"
 									+ "<td>" + data[i].vozilo.nazivKlase + "</td>"
+									+ "<td>" + "<img height='100' width='150' src='"+slike[0]+"'>" + "</td>"
 									+ "<td>" + data[i].agent.ime + "</td>"
 									
 								+ "</tr>"
@@ -129,7 +137,9 @@
 									+ "</tr>"
 								$("#oglas").append(newRow)
 		  				}*/
-					
+		  				
+		  				var temp = data[i].vozilo.slike
+			    		   var slike= temp.split(';')
 						 
 						 newRow = 
 								"<tr>"
@@ -140,6 +150,7 @@
 									+ "<td>" + data[i].vozilo.nazivMarke + "</td>"
 									+ "<td>" + data[i].vozilo.nazivModela + "</td>"
 									+ "<td>" + data[i].vozilo.nazivVrsteGoriva + "</td>"
+									+ "<td>" + "<img height='100' width='150' src='"+slike[0]+"'>" + "</td>"
 									+ "<td>" + data[i].agent.ime + "</td>"
 									
 									
@@ -185,6 +196,7 @@ a:hover {
 				<th>naziv klase</th>
 				<th>vozilo slobodno od</th>
 				<th>vozilo slobodno do</th>
+				<th id="slika">slike</th>
 				<th>ime agenta</th>
 				
 			</tr>

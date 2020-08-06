@@ -33,7 +33,7 @@ public class AgentServiceImpl implements AgentService{
 	@Override
 	public Agent getAgent(String name) {
 		// TODO Auto-generated method stub
-		return agentRepository.findByAdresa(name);
+		return (Agent) agentRepository.findByAdresa(name);
 	}
 
 	@Override

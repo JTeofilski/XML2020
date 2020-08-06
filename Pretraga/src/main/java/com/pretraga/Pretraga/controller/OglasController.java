@@ -58,11 +58,11 @@ public class OglasController {
 	  		
 	  		for(int i=0; i<oglasi.size(); i++) {
 	  			if(oglasi.get(i).getAgent().getAdresa().equals(adresa)&&oglasi.get(i).getVoziloSlobodnoOd().compareTo(slobodnoOd)<=0&&oglasi.get(i).getVoziloSlobodnoDo().compareTo(slobodnoDo)>=0&&slobodnoOd.compareTo(slobodnoDo)<0){
-	  				if(date.compareTo(slobodnoOd)<=2) {
-	  				   System.out.println("izaberite ...");
-	  				}else{
+	  			//	if(date.compareTo(slobodnoOd)<=2) {
+	  			//	   System.out.println("izaberite ...");
+	  			//	}else{
 	  				   oglasiPretraga.add(oglasi.get(i));
-	  			}
+	  		//	}
 	  			}
 	  			
 	  		}
