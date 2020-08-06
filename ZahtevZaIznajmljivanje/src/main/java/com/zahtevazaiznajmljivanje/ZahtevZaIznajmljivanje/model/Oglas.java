@@ -15,7 +15,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -28,6 +30,8 @@ import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlSchemaType;
 import javax.xml.bind.annotation.XmlType;
 import javax.xml.datatype.XMLGregorianCalendar;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 
 /**
@@ -94,7 +98,13 @@ public class Oglas {
     @ManyToOne
     protected Agent agent;
     
-    @ManyToMany(mappedBy = "oglasi")
+    
+    @ManyToMany( fetch = FetchType.LAZY,
+            cascade = {
+                    CascadeType.PERSIST,
+                    CascadeType.MERGE
+                },mappedBy = "oglasi")
+    @JsonIgnore
     protected Set<Korpa> korpe;
     
    /* private final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd");

@@ -109,7 +109,7 @@ public class RegistrovaniKorisnik {
    // protected List<ZahtevZaIznajmljivanje> zahtevZaIznajmljivanje;
 
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "korpa_id", referencedColumnName = "id")
+    @JoinColumn(name = "korpa_id", referencedColumnName = "identifikacioniBroj")
     private Korpa korpa;
     
     
