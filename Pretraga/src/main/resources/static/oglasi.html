@@ -223,7 +223,9 @@
 		  		var predjenaKilometraza = document.getElementById("predjenaKilometraza").value;
 		  		var predjenaKilometraza = document.getElementById("predjenaKilometraza").value;
 		  		var ogranicenjeKilometraze = document.getElementById("ogranicenjeKilometraze").value;
-		  		//console.log(data1[0]);
+		  		var cenaOd = document.getElementById("cenaOd").value;
+		  		var cenaDo = document.getElementById("cenaDo").value;
+		  		
 		  		if(document.getElementById("da").checked==true){
 		  			
 		  			var collisiondamageWaiver = true;
@@ -233,7 +235,7 @@
 		  		}
 		  		
 		  		$.ajax({
-					url: "http://localhost:2020/pretragaapp/oglasi/naprednaPretraga/" + adresa + "/" + voziloSlobodnoOd+ "/" + voziloSlobodnoDo+ "/" + nazivMarke + "/" + nazivModela + "/" + nazivVrsteGoriva + "/" + nazivKlase + "/" + nazivTipaMenjaca + "/" + brojSedistaZaDecu + "/" + predjenaKilometraza + "/" + collisiondamageWaiver + "/" + ogranicenjeKilometraze
+					url: "http://localhost:2020/pretragaapp/oglasi/naprednaPretraga/" + adresa + "/" + voziloSlobodnoOd+ "/" + voziloSlobodnoDo+ "/" + nazivMarke + "/" + nazivModela + "/" + nazivVrsteGoriva + "/" + nazivKlase + "/" + nazivTipaMenjaca + "/" + brojSedistaZaDecu + "/" + predjenaKilometraza + "/" + collisiondamageWaiver + "/" + ogranicenjeKilometraze + "/" + cenaOd + "/" + cenaDo
 		  		}).then(function(data) {	
 		  			$("#oglas").empty();
 		  			for(i=0; i<data.length; i++){
@@ -259,6 +261,8 @@
 									+ "<td>" + data[i].vozilo.nazivVrsteGoriva + "</td>"
 									+ "<td>" + "<img height='100' width='150' src='"+slike[0]+"'>" + "</td>"
 									+ "<td>" + data[i].agent.ime + "</td>"
+									+ "<td>" + data[i].vozilo.predjenaKilometraza + "</td>"
+									+ "<td>" + data[i].cenovnik.cenaZaDan + "</td>"
 									
 									
 								+ "</tr>"
@@ -339,7 +343,9 @@ a:hover {
 		<input type="text" class="form-control" id="menjac" name="menjac" placeholder = "Unesite tip menjaca">
 		<input type="text" class="form-control" id="sedista" name="sedista" placeholder = "Unesite broj sedista za decu">
 		<input type="text" class="form-control" id="predjenaKilometraza" name="predjenaKilometraza" placeholder = "Unesite predjenu kilometrazu">
-		<input type="text" class="form-control" id="ogranicenjeKilometraze" name="ogranicenjeKilometraze" placeholder = "Unesite planiranu kilometrazu"><br>
+		<input type="text" class="form-control" id="ogranicenjeKilometraze" name="ogranicenjeKilometraze" placeholder = "Unesite planiranu kilometrazu">
+		<input type="text" class="form-control" id="cenaOd" name="cenaOd" placeholder = "cena od">
+		<input type="text" class="form-control" id="cenaDo" name="cenaDo" placeholder = "cena do"><br>
 		<label>Collision Damage Waiver</label>
 		<input type="radio" name="colors" id="da">da
         <input type="radio" name="colors" id="ne">ne<br>
