@@ -64,13 +64,13 @@ public class OglasController {
 	  		java.util.Date date = Date.from(sada.atStartOfDay(ZoneId.systemDefault()).toInstant());
 	  		
 	  		for(int i=0; i<oglasi.size(); i++) {
-	  			if(oglasi.get(i).getAgent().getAdresa().equals(adresa)&&oglasi.get(i).getVoziloSlobodnoOd().compareTo(slobodnoOd)<=0&&oglasi.get(i).getVoziloSlobodnoDo().compareTo(slobodnoDo)>=0&&slobodnoOd.compareTo(slobodnoDo)<0){
+	  			//if(oglasi.get(i).getAgent().getAdresa().equals(adresa)&&oglasi.get(i).getVoziloSlobodnoOd().compareTo(slobodnoOd)<=0&&oglasi.get(i).getVoziloSlobodnoDo().compareTo(slobodnoDo)>=0&&slobodnoOd.compareTo(slobodnoDo)<0){
 	  			//	if(date.compareTo(slobodnoOd)<=2) {
 	  			//	   System.out.println("izaberite ...");
 	  			//	}else{
 	  				   oglasiPretraga.add(oglasi.get(i));
 	  		//	}
-	  			}
+	  			//}
 	  			
 	  		}
 	  		
@@ -99,12 +99,12 @@ public class OglasController {
 	  		System.out.println("broj sedista " + sedista);
 	  		System.out.println("adresa " + adresa);
 	  		for(int i=0; i<oglasi.size(); i++) {
-	  			if(oglasi.get(i).getAgent().getAdresa().contains(adresa.toLowerCase())&&oglasi.get(i).getVoziloSlobodnoOd().compareTo(slobodnoOd)<=0&&oglasi.get(i).getVoziloSlobodnoDo().compareTo(slobodnoDo)>=0&&slobodnoOd.compareTo(slobodnoDo)<0&&oglasi.get(i).getVozilo().getNazivMarke().equals(marka)&&oglasi.get(i).getVozilo().getNazivModela().equals(model)&&oglasi.get(i).getVozilo().getNazivVrsteGoriva().equals(gorivo)&&oglasi.get(i).getVozilo().getNazivKlase().equals(klasa)&&oglasi.get(i).getVozilo().getBrojSedistaZaDecu().equals(sedista)&&oglasi.get(i).getVozilo().getPredjenaKilometraza()==kilometraza&&oglasi.get(i).getVozilo().isCollisiondamageWaiver()==collision&&oglasi.get(i).getVozilo().getOgranicenjeKilometraze()==km&&oglasi.get(i).getCenovnik().getCenaZaDan().compareTo(cenaOd)>=0&&oglasi.get(i).getCenovnik().getCenaZaDan().compareTo(cenaDo)<=0){
+	  			//if(oglasi.get(i).getAgent().getAdresa().contains(adresa.toLowerCase())&&oglasi.get(i).getVoziloSlobodnoOd().compareTo(slobodnoOd)<=0&&oglasi.get(i).getVoziloSlobodnoDo().compareTo(slobodnoDo)>=0&&slobodnoOd.compareTo(slobodnoDo)<0&&oglasi.get(i).getVozilo().getNazivMarke().equals(marka)&&oglasi.get(i).getVozilo().getNazivModela().equals(model)&&oglasi.get(i).getVozilo().getNazivVrsteGoriva().equals(gorivo)&&oglasi.get(i).getVozilo().getNazivKlase().equals(klasa)&&oglasi.get(i).getVozilo().getBrojSedistaZaDecu().equals(sedista)&&oglasi.get(i).getVozilo().getPredjenaKilometraza()==kilometraza&&oglasi.get(i).getVozilo().isCollisiondamageWaiver()==collision&&oglasi.get(i).getVozilo().getOgranicenjeKilometraze()==km&&oglasi.get(i).getCenovnik().getCenaZaDan().compareTo(cenaOd)>=0&&oglasi.get(i).getCenovnik().getCenaZaDan().compareTo(cenaDo)<=0){
 	  				System.out.println(oglasi.get(i).getAgent().getAdresa().contains(adresa.toString()));
 	  				System.out.println(oglasi.get(i).getAgent().getAdresa().contains(adresa.intern()));
 	  				   oglasiPretraga.add(oglasi.get(i));
 	  				
-	  			}
+	  			//}
 	  			
 	  		}
 	  		
