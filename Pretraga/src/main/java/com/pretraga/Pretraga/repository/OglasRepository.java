@@ -14,4 +14,5 @@ public interface OglasRepository extends JpaRepository<Oglas, Long>{
 	//List<Oglas> OrderByVoziloSlobodnoOd(List<Oglas> oglasi);
 	List<Oglas> findByVoziloSlobodnoOd(Date date);
 	List<Oglas> findByVoziloSlobodnoDo(Date date);
+	//List<Oglas> findByVoziloSlobodnoOdCreatedBetween
 }
