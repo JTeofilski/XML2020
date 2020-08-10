@@ -225,7 +225,9 @@
 		  		var ogranicenjeKilometraze = document.getElementById("ogranicenjeKilometraze").value;
 		  		var cenaOd = document.getElementById("cenaOd").value;
 		  		var cenaDo = document.getElementById("cenaDo").value;
-		  		
+		  		if(adresa===""){
+		  			adresa="\n";
+		  		}
 		  		if(document.getElementById("da").checked==true){
 		  			
 		  			var collisiondamageWaiver = true;
