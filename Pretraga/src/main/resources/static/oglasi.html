@@ -55,11 +55,11 @@
 										+ "<td>" + "<a id='link' href='#' onclick='Fja("+data[i].identifikacioniBroj+")'>" + data[i].identifikacioniBroj+"</a>"+"</td>"
 										+ "<td>" + data[i].vozilo.identifikacioniBroj + "</td>"
 										+ "<td>" + data[i].vozilo.klasaVozila + "</td>"
-										+ "<td>" + data[i].vozilo.nazivKlase + "</td>"
-										//+ "<td>" + data[i].voziloSlobodnoOd + "</td>"
-										//+ "<td>" + data[i].voziloSlobodnoDo + "</td>"
+										+ "<td>" + data[i].vozilo.nazivMarke + "</td>"
+										+ "<td>" + data[i].vozilo.nazivModela + "</td>"
 										+ "<td>" + data[i].vozilo.predjenaKilometraza + "</td>"
 										+ "<td>" + data[i].cenovnik.cenaZaDan + "</td>"
+										+ "<td>" + data[i].agent.ime + "</td>"
 										+ "<td>" + "<img height='100' width='150' src='"+slike[0]+"'>" + "</td>"
 										+ "<td>" + " <button onclick='Korpafja("+data[i].identifikacioniBroj+","+korid+")'>Korpa</button>" + " </td>"
 											
@@ -198,12 +198,35 @@
 		  		var nazivTipaMenjaca = document.getElementById("menjac").value;
 		  		var brojSedistaZaDecu = document.getElementById("sedista").value;
 		  		var predjenaKilometraza = document.getElementById("predjenaKilometraza").value;
-		  		var predjenaKilometraza = document.getElementById("predjenaKilometraza").value;
 		  		var ogranicenjeKilometraze = document.getElementById("ogranicenjeKilometraze").value;
 		  		var cenaOd = document.getElementById("cenaOd").value;
 		  		var cenaDo = document.getElementById("cenaDo").value;
 		  		if(adresa===""){
-		  			adresa="\n";
+		  			adresa="0";
+		  		}
+		  		if(nazivMarke===""){
+		  			nazivMarke="0";
+		  		}
+		  		if(nazivModela===""){
+		  			nazivModela="0";
+		  		}
+		  		if(nazivKlase===""){
+		  			nazivKlase="0";
+		  		}
+		  		if(nazivTipaMenjaca===""){
+		  			nazivTipaMenjaca="0";
+		  		}
+		  		if(brojSedistaZaDecu===""){
+		  			brojSedistaZaDecu="0";
+		  		}
+		  		if(predjenaKilometraza===""){
+		  			predjenaKilometraza="0";
+		  		}
+		  		if(ogranicenjeKilometraze===""){
+		  			ogranicenjeKilometraze="0";
+		  		}
+		  		if(cenaOd===""){
+		  			cenaDo="0";
 		  		}
 		  		if(document.getElementById("da").checked==true){
 		  			
@@ -284,13 +307,13 @@ a:hover {
 				<th>id oglasa</th>
 				<th>id vozila</th>
 				<th>klasa vozila</th>
-				<th>naziv klase</th>
-				<th>vozilo slobodno od</th>
-				<th>vozilo slobodno do</th>
+				<th>marka</th>
+				<th>model</th>
 				<th>predjena kilometraza</th>
 				<th>cena za dan</th>
-				<th id="slika">slike</th>
 				<th>ime agenta</th>
+				<th id="slika">slike</th>
+				
 				
 			</tr>
 			</table>

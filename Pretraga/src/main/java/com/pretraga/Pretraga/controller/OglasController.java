@@ -104,18 +104,46 @@ public class OglasController {
 	 @RequestMapping(value="/naprednaPretraga/{adresa}/{voziloSlobodnoOd}/{voziloSlobodnoDo}/{nazivMarke}/{nazivModela}/{nazivVrsteGoriva}/{nazivKlase}/{nazivTipaMenjaca}/{brojSedistaZaDecu}/{predjenaKilometraza}/{collisiondamageWaiver}/{ogranicenjeKilometraze}/{cenaOd}/{cenaDo}", method=RequestMethod.GET)
 	  	@ResponseBody
 	  	public ResponseEntity<List<Oglas>> searchNapredno(@PathVariable(value="adresa", required = false) String adresa, @PathVariable("voziloSlobodnoOd") Date slobodnoOd, @PathVariable("voziloSlobodnoDo") Date slobodnoDo, @PathVariable("nazivMarke") String marka, @PathVariable("nazivModela") String model, @PathVariable("nazivVrsteGoriva") String gorivo, @PathVariable("nazivKlase") String klasa, @PathVariable("nazivTipaMenjaca") String menjac, @PathVariable("brojSedistaZaDecu") BigInteger sedista, @PathVariable("predjenaKilometraza") float kilometraza, @PathVariable("collisiondamageWaiver") boolean collision, @PathVariable("ogranicenjeKilometraze") float km, @PathVariable("cenaOd") BigInteger cenaOd, @PathVariable("cenaDo") BigInteger cenaDo){
-	  		List<Oglas> oglasi = oglasService.findAll(Sort.by(Sort.Direction.ASC, "identifikacioniBroj"));
+		 
+				 List<Oglas> oglasi = oglasService.findAll(Sort.by(Sort.Direction.ASC, "identifikacioniBroj"));
 	  		List<Oglas> oglasiPretraga = new ArrayList<Oglas>();
-	  		System.out.println("broj sedista " + sedista);
-	  		System.out.println("adresa " + adresa);
+	  		Set<RezervisaniDatumi> hset = new HashSet<RezervisaniDatumi>();
+	  		boolean zauzeto = false;
+	  		if(adresa.equals("0")) {
+	  			adresa="";
+	  		}
+	  		if(marka.equals("0")) {
+	  			marka="";
+	  		}
+	  		if(model.equals("0")) {
+	  			model="";
+	  		}
+	  		if(gorivo.equals("0")) {
+	  			gorivo="";
+	  		}
+	  		if(klasa.equals("0")) {
+	  			klasa="";
+	  		}
+	  		if(menjac.equals("0")) {
+	  			menjac="";
+	  		}
+	  		
 	  		for(int i=0; i<oglasi.size(); i++) {
-	  			//if(oglasi.get(i).getAgent().getAdresa().contains(adresa.toLowerCase())&&oglasi.get(i).getVoziloSlobodnoOd().compareTo(slobodnoOd)<=0&&oglasi.get(i).getVoziloSlobodnoDo().compareTo(slobodnoDo)>=0&&slobodnoOd.compareTo(slobodnoDo)<0&&oglasi.get(i).getVozilo().getNazivMarke().equals(marka)&&oglasi.get(i).getVozilo().getNazivModela().equals(model)&&oglasi.get(i).getVozilo().getNazivVrsteGoriva().equals(gorivo)&&oglasi.get(i).getVozilo().getNazivKlase().equals(klasa)&&oglasi.get(i).getVozilo().getBrojSedistaZaDecu().equals(sedista)&&oglasi.get(i).getVozilo().getPredjenaKilometraza()==kilometraza&&oglasi.get(i).getVozilo().isCollisiondamageWaiver()==collision&&oglasi.get(i).getVozilo().getOgranicenjeKilometraze()==km&&oglasi.get(i).getCenovnik().getCenaZaDan().compareTo(cenaOd)>=0&&oglasi.get(i).getCenovnik().getCenaZaDan().compareTo(cenaDo)<=0){
-	  				System.out.println(oglasi.get(i).getAgent().getAdresa().contains(adresa.toString()));
-	  				System.out.println(oglasi.get(i).getAgent().getAdresa().contains(adresa.intern()));
-	  				   oglasiPretraga.add(oglasi.get(i));
-	  				
-	  			//}
 	  			
+	  			for(RezervisaniDatumi temp : oglasi.get(i).getRezervisaniDatumi()) {
+	  	
+	  			if(temp.getDatumOd().compareTo(slobodnoOd)<=0&&temp.getDatumDo().compareTo(slobodnoDo)>=0){
+	  			    zauzeto = true;
+	  			   
+	  			}else if(temp.getDatumOd().compareTo(slobodnoOd)>=0&&temp.getDatumDo().compareTo(slobodnoDo)<=0) {
+	  			    zauzeto = true;
+	  			}
+	  			
+	  			
+	  		}
+	  			if(zauzeto==false&&oglasi.get(i).getAgent().getAdresa().toLowerCase().contains(adresa.toLowerCase())&&oglasi.get(i).getVozilo().getNazivMarke().toLowerCase().contains(marka.toLowerCase())&&oglasi.get(i).getVozilo().getNazivModela().toLowerCase().contains(model.toLowerCase())&&oglasi.get(i).getVozilo().getNazivVrsteGoriva().toLowerCase().contains(gorivo.toLowerCase())&&oglasi.get(i).getVozilo().getNazivKlase().toLowerCase().contains(klasa.toLowerCase())&&oglasi.get(i).getVozilo().getBrojSedistaZaDecu().equals(sedista)&&oglasi.get(i).getVozilo().getPredjenaKilometraza()==kilometraza&&oglasi.get(i).getVozilo().isCollisiondamageWaiver()==collision&&oglasi.get(i).getVozilo().getOgranicenjeKilometraze()==km&&oglasi.get(i).getCenovnik().getCenaZaDan().compareTo(cenaOd)>=0&&oglasi.get(i).getCenovnik().getCenaZaDan().compareTo(cenaDo)<=0) {
+	  				oglasiPretraga.add(oglasi.get(i));
+	  			}
 	  		}
 	  		
 	  		return new ResponseEntity<List<Oglas>>(oglasiPretraga, HttpStatus.OK);
