@@ -33,7 +33,7 @@ public class RegistrovaniKorisnikController {
 		userSaved.setKorisnickoIme(korisnik.getKorisnickoIme());
 		userSaved.setLozinka(korisnik.getLozinka());
 		userSaved.setAdresa(korisnik.getAdresa());
-		userSaved.setStatus("ulogovan");
+		userSaved.setStatus("cekanje");
 		
 		korisnikService.save(userSaved);
 		Korpa korpa= new Korpa();
