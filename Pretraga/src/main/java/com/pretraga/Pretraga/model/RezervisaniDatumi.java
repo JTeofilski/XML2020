@@ -12,6 +12,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 public class RezervisaniDatumi {
 	
@@ -28,6 +30,7 @@ public class RezervisaniDatumi {
 	
 	@ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
 	@JoinColumn(name="oglas")
+	@JsonIgnore
 	public Oglas oglas;
 
 	public RezervisaniDatumi( Date datumOd, Date datumDo, Oglas oglas) {

@@ -4,8 +4,10 @@ import java.math.BigInteger;
 import java.sql.Date;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.Period;
 import java.time.ZoneId;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -24,6 +26,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.pretraga.Pretraga.model.Korpa;
 import com.pretraga.Pretraga.model.Oglas;
 import com.pretraga.Pretraga.model.RegistrovaniKorisnik;
+import com.pretraga.Pretraga.model.RezervisaniDatumi;
 import com.pretraga.Pretraga.model.Vozilo;
 import com.pretraga.Pretraga.repository.OglasRepository;
 import com.pretraga.Pretraga.repository.VoziloRepository;
@@ -58,20 +61,27 @@ public class OglasController {
 	  	public ResponseEntity<List<Oglas>> search(@PathVariable("adresa") String adresa, @PathVariable("voziloSlobodnoOd") Date slobodnoOd, @PathVariable("voziloSlobodnoDo") Date slobodnoDo){
 	  		List<Oglas> oglasi = oglasService.findAll(Sort.by(Sort.Direction.ASC, "identifikacioniBroj"));
 	  		List<Oglas> oglasiPretraga = new ArrayList<Oglas>();
-	  		System.out.println("pretraga  " + oglasi.get(1).getVozilo().getNazivKlase());
-	  		ZoneId defaultZoneId = ZoneId.systemDefault();
-	  		LocalDate sada = java.time.LocalDate.now();
-	  		java.util.Date date = Date.from(sada.atStartOfDay(ZoneId.systemDefault()).toInstant());
-	  		
+	  		Set<RezervisaniDatumi> hset = new HashSet<RezervisaniDatumi>();
+	  		boolean zauzeto = false;
+	  		if(adresa.equals("0")) {
+	  			adresa="";
+	  		}
 	  		for(int i=0; i<oglasi.size(); i++) {
-	  			//if(oglasi.get(i).getAgent().getAdresa().equals(adresa)&&oglasi.get(i).getVoziloSlobodnoOd().compareTo(slobodnoOd)<=0&&oglasi.get(i).getVoziloSlobodnoDo().compareTo(slobodnoDo)>=0&&slobodnoOd.compareTo(slobodnoDo)<0){
-	  			//	if(date.compareTo(slobodnoOd)<=2) {
-	  			//	   System.out.println("izaberite ...");
-	  			//	}else{
-	  				   oglasiPretraga.add(oglasi.get(i));
-	  		//	}
-	  			//}
 	  			
+	  			for(RezervisaniDatumi temp : oglasi.get(i).getRezervisaniDatumi()) {
+	  	
+	  			if(temp.getDatumOd().compareTo(slobodnoOd)<=0&&temp.getDatumDo().compareTo(slobodnoDo)>=0){
+	  			    zauzeto = true;
+	  			   
+	  			}else if(temp.getDatumOd().compareTo(slobodnoOd)>=0&&temp.getDatumDo().compareTo(slobodnoDo)<=0) {
+	  			    zauzeto = true;
+	  			}
+	  			
+	  			
+	  		}
+	  			if(zauzeto==false&&oglasi.get(i).getAgent().getAdresa().toLowerCase().contains(adresa.toLowerCase())) {
+	  				oglasiPretraga.add(oglasi.get(i));
+	  			}
 	  		}
 	  		
 	  		return new ResponseEntity<List<Oglas>>(oglasiPretraga, HttpStatus.OK);

@@ -56,8 +56,8 @@
 										+ "<td>" + data[i].vozilo.identifikacioniBroj + "</td>"
 										+ "<td>" + data[i].vozilo.klasaVozila + "</td>"
 										+ "<td>" + data[i].vozilo.nazivKlase + "</td>"
-										+ "<td>" + data[i].voziloSlobodnoOd + "</td>"
-										+ "<td>" + data[i].voziloSlobodnoDo + "</td>"
+										//+ "<td>" + data[i].voziloSlobodnoOd + "</td>"
+										//+ "<td>" + data[i].voziloSlobodnoDo + "</td>"
 										+ "<td>" + data[i].vozilo.predjenaKilometraza + "</td>"
 										+ "<td>" + data[i].cenovnik.cenaZaDan + "</td>"
 										+ "<td>" + "<img height='100' width='150' src='"+slike[0]+"'>" + "</td>"
@@ -75,13 +75,17 @@
 		  		 var adresa = document.getElementById("adresa").value;
 		  		 var voziloSlobodnoOd = document.getElementById("datumOd").value;
 		  		var voziloSlobodnoDo = document.getElementById("datumDo").value;
-		  		
-		  		
+		  		if(adresa==""){
+		  			adresa="0";
+		  		}
+		  		if(voziloSlobodnoOd>voziloSlobodnoDo){
+		  			alert("Greska! Unesite datum povratka vozila veci od datuma preuzimanja.");
+		  		}else{
 		  		$.ajax({
 					url: "http://localhost:2020/pretragaapp/oglasi/pretraga/" + adresa + "/" + voziloSlobodnoOd + "/" + voziloSlobodnoDo
 		  		}).then(function(data) {
 		  			data1  = data;
-		  			console.log(data1[0].identifikacioniBroj);
+		  			//console.log(data1[0].identifikacioniBroj);
 		  			$("#oglas").empty();
 		  			for(i=0; i<data.length; i++){
 		  			/*	if(data.length<0){
@@ -113,39 +117,12 @@
 					 }
 		  			}
 					});
-					
+		  		}
 				});
 			 $('#sort').on('change', function() {               
 		            if ($("#sort").val() != "") { 
 		            	var kriterijum = $(this).val();
 
-		              /*  $.ajax({
-		                	url: "http://localhost:2020/pretragaapp/oglasi/sortiranje/" + kriterijum,
-		                    type: 'GET',
-		                    success: function (data){                      
-		                    	 for (var i=0; i<data.length; i++){
-					    			  var temp = data[i].vozilo.slike
-						    		   var slike= temp.split(';')
-						    		 
-						    			   	//$("#slika").append("<img height='100' width='150' src='"+slike[0]+"'>")
-					    		   newRow = 
-											"<tr>"
-												+ "<td>" + "<a id='link' href='#' onclick='Fja("+data[i].identifikacioniBroj+")'>" + data[i].identifikacioniBroj+"</a>"+"</td>"
-												+ "<td>" + data[i].vozilo.identifikacioniBroj + "</td>"
-												+ "<td>" + data[i].vozilo.klasaVozila + "</td>"
-												+ "<td>" + data[i].vozilo.nazivKlase + "</td>"
-												+ "<td>" + data[i].voziloSlobodnoOd + "</td>"
-												+ "<td>" + data[i].voziloSlobodnoDo + "</td>"
-												+ "<td>" + "<img height='100' width='150' src='"+slike[0]+"'>" + "</td>"
-												+ "<td>" + " <button onclick='Korpafja("+data[i].identifikacioniBroj+","+korid+")'>Korpa</button>" + " </td>"
-													
-											+ "</tr>"
-											
-										$("#oglas").append(newRow)	
-										getData()
-					    	   }
-					    	   }
-		                });*/
 		               if(kriterijum==="predjenaKilometraza"){
 		                	  var table, rows, switching, i, x, y, shouldSwitch;
 		                	  table = document.getElementById("oglas");
@@ -193,7 +170,7 @@
 		                	      
 		                	      x = rows[i].getElementsByTagName("TD")[7];
 		                	      y = rows[i + 1].getElementsByTagName("TD")[7];
-		                	     alert(x.innerHTML);
+		                	     
 		                	      if (x.innerHTML > y.innerHTML) {
 		                	        
 		                	        shouldSwitch = true;
