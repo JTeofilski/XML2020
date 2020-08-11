@@ -6,7 +6,7 @@
 //
 
 
-package com.zahtevazaiznajmljivanje.ZahtevZaIznajmljivanje.model;
+package com.pretraga.Pretraga.model;
 
 import java.sql.Date;
 import java.util.ArrayList;

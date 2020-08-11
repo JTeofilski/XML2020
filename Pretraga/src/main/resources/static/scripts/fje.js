@@ -37,11 +37,38 @@ function Zahtev(x){
 	if(brojac>0){
 		if (confirm('Imate vise odlasa od istog agenta, da li zelite da napravite bundle?')) {
 			  // Save it!
-			  console.log('Potvrda bundla');
+			  
+			 
+			  var formData = JSON.stringify(x);
+			 // console.log(formData);
+			  $.ajax({
+			        url: "http://localhost:2020/zahtevzaiznajmljivanjeapp/zahtevi/kreiranje/"+true, 
+			   		type: "POST",
+			   		data: formData,
+			   		contentType: "application/json",
+			   		datatype: 'json',
+			    	   success: function(data){	   
+			    		  console.log("proslo");
+			    	   }	 
+			    	   });
+		
 			  
 			} else {
 			  // Do nothing!
-			  console.log('Salju se pojedinacni zahtevi');
+			 // console.log('Salju se pojedinacni zahtevi');
+				var formData = JSON.stringify(x);
+				 // console.log(formData);
+				  $.ajax({
+				        url: "http://localhost:2020/zahtevzaiznajmljivanjeapp/zahtevi/kreiranje/"+false, 
+				   		type: "POST",
+				   		data: formData,
+				   		contentType: "application/json",
+				   		datatype: 'json',
+				    	   success: function(data){	   
+				    		  console.log("proslo");
+				    	   }	 
+				    	   });
 			}
 	}
+
 }

@@ -23,6 +23,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
@@ -76,15 +77,16 @@ public class Oglas {
 	protected long identifikacioniBroj;
 	
     
-     @XmlElement(namespace = "http://www.ftn.uns.ac.rs/oglas", required = true)
-     @XmlSchemaType(name = "dateTime")
-     protected java.sql.Date voziloSlobodnoOd;
+    // @XmlElement(namespace = "http://www.ftn.uns.ac.rs/oglas", required = true)
+    // @XmlSchemaType(name = "dateTime")
+    // protected java.sql.Date voziloSlobodnoOd;
    // protected XMLGregorianCalendar voziloSlodobnoOd;
-    @XmlElement(namespace = "http://www.ftn.uns.ac.rs/oglas", required = true)
-    @XmlSchemaType(name = "dateTime")
-    protected java.sql.Date voziloSlobodnoDo;
-   // @XmlElement(name = "Cenovnik", namespace = "http://www.ftn.uns.ac.rs/cenovnik", required = true)
-   // protected Cenovnik cenovnik;
+   // @XmlElement(namespace = "http://www.ftn.uns.ac.rs/oglas", required = true)
+   // @XmlSchemaType(name = "dateTime")
+    //protected java.sql.Date voziloSlobodnoDo;
+    @XmlElement(name = "Cenovnik", namespace = "http://www.ftn.uns.ac.rs/cenovnik", required = true)
+    @ManyToOne
+     protected Cenovnik cenovnik;
    // @XmlElement(name = "Ocena", namespace = "http://www.ftn.uns.ac.rs/ocenakomentarporuka")
    // protected List<Ocena> ocena;
    // @XmlElement(name = "Komentar", namespace = "http://www.ftn.uns.ac.rs/ocenakomentarporuka")
@@ -107,6 +109,19 @@ public class Oglas {
     @JsonIgnore
     protected Set<Korpa> korpe;
     
+    
+    @OneToMany (cascade = CascadeType.ALL, mappedBy = "oglas", fetch = FetchType.LAZY)
+    public Set<RezervisaniDatumi> rezervisaniDatumi;
+    
+    
+    @ManyToMany( fetch = FetchType.LAZY,
+            cascade = {
+                    CascadeType.PERSIST,
+                    CascadeType.MERGE
+                },mappedBy = "oglasi")
+    @JsonIgnore
+    protected Set<ZahtevZaIznajmljivanje> zahtevi;
+    
    /* private final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd");
     
    // private final SimpleDateFormat DATE_TIME_FORMAT = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
@@ -119,22 +134,26 @@ public class Oglas {
         }
     }*/
 
-    public Oglas(long identifikacioniBroj, Vozilo vozilo, Agent agent, Date voziloSlodobnoOd,
-			Date voziloSlobodnoDo, Cenovnik cenovnik) {
-		super();
-		this.identifikacioniBroj = identifikacioniBroj;
-		this.vozilo = vozilo;
-		this.agent = agent;
-		this.voziloSlobodnoOd = voziloSlodobnoOd;
-		this.voziloSlobodnoDo = voziloSlobodnoDo;
-		//this.cenovnik = cenovnik;
-	}
+   
     
     
 
 	public Oglas() {
 		super();
 		// TODO Auto-generated constructor stub
+	}
+
+
+
+	public Oglas(Cenovnik cenovnik, Vozilo vozilo, Agent agent, Set<Korpa> korpe,
+			Set<RezervisaniDatumi> rezervisaniDatumi, Set<ZahtevZaIznajmljivanje> zahtevi) {
+		super();
+		this.cenovnik = cenovnik;
+		this.vozilo = vozilo;
+		this.agent = agent;
+		this.korpe = korpe;
+		this.rezervisaniDatumi = rezervisaniDatumi;
+		this.zahtevi=zahtevi;
 	}
 
 
@@ -151,7 +170,19 @@ public class Oglas {
         return vozilo;
     }
 
-    /**
+    public Cenovnik getCenovnik() {
+		return cenovnik;
+	}
+
+
+
+	public void setCenovnik(Cenovnik cenovnik) {
+		this.cenovnik = cenovnik;
+	}
+
+
+
+	/**
      * Sets the value of the vozilo property.
      * 
      * @param value
@@ -175,6 +206,7 @@ public class Oglas {
 		this.agent = agent;
 	}
 
+	/*
 	public java.sql.Date getVoziloSlobodnoOd() {
 		return voziloSlobodnoOd;
 	}
@@ -195,7 +227,7 @@ public class Oglas {
 		this.voziloSlobodnoDo = voziloSlobodnoDo;
 	}
 
-
+	*/
 
 	public long getIdentifikacioniBroj() {
 		return identifikacioniBroj;
@@ -213,6 +245,32 @@ public class Oglas {
 		this.korpe = korpe;
 	}
 
+
+
+	public Set<RezervisaniDatumi> getRezervisaniDatumi() {
+		return rezervisaniDatumi;
+	}
+
+
+
+	public void setRezervisaniDatumi(Set<RezervisaniDatumi> rezervisaniDatumi) {
+		this.rezervisaniDatumi = rezervisaniDatumi;
+	}
+
+
+
+	public Set<ZahtevZaIznajmljivanje> getZahtevi() {
+		return zahtevi;
+	}
+
+
+
+	public void setZahtevi(Set<ZahtevZaIznajmljivanje> zahtevi) {
+		this.zahtevi = zahtevi;
+	}
+
+	
+	
     
     /**
      * Gets the value of the voziloSlodobnoOd property.
