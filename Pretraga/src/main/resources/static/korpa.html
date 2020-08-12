@@ -46,7 +46,7 @@ var korisnik=delovi[1].split('=')[1];
 								$("#oglas").append(newRow)						
 			    	   }
 			    		  console.log(oglasi)
-			    		  $("#zahtev").append("<button class='dugme' onclick='Zahtev("+JSON.stringify(oglasi)+")'>Posalji</button>")
+			    		  $("#zahtev").append("<button class='dugme' onclick='Zahtev("+JSON.stringify(oglasi)+","+korisnik+")'>Posalji</button>")
 			    		  
 			    	   }
 			      

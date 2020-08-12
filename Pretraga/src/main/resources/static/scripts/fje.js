@@ -24,7 +24,7 @@ function Brisanjefja(x,korid){
 	    	   });
 }
 
-function Zahtev(x){
+function Zahtev(x, korid){
 	var brojac=0;
 	for(i=0;i<x.length-1;i++){
 		for( j=i+1; j<x.length; j++){
@@ -42,7 +42,7 @@ function Zahtev(x){
 			  var formData = JSON.stringify(x);
 			 // console.log(formData);
 			  $.ajax({
-			        url: "http://localhost:2020/zahtevzaiznajmljivanjeapp/zahtevi/kreiranje/"+true, 
+			        url: "http://localhost:2020/zahtevzaiznajmljivanjeapp/zahtevi/kreiranje/"+true+"/"+korid, 
 			   		type: "POST",
 			   		data: formData,
 			   		contentType: "application/json",
@@ -59,7 +59,7 @@ function Zahtev(x){
 				var formData = JSON.stringify(x);
 				 // console.log(formData);
 				  $.ajax({
-				        url: "http://localhost:2020/zahtevzaiznajmljivanjeapp/zahtevi/kreiranje/"+false, 
+				        url: "http://localhost:2020/zahtevzaiznajmljivanjeapp/zahtevi/kreiranje/"+false+"/"+korid, 
 				   		type: "POST",
 				   		data: formData,
 				   		contentType: "application/json",
@@ -69,6 +69,21 @@ function Zahtev(x){
 				    	   }	 
 				    	   });
 			}
+	}
+	else {
+		var formData = JSON.stringify(x);
+		 // console.log(formData);
+		  $.ajax({
+		        url: "http://localhost:2020/zahtevzaiznajmljivanjeapp/zahtevi/kreiranje/"+false+"/"+korid, 
+		   		type: "POST",
+		   		data: formData,
+		   		contentType: "application/json",
+		   		datatype: 'json',
+		    	   success: function(data){	   
+		    		  console.log("proslo");
+		    	   }	 
+		    	   });
+		
 	}
 
 }

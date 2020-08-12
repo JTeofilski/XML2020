@@ -33,40 +33,39 @@ public class ZahtevZaIznajmljivanjeController {
 	
 	
 	
-	@RequestMapping(method=RequestMethod.POST, value = "kreiranje/{bundle}", consumes="application/json")
-	public ResponseEntity <ZahtevZaIznajmljivanje> kreiranjeZahteva(@PathVariable("bundle") boolean bundle, @RequestBody List<Oglas> oglasi){
+	@RequestMapping(method=RequestMethod.POST, value = "kreiranje/{bundle}/{korid}", consumes="application/json")
+	public ResponseEntity <ZahtevZaIznajmljivanje> kreiranjeZahteva(@PathVariable("bundle") boolean bundle,@PathVariable("korid") long korid, @RequestBody List<Oglas> oglasi){
 		ArrayList<Agent> agenti = new ArrayList<>();
 		ZahtevZaIznajmljivanje z = null;
-		ArrayList<Agent> agentiNovo = new ArrayList<>();
+		ArrayList<Long> agentiNovo = new ArrayList<>();
 		if(bundle==true) {
 			for (int i=0;i<oglasi.size();i++) {
 				  agenti.add(oglasi.get(i).getAgent()); //stavlja sve agente u posebnu listu
 			}
 			
-			for(int j=0; j<agenti.size(); j++) {
-				
-				
-				if(agentiNovo.size()==0){
-					agentiNovo.add(agenti.get(j));
-					
+			for(int j=0; j<agenti.size(); j++) {			
+				if(agentiNovo.isEmpty()){
+					agentiNovo.add(agenti.get(j).getIdentifikacioniBroj());	
+					System.out.println("agent prvi put prazan");
 				}
-				
-			
-				    if(!agentiNovo.contains(agenti.get(j))) {
+				else {		
+				    if(!agentiNovo.contains(agenti.get(j).getIdentifikacioniBroj())) {
 						//algoritam za trazenje duplikata...mozda moze ovako
-						agentiNovo.add(agenti.get(j));
+						agentiNovo.add(agenti.get(j).getIdentifikacioniBroj());
 					
-				
+				    }
 					
 				}
 			}
 			for(int i=0; i<agentiNovo.size(); i++) {
-			System.out.println("agent novo id " + agentiNovo.get(i).getIdentifikacioniBroj());
+			System.out.println("agent novo id " + agentiNovo.get(i));
 			}
+			
+			
 			List<List<Oglas>> setovi = new ArrayList<List<Oglas>>();
 			List<ZahtevZaIznajmljivanje> zahtevi = new ArrayList<ZahtevZaIznajmljivanje>();
 			for(int i=0; i<agentiNovo.size(); i++) {
-				System.out.println("ima li necega "  + agentiNovo.get(i).getIme());
+				System.out.println("ima li necega "  + agentiNovo.get(i));
 				List<Oglas> list = new ArrayList<Oglas>(); 
 			    //ova lista posle mora da se konvertuje u set
 				setovi.add(list);
@@ -79,26 +78,25 @@ public class ZahtevZaIznajmljivanjeController {
 			for (int i=0;i<oglasi.size();i++) {
 				//z= new ZahtevZaIznajmljivanje();
 				for(int k=0; k<agentiNovo.size(); k++) {
-				//for (int j=1;j<oglasi.size();j++) {
-					if(oglasi.get(i).getAgent().equals(agentiNovo.get(k))) {
+					if(oglasi.get(i).getAgent().getIdentifikacioniBroj()==(agentiNovo.get(k))) {
 						if(zahtevi.get(k).getOglasi()== null) {
 							//Set<Oglas> set = new HashSet<>();
 							setovi.get(k).add(oglasi.get(i));
 							Set<Oglas> targetSet = new HashSet<>(setovi.get(k));//konvertujem listu u set
 							zahtevi.get(k).setOglasi(targetSet); //dodaju se bas u zahtev agenta k	
+							zahtevi.get(k).setAgentFirmaID(oglasi.get(i).getAgent().getIdentifikacioniBroj());
+							zahtevi.get(k).setStatusIznajmljivanja("PENDING");
+							zahtevi.get(k).setBundle(bundle);
+							zahtevi.get(k).setRegistrovaniKorisnkID(korid);
 						}
 						else {
 							System.out.println("isti agenti");
 							zahtevi.get(k).getOglasi().add(oglasi.get(i));			
-							oglasi.remove(i);
 						
 						}
 					}
-				//}
+				
 				}
-				//z.getOglasi().add(oglasi.get(i));
-				//z.setAgentFirmaID(oglasi.get(i).getAgent().getIdentifikacioniBroj());
-				//z.setStatusIznajmljivanja("PENDING");
 				for(int m=0; m<zahtevi.size(); m++) {
 				zahtevService.save(zahtevi.get(m));
 				}
@@ -114,15 +112,18 @@ public class ZahtevZaIznajmljivanjeController {
 					z.setOglasi(set);	
 					z.setAgentFirmaID(oglasi.get(i).getAgent().getIdentifikacioniBroj());
 					z.setStatusIznajmljivanja("PENDING");
+					z.setBundle(bundle);
+					z.setRegistrovaniKorisnkID(korid);
 					zahtevService.save(z);
 				}
 			
 			}
 			
+		
+		
+		
+		
 		}
-		
-		
-		
 		return  new ResponseEntity<ZahtevZaIznajmljivanje>(z, HttpStatus.OK);
 	}
 }
