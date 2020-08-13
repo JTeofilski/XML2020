@@ -17,18 +17,14 @@ insert into "public"."oglas" ("vozilo_identifikacioni_broj", "agent_identifikaci
 insert into "public"."oglas" ("vozilo_identifikacioni_broj", "agent_identifikacioni_broj",  "cenovnik_identifikacioni_broj") values(3, 2, 2);
 
 insert into "public"."rezervisani_datumi" ("datum_od", "datum_do", "oglas") values ('8/8/2020', '10/8/2020', 1);
-insert into "public"."rezervisani_datumi" ("datum_od", "datum_do", "oglas") values ('8/20/2020', '8/30/2020', 1);
-insert into "public"."rezervisani_datumi" ("datum_od", "datum_do", "oglas") values ('8/18/2020', '8/19/2020', 2);
-insert into "public"."rezervisani_datumi" ("datum_od", "datum_do", "oglas") values ('1/8/2020', '8/15/2020', 3);
+insert into "public"."rezervisani_datumi" ("datum_od", "datum_do", "oglas") values ('20/8/2020', '30/8/2020', 1);
+insert into "public"."rezervisani_datumi" ("datum_od", "datum_do", "oglas") values ('18/8/2020', '19/8/2020', 2);
+insert into "public"."rezervisani_datumi" ("datum_od", "datum_do", "oglas") values ('1/8/2020', '15/8/2020', 3);
 
 
 insert into "public"."korpa" ("identifikacioni_broj") values(1);
 insert into "public"."registrovani_korisnik" ("identifikacioni_broj", "adresa", "email", "ime", "korisnicko_ime", "lozinka", "prezime", "status", "korpa_id") values(1, 'adr', 'mail', 'Olga', 'olgam', '123', 'Momirov', 'ulogovan', 1);
-insert into "public"."korpa_oglasi" ("korpe_identifikacioni_broj", "oglasi_identifikacioni_broj") values (1,1);
-insert into "public"."korpa_oglasi" ("korpe_identifikacioni_broj", "oglasi_identifikacioni_broj") values (1,3);
 
 
 insert into "public"."korpa" ("identifikacioni_broj") values(2);
 insert into "public"."registrovani_korisnik" ("identifikacioni_broj", "adresa", "email", "ime", "korisnicko_ime", "lozinka", "prezime", "status", "korpa_id") values(2, 'adr', 'mail', 'Perica', 'perazdera', '123', 'Peric', 'ulogovan', 2);
-insert into "public"."korpa_oglasi" ("korpe_identifikacioni_broj", "oglasi_identifikacioni_broj") values (2,1);
-insert into "public"."korpa_oglasi" ("korpe_identifikacioni_broj", "oglasi_identifikacioni_broj") values (2,2);

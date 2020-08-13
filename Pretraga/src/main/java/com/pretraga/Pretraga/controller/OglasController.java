@@ -154,7 +154,7 @@ public class OglasController {
 			return new ResponseEntity<Oglas>(oglas, HttpStatus.OK);
 		}
 		
-		
+		/*
 		@RequestMapping(method=RequestMethod.GET, value="/korpa/{id}/{korid}")
 		public ResponseEntity<Set<Oglas>> izKorpe(@PathVariable("id") Long id,@PathVariable("korid") Long korid){
 			Korpa korpa= korpaService.findOne(korid);
@@ -192,5 +192,6 @@ public class OglasController {
 			Set<Oglas> oglasiIzKorpe= korpa.getOglas();
 			return new ResponseEntity<Set<Oglas>>(oglasiIzKorpe, HttpStatus.OK);
 		}
+		*/
 		
 }

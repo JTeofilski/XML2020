@@ -101,26 +101,13 @@ public class Oglas {
     protected Agent agent;
     
     
-    @ManyToMany( fetch = FetchType.LAZY,
-            cascade = {
-                    CascadeType.PERSIST,
-                    CascadeType.MERGE
-                },mappedBy = "oglasi")
-    @JsonIgnore
-    protected Set<Korpa> korpe;
+    
     
     
     @OneToMany (cascade = CascadeType.ALL, mappedBy = "oglas", fetch = FetchType.LAZY)
     public Set<RezervisaniDatumi> rezervisaniDatumi;
     
     
-    @ManyToMany( fetch = FetchType.LAZY,
-            cascade = {
-                    CascadeType.PERSIST,
-                    CascadeType.MERGE
-                },mappedBy = "oglasi")
-    @JsonIgnore
-    protected Set<ZahtevZaIznajmljivanje> zahtevi;
     
    /* private final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd");
     
@@ -145,15 +132,14 @@ public class Oglas {
 
 
 
-	public Oglas(Cenovnik cenovnik, Vozilo vozilo, Agent agent, Set<Korpa> korpe,
-			Set<RezervisaniDatumi> rezervisaniDatumi, Set<ZahtevZaIznajmljivanje> zahtevi) {
+	public Oglas(Cenovnik cenovnik, Vozilo vozilo, Agent agent,
+			Set<RezervisaniDatumi> rezervisaniDatumi) {
 		super();
 		this.cenovnik = cenovnik;
 		this.vozilo = vozilo;
 		this.agent = agent;
-		this.korpe = korpe;
 		this.rezervisaniDatumi = rezervisaniDatumi;
-		this.zahtevi=zahtevi;
+		
 	}
 
 
@@ -235,15 +221,6 @@ public class Oglas {
 
 
 
-	public Set<Korpa> getKorpe() {
-		return korpe;
-	}
-
-
-
-	public void setKorpe(Set<Korpa> korpe) {
-		this.korpe = korpe;
-	}
 
 
 
@@ -258,16 +235,6 @@ public class Oglas {
 	}
 
 
-
-	public Set<ZahtevZaIznajmljivanje> getZahtevi() {
-		return zahtevi;
-	}
-
-
-
-	public void setZahtevi(Set<ZahtevZaIznajmljivanje> zahtevi) {
-		this.zahtevi = zahtevi;
-	}
 
 	
 	

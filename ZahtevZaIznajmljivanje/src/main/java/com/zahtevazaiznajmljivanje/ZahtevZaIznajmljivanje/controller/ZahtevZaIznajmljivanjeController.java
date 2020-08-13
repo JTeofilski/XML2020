@@ -32,7 +32,7 @@ public class ZahtevZaIznajmljivanjeController {
 	private ZahtevZaIznajmljivanjeService zahtevService;
 	
 	
-	
+	/*
 	@RequestMapping(method=RequestMethod.POST, value = "kreiranje/{bundle}/{korid}", consumes="application/json")
 	public ResponseEntity <ZahtevZaIznajmljivanje> kreiranjeZahteva(@PathVariable("bundle") boolean bundle,@PathVariable("korid") long korid, @RequestBody List<Oglas> oglasi){
 		ArrayList<Agent> agenti = new ArrayList<>();
@@ -126,4 +126,5 @@ public class ZahtevZaIznajmljivanjeController {
 		}
 		return  new ResponseEntity<ZahtevZaIznajmljivanje>(z, HttpStatus.OK);
 	}
+	*/
 }

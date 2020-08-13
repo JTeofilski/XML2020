@@ -20,6 +20,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
@@ -105,22 +106,35 @@ public class ZahtevZaIznajmljivanje {
     @XmlElement(name = "Izvestaj", namespace = "http://www.ftn.uns.ac.rs/izvestaj", required = true)
    // protected Izvestaj izvestaj;
     
-    
-    
-    @ManyToMany (fetch = FetchType.LAZY,
-    cascade = {
-            
-            CascadeType.MERGE
-        })
-    protected Set<Oglas> oglasi;
 
 
     
+    @OneToMany ( mappedBy = "zahtev")
+    private List<Narudzbenica> narudzbenica;
     
     
     
-    
-    public ZahtevZaIznajmljivanje() {
+    public List<Narudzbenica> getNarudzbenica() {
+		return narudzbenica;
+	}
+
+
+
+
+
+
+
+	public void setNarudzbenica(List<Narudzbenica> narudzbenica) {
+		this.narudzbenica = narudzbenica;
+	}
+
+
+
+
+
+
+
+	public ZahtevZaIznajmljivanje() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
@@ -141,6 +155,22 @@ public class ZahtevZaIznajmljivanje {
 		//this.datumDO = datumDO;
 		this.bundle = bundle;
 		//this.ukupnaCena = ukupnaCena;
+		
+	}
+
+
+
+
+
+
+
+	public ZahtevZaIznajmljivanje(long registrovaniKorisnkID, long agentFirmaID, String statusIznajmljivanja,
+			boolean bundle, List<Narudzbenica> narudzbenica) {
+		super();
+		this.registrovaniKorisnkID = registrovaniKorisnkID;
+		this.agentFirmaID = agentFirmaID;
+		this.statusIznajmljivanja = statusIznajmljivanja;
+		this.bundle = bundle;
 		
 	}
 
@@ -196,13 +226,7 @@ public class ZahtevZaIznajmljivanje {
         return registrovaniKorisnkID;
     }
 
-    public Set<Oglas> getOglasi() {
-		return oglasi;
-	}
-
-	public void setOglasi(Set<Oglas> oglasi) {
-		this.oglasi = oglasi;
-	}
+   
 
 	/**
      * Sets the value of the registrovaniKorisnkID property.

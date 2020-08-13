@@ -17,12 +17,15 @@ if( delovi[0].split('=')[1]==null)
 else
 	var value =  delovi[0].split('=')[1];
 var korisnik=delovi[1].split('=')[1];
+var rezOd=delovi[2].split('=')[1];
+var rezDo=delovi[3].split('=')[1];
 
+console.log(window.location.search);
 
 //console.log(korisnik);
 		$(document).ready(function() {
 			 $.ajax({
-			        url: "http://localhost:2020/pretragaapp/oglasi/korpa/"+value+"/"+korisnik, 
+			        url: "http://localhost:2020/pretragaapp/narudzbenice/"+value+"/"+korisnik+"/"+rezOd+"/"+rezDo, 
 			   		type: "GET",
 			   		contentType: "application/json",
 			   		datatype: 'json',
@@ -32,14 +35,13 @@ var korisnik=delovi[1].split('=')[1];
 			    		  for (var i=0; i<data.length; i++){
 			    		   newRow = 
 									"<tr>"
-										+ "<td>" + "<a id='link' href='#' onclick='Fja("+data[i].identifikacioniBroj+")'>" + data[i].identifikacioniBroj+"</a>"+"</td>"
-										+ "<td>" + data[i].vozilo.identifikacioniBroj + "</td>"
-										+ "<td>" + data[i].vozilo.klasaVozila + "</td>"
-										+ "<td>" + data[i].vozilo.nazivKlase + "</td>"
-										+ "<td>" + data[i].voziloSlobodnoOd + "</td>"
-										+ "<td>" + data[i].voziloSlobodnoDo + "</td>"
-										+ "<td>" + data[i].agent.ime + "</td>"
-										+ "<td>" + " <button id='brisanje' onclick='Brisanjefja("+data[i].identifikacioniBroj+","+korisnik+")'>Brisanje</button>" + " </td>"
+										+ "<td>" + "<a id='link' href='#' onclick='Fja("+data[i].oglasId+")'>" + data[i].oglasId+"</a>"+"</td>"
+										+ "<td>" + data[i].markaVozila + "</td>"
+										+ "<td>" + data[i].rentiranjeOd + "</td>"
+										+ "<td>" + data[i].rentiranjeDo + "</td>"
+
+										+ "<td>" + data[i].agentId + "</td>"
+									//	+ "<td>" + " <button id='brisanje' onclick='Brisanjefja("+data[i].identifikacioniBroj+","+korisnik+")'>Brisanje</button>" + " </td>"
 
 									+ "</tr>";
 									

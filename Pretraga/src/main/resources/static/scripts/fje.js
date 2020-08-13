@@ -1,8 +1,8 @@
-function Korpafja(x,korid){ 
+function Korpafja(x,korid,voziloSlobodnoOd,voziloSlobodnoDo){ 
 	//window.location.href = "http://localhost:2020/pretragaapp/korpa/"+x; 
-	
-	
-	window.location.href = "http://localhost:2020/pretragaapp/korpa.html?id="+x+"&korid="+korid;
+	//var d=voziloSlobodnoOd.toString().replace(/ /g, '-');
+	console.log(voziloSlobodnoOd);
+	window.location.href = "http://localhost:2020/pretragaapp/korpa.html?id="+x+"&korid="+korid+"&rezOd="+voziloSlobodnoOd+"&rezDo="+voziloSlobodnoOd;
 			 
 }
 

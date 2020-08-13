@@ -25,12 +25,7 @@ public class Korpa {
 	@OneToOne(mappedBy = "korpa")
     protected RegistrovaniKorisnik registrovaniKorisnik;
 	
-	@ManyToMany (fetch = FetchType.LAZY,
-            cascade = {
-                    CascadeType.PERSIST,
-                    CascadeType.MERGE
-                })
-	protected Set<Oglas> oglasi;
+	
 
 	public Korpa() {
 		super();
@@ -50,13 +45,6 @@ public class Korpa {
 		this.registrovaniKorisnik = registrovaniKorisnik;
 	}
 
-	public Set<Oglas> getOglas() {
-		return oglasi;
-	}
-
-	public void setOglas(Set<Oglas> oglas) {
-		this.oglasi = oglas;
-	}
 
 	public Long getIdentifikacioniBroj() {
 		return identifikacioniBroj;
