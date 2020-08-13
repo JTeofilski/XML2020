@@ -12,4 +12,6 @@ public interface NarudzbenicaService {
 	Narudzbenica save(Narudzbenica narudzbenica);
 	
 	List<Narudzbenica> findByKorpaId(long id);
+	
+	void remove(Narudzbenica narudzbenica);
 }

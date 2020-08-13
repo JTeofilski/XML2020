@@ -2,7 +2,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>Korpa</title>
 <script src="scripts/jquery-3.2.1.min.js"></script>
 		<script src="scripts/tether.min.js"></script>
 		<script src="scripts/bootstrap.min.js"></script>
@@ -17,8 +17,14 @@ if( delovi[0].split('=')[1]==null)
 else
 	var value =  delovi[0].split('=')[1];
 var korisnik=delovi[1].split('=')[1];
-var rezOd=delovi[2].split('=')[1];
-var rezDo=delovi[3].split('=')[1];
+if(delovi[2]!=null)
+	var rezOd=delovi[2].split('=')[1];
+else
+	var rezOd=0;
+if(delovi[3]!=null)
+	var rezDo=delovi[3].split('=')[1];
+else
+	var rezDo=0
 
 console.log(window.location.search);
 
@@ -39,9 +45,8 @@ console.log(window.location.search);
 										+ "<td>" + data[i].markaVozila + "</td>"
 										+ "<td>" + data[i].rentiranjeOd + "</td>"
 										+ "<td>" + data[i].rentiranjeDo + "</td>"
-
 										+ "<td>" + data[i].agentId + "</td>"
-									//	+ "<td>" + " <button id='brisanje' onclick='Brisanjefja("+data[i].identifikacioniBroj+","+korisnik+")'>Brisanje</button>" + " </td>"
+										+ "<td>" + " <button id='brisanje' onclick='Brisanjefja("+data[i].identifikacioniBroj+","+korisnik+")'>Brisanje</button>" + " </td>"
 
 									+ "</tr>";
 									
@@ -70,17 +75,15 @@ a:hover {
 </head>
 <body>
 <h1>Korpa</h1>
-<h3>Oglasi u korpi:</h3>
+<h3>Narudzbine:</h3>
 
 <table id="oglas" class = "table " style= "width:700px" border="1px">
 			<tr class="header">
 				<th>id oglasa</th>
-				<th>id vozila</th>
-				<th>klasa vozila</th>
-				<th>naziv klase</th>
-				<th>vozilo slobodno od</th>
-				<th>vozilo slobodno do</th>
-				<th>ime agenta</th>
+				<th>marka vozila</th>
+				<th>rezervacija od</th>
+				<th>rezervacija do</th>
+				<th>id agenta</th>
 				
 			</tr>
 			</table>

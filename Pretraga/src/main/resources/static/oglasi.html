@@ -74,8 +74,9 @@
 		  		 var adresa = document.getElementById("adresa").value;
 		  		 var voziloSlobodnoOd = document.getElementById("datumOd").value;
 		  		var voziloSlobodnoDo = document.getElementById("datumDo").value;
-		  		var d=new Date(voziloSlobodnoOd).toLocaleDateString();
-		  		d=voziloSlobodnoDo.replace(/-/g, "\_");
+		  		var rezervacijaOd= voziloSlobodnoOd.replace(/-/g, "\_");
+		  		var rezervacijaDo= voziloSlobodnoDo.replace(/-/g, "\_");
+
 		  		
 		  		if(adresa==""){
 		  			adresa="0";
@@ -112,7 +113,7 @@
 									+ "<td>" + data[i].agent.ime + "</td>"
 									+ "<td>" + data[i].vozilo.predjenaKilometraza + "</td>"
 									+ "<td>" + data[i].cenovnik.cenaZaDan + "</td>"
-									+ "<td>" + " <button onclick='Korpafja("+data[i].identifikacioniBroj+","+korid+"," +  d+ "," + voziloSlobodnoDo +    ")'>Korpa</button>" + " </td>"
+									+ "<td>" + " <button onclick='Korpafja("+data[i].identifikacioniBroj+","+korid+"," +  rezervacijaOd + "," + rezervacijaDo +    ")'>Korpa</button>" + " </td>"
 
 								+ "</tr>"
 								

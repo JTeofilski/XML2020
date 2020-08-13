@@ -38,4 +38,10 @@ public class NarudzbenicaServiceImpl implements NarudzbenicaService{
 		return repository.findAllByKorpaId(id);
 	}
 
+
+	@Override
+	public void remove(Narudzbenica narudzbenica) {
+		repository.delete(narudzbenica);
+	}
+
 }

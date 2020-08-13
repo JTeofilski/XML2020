@@ -121,7 +121,7 @@ public class Narudzbenica {
 		this.zahtev = zahtev;
 	}
 
-	public long getIdentrifikacioniBroj() {
+	public long getIdentifikacioniBroj() {
 		return identifikacioniBroj;
 	}
 	

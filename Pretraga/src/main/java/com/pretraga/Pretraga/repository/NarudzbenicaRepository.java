@@ -13,5 +13,7 @@ public interface NarudzbenicaRepository extends JpaRepository <Narudzbenica, Lon
 	Narudzbenica findByIdentifikacioniBroj(Long id);
 	
 	List<Narudzbenica> findAllByKorpaId(Long id);
+	
+	
 
 }

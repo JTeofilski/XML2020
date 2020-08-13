@@ -1,8 +1,8 @@
 function Korpafja(x,korid,voziloSlobodnoOd,voziloSlobodnoDo){ 
 	//window.location.href = "http://localhost:2020/pretragaapp/korpa/"+x; 
 	//var d=voziloSlobodnoOd.toString().replace(/ /g, '-');
-	console.log(voziloSlobodnoOd);
-	window.location.href = "http://localhost:2020/pretragaapp/korpa.html?id="+x+"&korid="+korid+"&rezOd="+voziloSlobodnoOd+"&rezDo="+voziloSlobodnoOd;
+
+	window.location.href = "http://localhost:2020/pretragaapp/korpa.html?id="+x+"&korid="+korid+"&rezOd="+voziloSlobodnoOd+"&rezDo="+voziloSlobodnoDo;
 			 
 }
 
@@ -14,7 +14,7 @@ function Fja(x){
 
 function Brisanjefja(x,korid){ 
 	 $.ajax({
-	        url: "http://localhost:2020/pretragaapp/oglasi/korpa/"+x+"/"+korid, 
+	        url: "http://localhost:2020/pretragaapp/narudzbenice/"+x+"/"+korid, 
 	   		type: "DELETE",
 	   		contentType: "application/json",
 	   		datatype: 'json',
