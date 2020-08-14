@@ -12,5 +12,7 @@ public interface ZahtevZaIznajmljivanjeService {
 
 	List<ZahtevZaIznajmljivanje> findAll();
 	
+	ZahtevZaIznajmljivanje findOne(Long id);
+	
 	ZahtevZaIznajmljivanje save(ZahtevZaIznajmljivanje zahtev);
 }

@@ -32,5 +32,13 @@ public class ZahtevZaIznajmljivanjeServiceImpl implements ZahtevZaIznajmljivanje
 		// TODO Auto-generated method stub
 		return repository.findAll();
 	}
+
+
+
+	@Override
+	public ZahtevZaIznajmljivanje findOne(Long id) {
+		// TODO Auto-generated method stub
+		return repository.findById(id).orElse(null);
+	}
 	
 }
