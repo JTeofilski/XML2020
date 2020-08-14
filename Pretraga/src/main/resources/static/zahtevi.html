@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<script src="scripts/jquery-3.2.1.min.js"></script>
+		<script src="scripts/tether.min.js"></script>
+		<script src="scripts/bootstrap.min.js"></script>
+		<script src="scripts/fje.js" charset="UTF-8" type="text/javascript"></script>
+		<script src="js/oglas.js" type="text/javascript"></script>
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+	
+<title>Odobreni zahtevi</title>
+<style>
+			table, th, td {
+  				border: 1px solid black;
+			}
+			body {	
+				background: linear-gradient(45deg, #fafbfc, #00FFFF);
+			}
+
+			.container{
+				position: relative;
+				left: 10%;
+				
+			}
+			</style>
+<script>
+		var url_string = window.location.href;
+		var url = new URL(url_string);
+		var id = url.searchParams.get("id");
+		$(document).ready(function() {
+			 $.ajax({
+			        url: "http://localhost:2020/pretragaapp/zahtevi/sviZahtevi", 
+			   		type: "GET",
+			   		contentType: "application/json",
+			   		datatype: 'json',
+			    	   success: function(data){	 
+			    		   for(i=0; i<data.length; i++){
+			    		 if(data[i].statusIznajmljivanja=="RESERVED"){
+			    		   newRow = 
+								"<tr>"
+									
+									+ "<td>" + data[i].datumOD + "</td>"
+									+ "<td>" + data[i].datumDO + "</td>"
+									+ "<td>" + data[i].ukupnaCena + "</td>"
+									+ "<td>" + "<button class='btn' id='inbox'><a id='link' href='http://localhost:2020/porukaapp/poruke.html?id="+data[i].identifikacioniBroj+"'</a><i class='fa fa-paper-plane'>poruka</i></button>" + " </td>"
+										
+								+ "</tr>"
+								
+								$("#zahtevi").append(newRow)	
+			    		 }
+			    	   }
+			    	   }
+			      
+			       });
+		});
+		</script>
+		<script type="text/javascript">
+		 $("#inbox").click(function() {
+		  		alert("radis li");
+			 //window.location.href = "http://localhost:2020/pretragaapp/zahtevi.html?id=" + id;	 
+			});
+		</script>
+</head>
+<body>
+<table id="zahtevi" class = "table " style= "width:700px">
+			<tr class="header">
+				<th>datum od</th>
+				<th>datum do</th>
+				<th>ukupna cena</th>
+				<th>poruka</th>
+				
+			</tr>
+			</table>
+</body>
+</html>

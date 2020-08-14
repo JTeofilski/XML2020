@@ -6,6 +6,7 @@
 		<script src="scripts/bootstrap.min.js"></script>
 		<script src="scripts/fje.js" charset="UTF-8" type="text/javascript"></script>
 		<script src="js/oglas.js" type="text/javascript"></script>
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 		<style>
 			table, th, td {
   				border: 1px solid black;
@@ -38,6 +39,11 @@
 		var params = window.location.search.split('?')[1];
 		var korid =  params.split('=')[1];
 		var data1;
+		
+		var url_string = window.location.href;
+		var url = new URL(url_string);
+		var id = url.searchParams.get("id");
+		
 		$(document).ready(function() {
 			 $.ajax({
 			        url: "http://localhost:2020/pretragaapp/oglasi/sviOglasi", 
@@ -123,6 +129,10 @@
 		  			}
 					});
 		  		}
+				});
+			 $("#zahtevi").click(function() {
+		  		
+				 window.location.href = "http://localhost:2020/pretragaapp/zahtevi.html?id=" + id;	 
 				});
 			 $('#sort').on('change', function() {               
 		            if ($("#sort").val() != "") { 
@@ -305,6 +315,7 @@ a:hover {
 </style>
 	</head>
 	<body>
+	<button class="btn" id="zahtevi"><i class="fa fa-paper-plane">zahtevi</i></button>
 		<h3 id="oglasNaslov">Spisak oglasa</h3>
 		<a href="#" onclick=Link()>Korpa</a>
 		<table id="oglas" class = "table " style= "width:700px">

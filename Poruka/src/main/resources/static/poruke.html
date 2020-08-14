@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<script src="scripts/jquery-3.2.1.min.js"></script>
+		<script src="scripts/tether.min.js"></script>
+		<script src="scripts/bootstrap.min.js"></script>
+		<script src="scripts/fje.js" charset="UTF-8" type="text/javascript"></script>
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+	
+<title>Poruka</title>
+<style>
+			table, th, td {
+  				border: 1px solid black;
+			}
+			body {	
+				background: linear-gradient(45deg, #fafbfc, #00FFFF);
+			}
+
+			.container{
+				position: relative;
+				left: 10%;
+				
+			}
+			</style>
+<script>
+		var url_string = window.location.href;
+		var url = new URL(url_string);
+		var id = url.searchParams.get("id");
+		$(document).ready(function() {
+			 $.ajax({
+			        url: "http://localhost:2020/pretragaapp/zahtevi/zahtev/" +id, 
+			   		type: "GET",
+			   		contentType: "application/json",
+			   		datatype: 'json',
+			    	   success: function(data){	 
+			    		  
+			    		
+			    		   newRow = 
+								"<tr>"
+									
+									+ "<td>" + data.datumOD + "</td>"
+									+ "<td>" + data.datumDO + "</td>"
+									+ "<td>" + data.ukupnaCena + "</td>"
+										
+								+ "</tr>"
+								
+								$("#zahtevi").append(newRow)	
+			    		 
+			    	   
+			    	   }
+			      
+			       });
+			 $("#poruka").click(function() {
+				 var formData = JSON.stringify({
+		  	          text:$("#inputMessage [name='text']").val(),
+		  	         
+		  	          
+		  	      });
+		  		 
+		  		
+		  		$.ajax({
+					url: "http://localhost:2020/porukaapp/poruke/posaljiPoruku",
+					type: "POST",
+					data: formData,
+					//saljemo json i ocekujemo json nazad
+					contentType: "application/json",
+					datatype: 'json',
+		  		}).then(function(data) {	
+		  			alert("Poruka je uspesno poslata!");
+					});
+					
+				});
+		});
+		</script>
+		
+</head>
+<body>
+<form id="inputMessage">
+<table id="zahtevi" class = "table " style= "width:700px">
+			
+			<tr class="header">
+				<th>datum od</th>
+				<th>datum do</th>
+				<th>ukupna cena</th>
+				
+			</tr>
+			</table>
+			
+			<textarea id="text" name="text" rows="4" cols="50">
+           </textarea>
+           <button type="button" id="poruka">posalji</button>
+
+</form>
+</body>
+</html>

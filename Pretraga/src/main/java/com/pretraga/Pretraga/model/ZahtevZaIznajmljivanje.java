@@ -81,7 +81,7 @@ public class ZahtevZaIznajmljivanje {
 
     @XmlElement(namespace = "http://www.ftn.uns.ac.rs/zahtevzaiznajmljivanje")
     @Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
     protected long identifikacioniBroj;
   
       
