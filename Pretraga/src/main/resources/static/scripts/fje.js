@@ -28,12 +28,12 @@ function Zahtev(x, korid){
 	var brojac=0;
 	for(i=0;i<x.length-1;i++){
 		for( j=i+1; j<x.length; j++){
-			if (x[i].agent.ime==x[j].agent.ime){
+			if (x[i].agentId==x[j].agentId){
 				brojac++;
 			}
 		}
 	}
-	console.log(brojac);
+	
 	if(brojac>0){
 		if (confirm('Imate vise odlasa od istog agenta, da li zelite da napravite bundle?')) {
 			  // Save it!
@@ -48,7 +48,7 @@ function Zahtev(x, korid){
 			   		contentType: "application/json",
 			   		datatype: 'json',
 			    	   success: function(data){	   
-			    		  console.log("proslo");
+			    		   window.location.href = "http://localhost:2020/pretragaapp/oglasi.html?id="+korid;
 			    	   }	 
 			    	   });
 		
@@ -65,7 +65,7 @@ function Zahtev(x, korid){
 				   		contentType: "application/json",
 				   		datatype: 'json',
 				    	   success: function(data){	   
-				    		  console.log("proslo");
+				    		   window.location.href = "http://localhost:2020/pretragaapp/oglasi.html?id="+korid;
 				    	   }	 
 				    	   });
 			}
@@ -80,7 +80,7 @@ function Zahtev(x, korid){
 		   		contentType: "application/json",
 		   		datatype: 'json',
 		    	   success: function(data){	   
-		    		  console.log("proslo");
+		    		   window.location.href = "http://localhost:2020/pretragaapp/oglasi.html?id="+korid;
 		    	   }	 
 		    	   });
 		

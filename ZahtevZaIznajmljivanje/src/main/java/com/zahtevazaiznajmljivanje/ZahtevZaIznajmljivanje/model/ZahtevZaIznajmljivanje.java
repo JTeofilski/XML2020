@@ -81,7 +81,7 @@ public class ZahtevZaIznajmljivanje {
 
     @XmlElement(namespace = "http://www.ftn.uns.ac.rs/zahtevzaiznajmljivanje")
     @Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
     protected long identifikacioniBroj;
   
       
@@ -110,11 +110,11 @@ public class ZahtevZaIznajmljivanje {
 
     
     @OneToMany ( mappedBy = "zahtev")
-    private List<Narudzbenica> narudzbenica;
+    private Set<Narudzbenica> narudzbenica;
     
     
     
-    public List<Narudzbenica> getNarudzbenica() {
+    public Set<Narudzbenica> getNarudzbenica() {
 		return narudzbenica;
 	}
 
@@ -124,7 +124,7 @@ public class ZahtevZaIznajmljivanje {
 
 
 
-	public void setNarudzbenica(List<Narudzbenica> narudzbenica) {
+	public void setNarudzbenica(Set<Narudzbenica> narudzbenica) {
 		this.narudzbenica = narudzbenica;
 	}
 

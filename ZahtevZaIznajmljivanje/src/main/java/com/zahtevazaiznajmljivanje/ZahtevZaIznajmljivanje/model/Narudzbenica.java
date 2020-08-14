@@ -17,7 +17,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 public class Narudzbenica {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long identifikacioniBroj;
 	
 	private long oglasId;
@@ -34,6 +34,8 @@ public class Narudzbenica {
 	
 	private String markaVozila;
 	
+	private long cenovnikId;
+	
 	
 	
 	@ManyToOne(fetch = FetchType.LAZY)
@@ -46,7 +48,7 @@ public class Narudzbenica {
 	}
 
 	public Narudzbenica(long oglasid, long registrovaniKorisnikId, long agentId, long korpaId, Date rentiranjeOd,
-			Date rentiranjeDo, String markaVozila) {
+			Date rentiranjeDo, String markaVozila, long cenovnikId) {
 		super();
 		this.oglasId = oglasid;
 		this.registrovaniKorisnikId = registrovaniKorisnikId;
@@ -55,6 +57,15 @@ public class Narudzbenica {
 		this.rentiranjeOd = rentiranjeOd;
 		this.rentiranjeDo = rentiranjeDo;
 		this.markaVozila = markaVozila;
+		this.cenovnikId=cenovnikId;
+	}
+
+	public long getCenovnikId() {
+		return cenovnikId;
+	}
+
+	public void setCenovnikId(long cenovnikId) {
+		this.cenovnikId = cenovnikId;
 	}
 
 	public long getOglasId() {
@@ -121,7 +132,7 @@ public class Narudzbenica {
 		this.zahtev = zahtev;
 	}
 
-	public long getIdentrifikacioniBroj() {
+	public long getIdentifikacioniBroj() {
 		return identifikacioniBroj;
 	}
 	

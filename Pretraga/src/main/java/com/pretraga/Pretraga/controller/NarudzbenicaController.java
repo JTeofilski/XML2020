@@ -70,6 +70,7 @@ public class NarudzbenicaController {
 		Narudzbenica narudzbenica= new Narudzbenica();
 		narudzbenica.setAgentId(oglas.getAgent().getIdentifikacioniBroj());
 		narudzbenica.setKorpaId(korpa.getIdentifikacioniBroj());
+		narudzbenica.setCenovnikId(oglas.getCenovnik().getIdentifikacioniBroj());
 		narudzbenica.setMarkaVozila(oglas.getVozilo().getNazivMarke());
 		narudzbenica.setOglasId(oglas.getIdentifikacioniBroj());
 		narudzbenica.setRegistrovaniKorisnikId(korid);

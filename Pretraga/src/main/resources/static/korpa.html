@@ -36,8 +36,8 @@ console.log(window.location.search);
 			   		contentType: "application/json",
 			   		datatype: 'json',
 			    	   success: function(data){	 
-			    		   var oglasi=data;
-			    		   console.log(oglasi);
+			    		   var narudzbenice=data;
+			    		   
 			    		  for (var i=0; i<data.length; i++){
 			    		   newRow = 
 									"<tr>"
@@ -52,8 +52,8 @@ console.log(window.location.search);
 									
 								$("#oglas").append(newRow)						
 			    	   }
-			    		  console.log(oglasi)
-			    		  $("#zahtev").append("<button class='dugme' onclick='Zahtev("+JSON.stringify(oglasi)+","+korisnik+")'>Posalji</button>")
+			    		 
+			    		  $("#zahtev").append("<button class='dugme' onclick='Zahtev("+JSON.stringify(narudzbenice)+","+korisnik+")'>Posalji</button>")
 			    		  
 			    	   }
 			      
