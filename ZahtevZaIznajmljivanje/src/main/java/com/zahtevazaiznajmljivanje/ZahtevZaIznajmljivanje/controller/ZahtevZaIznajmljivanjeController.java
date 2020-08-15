@@ -3,6 +3,7 @@ package com.zahtevazaiznajmljivanje.ZahtevZaIznajmljivanje.controller;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -132,6 +133,8 @@ public class ZahtevZaIznajmljivanjeController {
 		}
 		else {
 			System.out.println("odvojeni zahtevi");
+			//java.sql.Date d=new java.sql.Date(Calendar.getInstance().getTime().getTime());
+			//System.out.println(d.getHours());
 			for (int i=0;i<narudzbenice.size();i++) {
 				z = new ZahtevZaIznajmljivanje();
 				if(z.getNarudzbenica()== null) {
@@ -163,11 +166,7 @@ public class ZahtevZaIznajmljivanjeController {
 				}
 			
 			}
-			
-		
-		
-		
-		
+					
 		}
 		return  new ResponseEntity<ZahtevZaIznajmljivanje>(z, HttpStatus.OK);
 	}

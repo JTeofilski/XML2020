@@ -10,7 +10,10 @@ import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 public class PretragaApplication {
 
 	public static void main(String[] args) {
+		
 		SpringApplication.run(PretragaApplication.class, args);
+		MyTimeTask mtt= new MyTimeTask();
+		mtt.timer();
 	}
 
 }
