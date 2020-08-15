@@ -49,6 +49,20 @@
 								
 								$("#zahtevi").append(newRow)	
 			    		 }
+			    		 else{
+			    			  newRow = 
+									"<tr>"
+										
+										+ "<td>" + data[i].identifikacioniBroj + "</td>"							
+										+ "<td>" + data[i].ukupnaCena + "</td>"
+										+ "<td>" + data[i].statusIznajmljivanja + "</td>"
+											
+									+ "</tr>"
+									
+									$("#zahtevi_cekanje_tbl").append(newRow);
+			    			 		document.getElementById("zahtevi_cekanje").style.visibility="visible";
+			    			 
+			    		 }
 			    	   }
 			    	   }
 			      
@@ -72,5 +86,17 @@
 				
 			</tr>
 			</table>
+
+<div id="zahtevi_cekanje"  style= "visibility:hidden">
+	<h3>Zahtevi na cekanju</h3>
+<table id="zahtevi_cekanje_tbl" class = "table " style= "width:700px;  margin-top:50px">
+	<tr class="header">
+		<th>id zahteva</th>
+		<th>ukupna cena</th>
+		<th>status</th>		
+	</tr>
+</table>
+
+</div>
 </body>
 </html>

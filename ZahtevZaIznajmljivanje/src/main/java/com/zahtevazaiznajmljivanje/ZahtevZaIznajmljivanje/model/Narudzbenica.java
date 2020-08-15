@@ -40,6 +40,7 @@ public class Narudzbenica {
 	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name="zahtev_id")
+	@JsonIgnore
 	private ZahtevZaIznajmljivanje zahtev;
 
 	public Narudzbenica() {
