@@ -1,9 +1,12 @@
 package com.zahtevazaiznajmljivanje.ZahtevZaIznajmljivanje.controller;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -133,6 +136,11 @@ public class ZahtevZaIznajmljivanjeController {
 		}
 		else {
 			System.out.println("odvojeni zahtevi");
+			
+			SimpleDateFormat formatter= new SimpleDateFormat("yyyy-MM-dd  HH:mm:ss");
+			Date date = new Date(System.currentTimeMillis());
+			
+			
 			//java.sql.Date d=new java.sql.Date(Calendar.getInstance().getTime().getTime());
 			//System.out.println(d.getHours());
 			for (int i=0;i<narudzbenice.size();i++) {
@@ -150,7 +158,7 @@ public class ZahtevZaIznajmljivanjeController {
 					long dani=ChronoUnit.DAYS.between(LocalDate.parse(narudzbenice.get(i).getRentiranjeOd().toString()),LocalDate.parse(narudzbenice.get(i).getRentiranjeDo().toString()));
 					//System.out.println(dani);
 					z.setUkupnaCena((dani+1)*cenovnik.getCenaZaDan().floatValue()); //za isti datum racuna 0, a mi vrv kao jedan dan?
-					
+					z.setVremeKreiranja(date);
 					
 					zahtevService.save(z);
 					//narudzbenice.get(i).setZahtev(z);

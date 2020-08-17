@@ -121,6 +121,26 @@ public class ZahtevZaIznajmljivanje {
 
 
 
+    public java.util.Date vremeKreiranja;
+
+
+	public java.util.Date getVremeKreiranja() {
+		return vremeKreiranja;
+	}
+
+
+
+
+
+
+
+	public void setVremeKreiranja(java.util.Date vremeKreiranja) {
+		this.vremeKreiranja = vremeKreiranja;
+	}
+
+
+
+
 
 
 
