@@ -24,7 +24,7 @@ public class RegistrovaniKorisnikController {
 	
 	
 	@RequestMapping(method=RequestMethod.POST, value = "/registracija", consumes="application/json")
-	public String registrovanje(@RequestBody RegistrovaniKorisnik korisnik, HttpSession httpSession){
+	public ResponseEntity<RegistrovaniKorisnik> registrovanje(@RequestBody RegistrovaniKorisnik korisnik, HttpSession httpSession){
 	
 		RegistrovaniKorisnik userSaved = new RegistrovaniKorisnik();
 		userSaved.setIme(korisnik.getIme());
@@ -42,8 +42,7 @@ public class RegistrovaniKorisnikController {
 		userSaved.setKorpa(korpa);
 		korisnikService.save(userSaved);
 		httpSession.setAttribute("ulogovan", userSaved);
-		//return new ResponseEntity<>( userSaved, HttpStatus.OK);
-		return "redirect:/pretragaapp/narudzbenice/1/1";
+		return new ResponseEntity<>( userSaved, HttpStatus.OK);
 	}
 	@RequestMapping(method=RequestMethod.POST, value = "/logovanje", consumes="application/json")
 	public ResponseEntity<RegistrovaniKorisnik> logUser(@RequestBody RegistrovaniKorisnik user){
