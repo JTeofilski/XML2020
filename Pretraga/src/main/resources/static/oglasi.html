@@ -52,6 +52,15 @@
 			   		datatype: 'json',
 			    	   success: function(data){	   
 			    		  for (var i=0; i<data.length; i++){
+			    			  
+			    			  var ocena=0;   
+					        	for(o=0;o<data[i].ocena.length; o++){
+					        		ocena+=data[i].ocena[o].vrednostOcene;
+					        	}
+					        	if(ocena!=0){
+					        		ocena=ocena/o;
+					        	}
+			    			  
 			    			  var temp = data[i].vozilo.slike
 				    		   var slike= temp.split(';')
 				    			   	//$("#slika").append("<img height='100' width='150' src='"+slike[0]+"'>")
@@ -66,6 +75,7 @@
 										+ "<td>" + data[i].cenovnik.cenaZaDan + "</td>"
 										+ "<td>" + data[i].agent.ime + "</td>"
 										+ "<td>" + "<img height='100' width='150' src='"+slike[0]+"'>" + "</td>"
+										+ "<td>" + ocena + "</td>"
 										//+ "<td>" + " <button onclick='Korpafja("+data[i].identifikacioniBroj+","+korid+")'>Korpa</button>" + " </td>"
 											
 									+ "</tr>"
@@ -104,8 +114,17 @@
 									+ "</tr>"
 								$("#oglas").append(newRow)
 		  				}*/
-		  				var temp = data[i].vozilo.slike
-			    		   var slike= temp.split(';')
+		  				var temp = data[i].vozilo.slike;
+			    		   var slike= temp.split(';');
+			    		   
+			    	
+			    		var ocena=0;   
+			        	for(o=0;o<data[i].ocena.length; o++){
+			        		ocena+=data[i].ocena[o].vrednostOcene;
+			        	}
+			        	if(ocena!=0){
+			        		ocena=ocena/o;
+			        	}
 			    		   
 					 if(data[i].agent.adresa){
 		
@@ -119,6 +138,7 @@
 									+ "<td>" + data[i].agent.ime + "</td>"
 									+ "<td>" + data[i].vozilo.predjenaKilometraza + "</td>"
 									+ "<td>" + data[i].cenovnik.cenaZaDan + "</td>"
+									+ "<td>" + ocena + "</td>"
 									+ "<td>" + " <button onclick='Korpafja("+data[i].identifikacioniBroj+","+korid+"," +  rezervacijaOd + "," + rezervacijaDo +    ")'>Korpa</button>" + " </td>"
 
 								+ "</tr>"
@@ -256,6 +276,15 @@
 		  		}).then(function(data) {	
 		  			$("#oglas").empty();
 		  			for(i=0; i<data.length; i++){
+		  				
+		  				var ocena=0;   
+			        	for(o=0;o<data[i].ocena.length; o++){
+			        		ocena+=data[i].ocena[o].vrednostOcene;
+			        	}
+			        	if(ocena!=0){
+			        		ocena=ocena/o;
+			        	}
+		  				
 		  			/*	if(data.length<0){
 		  					 $("#oglas").empty();
 								newRow = "<tr>"
@@ -280,6 +309,7 @@
 									+ "<td>" + data[i].agent.ime + "</td>"
 									+ "<td>" + data[i].vozilo.predjenaKilometraza + "</td>"
 									+ "<td>" + data[i].cenovnik.cenaZaDan + "</td>"
+									+ "<td>" + ocena + "</td>"
 									
 									
 								+ "</tr>"
@@ -329,6 +359,7 @@ a:hover {
 				<th>cena za dan</th>
 				<th>ime agenta</th>
 				<th id="slika">slike</th>
+				<th>ocena</th>
 				
 				
 			</tr>

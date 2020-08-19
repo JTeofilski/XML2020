@@ -87,3 +87,43 @@ function Zahtev(x, korid){
 	}
 
 }
+
+function Ocena(ocena,korisnik, oglasId){
+	var formData = JSON.stringify({
+		  vrednostOcene:ocena,
+		  kreatorOceneID:korisnik,
+		 
+         
+          
+      });
+	$.ajax({
+		url: "http://localhost:2020/ocenaapp/ocene/"+oglasId,
+		type: "POST",
+		data: formData,
+		//saljemo json i ocekujemo json nazad
+		contentType: "application/json",
+		datatype: 'json',
+		success: function(result){
+			
+			
+		alert("uspesna ocena!")
+		//window.location.href = "http://localhost:2020/pretragaapp/oglasi.html?id=" + result.identifikacioniBroj;	 
+		}
+	});
+
+}
+
+function Zvezdice(zahtevId,korisnikId,idOglasa){
+	return '<fieldset class="rating">'
+	+ '<input type="radio" id="star5" name="rating" value="5" /><label class = "full" for="star5" title="Awesome - 5 stars" onclick="Ocena(5,'+korisnikId+","+idOglasa+');"></label>'
+	   + ' <input type="radio" id="star4half" name="rating" value="4 and a half" /><label class="half" for="star4half" title="Pretty good - 4.5 stars" onclick="Ocena(4.5,'+korisnikId+","+idOglasa+');"></label>'
+	   +'  <input type="radio" id="star4" name="rating" value="4" /><label class = "full" for="star4" title="Pretty good - 4 stars" onclick="Ocena(4,'+korisnikId+","+idOglasa+');"></label>'
+	   +' <input type="radio" id="star3half" name="rating" value="3 and a half" /><label class="half" for="star3half" title="Meh - 3.5 stars" onclick="Ocena(3.5,'+korisnikId+","+idOglasa+');"></label>'
+	   +' <input type="radio" id="star3" name="rating" value="3" /><label class = "full" for="star3" title="Meh - 3 stars" onclick="Ocena(3,'+korisnikId+","+idOglasa+');"></label>'
+	   +' <input type="radio" id="star2half" name="rating" value="2 and a half" /><label class="half" for="star2half" title="Kinda bad - 2.5 stars" onclick="Ocena(2.5,'+korisnikId+","+idOglasa+');"></label>'
+	   +' <input type="radio" id="star2" name="rating" value="2" /><label class = "full" for="star2" title="Kinda bad - 2 stars" onclick="Ocena(2,'+korisnikId+","+idOglasa+');"></label>'
+	   +' <input type="radio" id="star1half" name="rating" value="1 and a half" /><label class="half" for="star1half" title="Meh - 1.5 stars" onclick="Ocena(1.5,'+korisnikId+","+idOglasa+');"></label>'
+	   +' <input type="radio" id="star1" name="rating" value="1" /><label class = "full" for="star1" title="Sucks big time - 1 star" onclick="Ocena(1,'+korisnikId+","+idOglasa+');"></label>'
+	   +' <input type="radio" id="starhalf" name="rating" value="half" /><label class="half" for="starhalf" title="Sucks big time - 0.5 stars" onclick="Ocena(0.5,'+korisnikId+","+idOglasa+');"></label>'
+	   +' </fieldset> '
+}

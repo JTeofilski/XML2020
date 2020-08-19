@@ -6,7 +6,7 @@
 //
 
 
-package com.zahtevazaiznajmljivanje.ZahtevZaIznajmljivanje.model;
+package com.ocena.Ocena.model;
 
 import java.sql.Date;
 import java.text.ParseException;

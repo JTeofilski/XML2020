@@ -27,7 +27,8 @@ public class PretragaApplication {
 		MyTimeTask mtt= new MyTimeTask();
 		mtt.timer();
 		*/
-		ScheduledTasks st= new ScheduledTasks();
+		//Otkomentarisati za periodicnu proveru starosti zahteva
+		//ScheduledTasks st= new ScheduledTasks();
 
 	}
 

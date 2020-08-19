@@ -8,6 +8,7 @@
 		<script src="scripts/fje.js" charset="UTF-8" type="text/javascript"></script>
 		<script src="js/oglas.js" type="text/javascript"></script>
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+	<link rel="stylesheet" href="ocena.css">
 	
 <title>Odobreni zahtevi</title>
 <style>
@@ -50,17 +51,38 @@
 								$("#zahtevi").append(newRow)	
 			    		 }
 			    		 else{
-			    			  newRow = 
-									"<tr>"
-										
-										+ "<td>" + data[i].identifikacioniBroj + "</td>"							
-										+ "<td>" + data[i].ukupnaCena + "</td>"
-										+ "<td>" + data[i].statusIznajmljivanja + "</td>"
-											
-									+ "</tr>"
+			    			 newDiv="";
+			    			  newDiv = 
+									"<div id='"+data[i].identifikacioniBroj+"'>"
 									
-									$("#zahtevi_cekanje_tbl").append(newRow);
-			    			 		document.getElementById("zahtevi_cekanje").style.visibility="visible";
+										+ "<p>Zahtev:"
+										+ data[i].identifikacioniBroj + 		", Ukupna cena za placanje:"		
+									    + data[i].ukupnaCena + ", Status iznajmljivanja: "	
+										+ data[i].statusIznajmljivanja + ","
+											
+									+ "</p>" ;
+							for (n=0;n<data[i].narudzbenica.length;n++){
+								newDiv=newDiv +		
+									"<p> Vozilo:"+data[i].narudzbenica[n].markaVozila 
+									+ " od: " + data[i].narudzbenica[n].rentiranjeOd
+									+ " do: " + data[i].narudzbenica[n].rentiranjeDo
+									"</p>";
+									
+									console.log(Date.parse(data[i].narudzbenica[n].rentiranjeDo));
+									console.log(Date.now());
+								if(Date.parse(data[i].narudzbenica[n].rentiranjeDo)<Date.now()&& data[i].statusIznajmljivanja=="PAID")	{
+									
+									newDiv=newDiv+Zvezdice(data[i].identifikacioniBroj,id,data[i].narudzbenica[n].oglasId ); 
+									
+								}
+								
+								
+								//newDiv=+ "</div>";
+							}
+							newDiv=newDiv+ "</div>";
+									
+									$("body").append(newDiv);
+			    			 		//document.getElementById("zahtevi_cekanje").style.visibility="visible";
 			    			 
 			    		 }
 			    	   }

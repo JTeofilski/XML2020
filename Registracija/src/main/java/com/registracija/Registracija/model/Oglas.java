@@ -87,8 +87,9 @@ public class Oglas {
     @XmlElement(name = "Cenovnik", namespace = "http://www.ftn.uns.ac.rs/cenovnik", required = true)
     @ManyToOne
      protected Cenovnik cenovnik;
-   // @XmlElement(name = "Ocena", namespace = "http://www.ftn.uns.ac.rs/ocenakomentarporuka")
-   // protected List<Ocena> ocena;
+    @XmlElement(name = "Ocena", namespace = "http://www.ftn.uns.ac.rs/ocenakomentarporuka")
+    @OneToMany(mappedBy = "oglas")
+    protected Set<Ocena> ocena;
    // @XmlElement(name = "Komentar", namespace = "http://www.ftn.uns.ac.rs/ocenakomentarporuka")
    // protected List<Komentar> komentar;
     
@@ -133,12 +134,13 @@ public class Oglas {
 
 
 	public Oglas(Cenovnik cenovnik, Vozilo vozilo, Agent agent,
-			Set<RezervisaniDatumi> rezervisaniDatumi) {
+			Set<RezervisaniDatumi> rezervisaniDatumi, Set<Ocena> ocena) {
 		super();
 		this.cenovnik = cenovnik;
 		this.vozilo = vozilo;
 		this.agent = agent;
 		this.rezervisaniDatumi = rezervisaniDatumi;
+		this.ocena=ocena;
 		
 	}
 
@@ -236,6 +238,18 @@ public class Oglas {
 
 
 
+	public Set<Ocena> getOcena() {
+		return ocena;
+	}
+
+
+
+	public void setOcena(Set<Ocena> ocena) {
+		this.ocena = ocena;
+	}
+
+
+
 	
 	
     
@@ -313,36 +327,7 @@ public class Oglas {
     }
     */
 
-    /**
-     * Gets the value of the ocena property.
-     * 
-     * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the ocena property.
-     * 
-     * <p>
-     * For example, to add a new item, do as follows:
-     * <pre>
-     *    getOcena().add(newItem);
-     * </pre>
-     * 
-     * 
-     * <p>
-     * Objects of the following type(s) are allowed in the list
-     * {@link Ocena }
-     * 
-     * 
-     
-    public List<Ocena> getOcena() {
-        if (ocena == null) {
-            ocena = new ArrayList<Ocena>();
-        }
-        return this.ocena;
-    }
-    */
-
+   
     /**
      * Gets the value of the komentar property.
      * 
