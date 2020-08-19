@@ -11,6 +11,9 @@ import javax.persistence.Id;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToOne;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.JoinColumn;
 
 
@@ -23,6 +26,7 @@ public class Korpa {
 	protected Long identifikacioniBroj;
 	
 	@OneToOne(mappedBy = "korpa")
+	@JsonIgnore
     protected RegistrovaniKorisnik registrovaniKorisnik;
 	
 	

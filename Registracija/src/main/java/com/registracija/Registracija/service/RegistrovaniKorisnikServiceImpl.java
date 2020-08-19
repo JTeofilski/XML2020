@@ -31,9 +31,9 @@ public class RegistrovaniKorisnikServiceImpl implements RegistrovaniKorisnikServ
 	}
 
 	@Override
-	public RegistrovaniKorisnik getKorisnik(String name) {
+	public RegistrovaniKorisnik getKorisnik(String email, String lozinka) {
 		// TODO Auto-generated method stub
-		return null;
+		return korisnikRepository.findByEmailAndLozinka(email, lozinka);
 	}
 
 	@Override

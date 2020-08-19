@@ -24,7 +24,7 @@ public class RegistrovaniKorisnikController {
 	
 	
 	@RequestMapping(method=RequestMethod.POST, value = "/registracija", consumes="application/json")
-	public ResponseEntity<RegistrovaniKorisnik> registrovanje(@RequestBody RegistrovaniKorisnik korisnik, HttpSession httpSession){
+	public String registrovanje(@RequestBody RegistrovaniKorisnik korisnik, HttpSession httpSession){
 	
 		RegistrovaniKorisnik userSaved = new RegistrovaniKorisnik();
 		userSaved.setIme(korisnik.getIme());
@@ -42,6 +42,18 @@ public class RegistrovaniKorisnikController {
 		userSaved.setKorpa(korpa);
 		korisnikService.save(userSaved);
 		httpSession.setAttribute("ulogovan", userSaved);
-		return new ResponseEntity<>( userSaved, HttpStatus.OK);
+		//return new ResponseEntity<>( userSaved, HttpStatus.OK);
+		return "redirect:/pretragaapp/narudzbenice/1/1";
+	}
+	@RequestMapping(method=RequestMethod.POST, value = "/logovanje", consumes="application/json")
+	public ResponseEntity<RegistrovaniKorisnik> logUser(@RequestBody RegistrovaniKorisnik user){
+	
+		if( korisnikService.getKorisnik(user.getEmail(), user.getLozinka())==null){
+			System.out.println("Pogresna kombinacija emaila i sifre!");
+			return new ResponseEntity<>( korisnikService.getKorisnik(user.getEmail(), user.getLozinka()), HttpStatus.NOT_FOUND);
+		}
+		
+		System.out.println("Korisnik " +  korisnikService.getKorisnik(user.getEmail(), user.getLozinka()).getIme() + " se uspesno ulogovao!");
+		return new ResponseEntity<>( korisnikService.getKorisnik(user.getEmail(), user.getLozinka()), HttpStatus.OK);
 	}
 }

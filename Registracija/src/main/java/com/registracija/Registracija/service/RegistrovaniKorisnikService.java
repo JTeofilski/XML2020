@@ -12,7 +12,7 @@ public interface RegistrovaniKorisnikService {
 
 	RegistrovaniKorisnik findOne(Long id);
 	
-	RegistrovaniKorisnik getKorisnik(String name);
+	RegistrovaniKorisnik getKorisnik(String email, String password);
 	
 	List<RegistrovaniKorisnik> findAll();
 	
