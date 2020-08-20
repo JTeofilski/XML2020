@@ -13,13 +13,16 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import javax.ws.rs.POST;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageConverter;
+import org.springframework.http.converter.StringHttpMessageConverter;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -194,10 +197,19 @@ public class ZahtevZaIznajmljivanjeController {
 			e.printStackTrace();
 		}
 		System.out.println("json potencijalniiiii " + json);
-	    RestTemplate restTemplate = new RestTemplate();
-	    ZahtevZaIznajmljivanje result = restTemplate.postForObject(uri, json, ZahtevZaIznajmljivanje.class);
+		RestTemplate restTemplate = new RestTemplate();
+		
+		HttpHeaders headers = new HttpHeaders();
+		headers.setContentType(MediaType.APPLICATION_JSON);
+		
+		HttpEntity<String> entity = new HttpEntity<String>(json,headers);
+		ZahtevZaIznajmljivanje answer = restTemplate.postForObject(uri, entity, ZahtevZaIznajmljivanje.class);
+		
+		
+	   // restTemplate.getMessageConverters().add(new StringHttpMessageConverter());
+	   // ZahtevZaIznajmljivanje result = restTemplate.postForObject(uri, json, ZahtevZaIznajmljivanje.class);
 
-        System.out.println("eeee " + result.toString());
+        System.out.println("prosao ");
 		return  new ResponseEntity<ZahtevZaIznajmljivanje>(z, HttpStatus.OK);
 	}
 	
