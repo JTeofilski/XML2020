@@ -66,14 +66,15 @@ import javax.xml.datatype.XMLGregorianCalendar;
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "", propOrder = {
     "identifikacioniBroj",
-    "oglas",
     "registrovaniKorisnkID",
+    "agentFirmaID",
     "statusIznajmljivanja",
     "datumOD",
     "datumDO",
     "bundle",
     "ukupnaCena",
-    "izvestaj"
+    "narudzbenica",
+    "vremeKreiranja"
 })
 @XmlRootElement(name = "ZahtevZaIznajmljivanje", namespace = "http://www.ftn.uns.ac.rs/zahtevzaiznajmljivanje")
 @Entity
@@ -93,11 +94,11 @@ public class ZahtevZaIznajmljivanje {
     
     @XmlElement(namespace = "http://www.ftn.uns.ac.rs/zahtevzaiznajmljivanje", required = true, defaultValue = "PENDING")
     protected String statusIznajmljivanja;
-    @XmlElement(namespace = "http://www.ftn.uns.ac.rs/zahtevzaiznajmljivanje", required = true)
-    @XmlSchemaType(name = "dateTime")
+   // @XmlElement(namespace = "http://www.ftn.uns.ac.rs/zahtevzaiznajmljivanje", required = true)
+   // @XmlSchemaType(name = "dateTime")
     protected Date datumOD;
-    @XmlElement(namespace = "http://www.ftn.uns.ac.rs/zahtevzaiznajmljivanje", required = true)
-    @XmlSchemaType(name = "dateTime")
+   // @XmlElement(namespace = "http://www.ftn.uns.ac.rs/zahtevzaiznajmljivanje", required = true)
+   // @XmlSchemaType(name = "dateTime")
     protected Date datumDO;
     @XmlElement(namespace = "http://www.ftn.uns.ac.rs/zahtevzaiznajmljivanje")
     protected boolean bundle;

@@ -30,7 +30,7 @@ public class ScheduledTasks {
 	@Autowired
 	private ZahtevZaIznajmljivanjeRepository repo;
 
-	@Scheduled(fixedRate = 15000) //15sec
+	@Scheduled(fixedRate = 360000) //15sec
 	public void reportCurrentTime() {
 
 		

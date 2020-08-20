@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.client.RestTemplate;
 
 import com.registracija.Registracija.model.Korpa;
 import com.registracija.Registracija.model.RegistrovaniKorisnik;
@@ -42,6 +43,12 @@ public class RegistrovaniKorisnikController {
 		userSaved.setKorpa(korpa);
 		korisnikService.save(userSaved);
 		httpSession.setAttribute("ulogovan", userSaved);
+		final String uri = "http://localhost:8099/agenti/svi";
+
+	    RestTemplate restTemplate = new RestTemplate();
+	    String result = restTemplate.getForObject(uri, String.class);
+
+	    System.out.println(result + "pise li");
 		return new ResponseEntity<>( userSaved, HttpStatus.OK);
 	}
 	@RequestMapping(method=RequestMethod.POST, value = "/logovanje", consumes="application/json")

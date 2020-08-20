@@ -13,17 +13,24 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import javax.ws.rs.POST;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.client.RestTemplate;
+import org.springframework.web.servlet.function.EntityResponse;
 
 import com.zahtevazaiznajmljivanje.ZahtevZaIznajmljivanje.model.ZahtevZaIznajmljivanje;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.zahtevazaiznajmljivanje.ZahtevZaIznajmljivanje.model.Agent;
 import com.zahtevazaiznajmljivanje.ZahtevZaIznajmljivanje.model.Cenovnik;
 import com.zahtevazaiznajmljivanje.ZahtevZaIznajmljivanje.model.Narudzbenica;
@@ -176,6 +183,21 @@ public class ZahtevZaIznajmljivanjeController {
 			}
 					
 		}
+		final String uri = "http://localhost:8099/zahtevi/kreiraj";
+		ObjectMapper mapper= new ObjectMapper();
+		String json = null;
+		
+		try {
+			json= mapper.writeValueAsString(z);
+		} catch (JsonProcessingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		System.out.println("json potencijalniiiii " + json);
+	    RestTemplate restTemplate = new RestTemplate();
+	    ZahtevZaIznajmljivanje result = restTemplate.postForObject(uri, json, ZahtevZaIznajmljivanje.class);
+
+        System.out.println("eeee " + result.toString());
 		return  new ResponseEntity<ZahtevZaIznajmljivanje>(z, HttpStatus.OK);
 	}
 	
