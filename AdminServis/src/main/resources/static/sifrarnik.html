@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+	<head>
+	<script src="scripts/jquery-3.2.1.min.js"></script>
+		<script src="scripts/tether.min.js"></script>
+		<script src="scripts/bootstrap.min.js"></script>
+		<style>
+			table, th, td {
+  				border: 1px solid black;
+			}
+			body {	
+				background: linear-gradient(45deg, #fafbfc, #00FFFF);
+			}
+
+			.container{
+				position: relative;
+				left: 10%;
+				
+			}
+			
+		</style>
+		
+		<meta charset="UTF-8">
+		<title>Sifrarnik</title>
+		<script>
+		
+		
+		$(document).ready(function() {
+			 $.ajax({
+			        url: "http://localhost:2020/adminservisapp/adminservlet/sifrarnik/marke", 
+			   		type: "GET",
+			   		contentType: "application/json",
+			   		datatype: 'json',
+			    	   success: function(data){	   
+			    		  for (var i=0; i<data.length; i++){
+			    			
+			    		   newRow = 
+									"<tr>"
+										
+										+ "<td>" + data[i].marka + "</td>"
+										+ "<td><a class=\"obrisiMarku\" onclick=\"getIDB(this)\" data-id=\"" + data[i].identifikacioniBroj +"\" href='#'>obrisi</a></td>"
+									+ "</tr>"
+									
+								$("#marke").append(newRow)	
+			    			 
+			    				 
+			    			
+			    	   }
+			      
+			       }
+			
+			 });
+			 });
+			
+		</script>
+		<script type="text/javascript">
+		function getIDB(e){
+			localStorage.setItem("markaZaBrisanje", $(e).attr('data-id'));
+		}
+		</script>
+		<script type="text/javascript">
+		$(document).on("click", ".obrisiMarku", function(event){
+
+			event.preventDefault();
+			
+			$.ajax({
+				url: "http://localhost:2020/adminservisapp/adminservlet/sifrarnik/obrisiMarku/"  + localStorage.getItem("markaZaBrisanje"),
+				type: "DELETE",
+				success: function(data){
+					if(data){
+						location.href = "http://localhost:2020/adminservisapp/adminservlet/sifrarnik.html"			
+					}else
+						alert("BRISANJE MARKE NIJE USPELO.");
+				}
+			});
+		});
+		</script>
+		
+		
+<style>
+a:hover {
+  color: red;
+}
+</style>
+	</head>
+	<body>
+		<h3 id="markeNaslov">Marke vozila</h3>
+		<table id="marke" class = "table " style= "width:700px">
+			<tr class="header">
+				<th>marka</th>
+				<th>brisanje</th>
+			</tr>
+			</table>
+			
+	</body>
+</html>
