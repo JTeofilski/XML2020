@@ -59,8 +59,8 @@ public class Firma {
 
     @XmlElement(required = true)
     protected String naziv;
-    @XmlElement(required = true)
-    protected TAdresa adresa;
+    //@XmlElement(required = true)
+   // protected TAdresa adresa;
     @XmlElement(required = true)
     protected String telefon;
     @XmlElement(required = true)
@@ -106,21 +106,7 @@ public class Firma {
      *     {@link TAdresa }
      *     
      */
-    public TAdresa getAdresa() {
-        return adresa;
-    }
-
-    /**
-     * Sets the value of the adresa property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link TAdresa }
-     *     
-     */
-    public void setAdresa(TAdresa value) {
-        this.adresa = value;
-    }
+  
 
     /**
      * Gets the value of the telefon property.

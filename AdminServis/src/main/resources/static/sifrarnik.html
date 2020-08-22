@@ -50,12 +50,114 @@
 			       }
 			
 			 });
+			 $.ajax({
+			        url: "http://localhost:2020/adminservisapp/adminservlet/sifrarnik/goriva", 
+			   		type: "GET",
+			   		contentType: "application/json",
+			   		datatype: 'json',
+			    	   success: function(data){	   
+			    		  for (var i=0; i<data.length; i++){
+			    			
+			    		   newRow = 
+									"<tr>"
+										
+										+ "<td>" + data[i].gorivo + "</td>"
+										+ "<td><a class=\"obrisiGorivo\" onclick=\"getIDG(this)\" data-id=\"" + data[i].identifikacioniBroj +"\" href='#'>obrisi</a></td>"
+									+ "</tr>"
+									
+								$("#goriva").append(newRow)	
+			    			 
+			    				 
+			    			
+			    	   }
+			      
+			       }
+			
+			 });
+			 
+			 $("#sacuvajModel").click(function(){
+					
+		            formData=JSON.stringify({
+		            	 model:$("#formaModel [name='model']").val()
+		          
+		            });
+		            
+			       $.ajax({
+			        url: "http://localhost:2020/adminservisapp/adminservlet/sifrarnik/dodajModel",
+			   		type: "POST",
+			   		data: formData,
+			   		//saljemo json i ocekujemo json nazad
+			   		contentType: "application/json",
+			   		datatype: 'json',
+			    	   success: function(data){
+								
+			    		   location.href = "http://localhost:2020/adminservisapp/adminservlet/sifrarnik.html"			
+			    	   }
+			      
+			       });
+			      
+			        
+			        });
+			 $("#sacuvaj").click(function(){
+					
+		            formData=JSON.stringify({
+		            	 marka:$("#forma [name='marka']").val()
+		          
+		            });
+		            
+			       $.ajax({
+			        url: "http://localhost:2020/adminservisapp/adminservlet/sifrarnik/dodajMarku",
+			   		type: "POST",
+			   		data: formData,
+			   		//saljemo json i ocekujemo json nazad
+			   		contentType: "application/json",
+			   		datatype: 'json',
+			    	   success: function(data){
+								
+			    		   location.href = "http://localhost:2020/adminservisapp/adminservlet/sifrarnik.html"			
+			    	   }
+			      
+			       });
+			      
+			       //$('#inputModal').modal('toggle');
+			        
+			        });
+			 $("#sacuvajGorivo").click(function(){
+					
+		            formData=JSON.stringify({
+		            	 gorivo:$("#formaGorivo [name='gorivo']").val()
+		          
+		            });
+		            
+			       $.ajax({
+			        url: "http://localhost:2020/adminservisapp/adminservlet/sifrarnik/dodajGorivo",
+			   		type: "POST",
+			   		data: formData,
+			   		//saljemo json i ocekujemo json nazad
+			   		contentType: "application/json",
+			   		datatype: 'json',
+			    	   success: function(data){
+								
+			    		   //location.href = "http://localhost:2020/adminservisapp/adminservlet/sifrarnik.html"			
+			    	   }
+			      
+			       });
+			      
+			       //$('#inputModal').modal('toggle');
+			        
+			        });
 			 });
 			
 		</script>
 		<script type="text/javascript">
 		function getIDB(e){
 			localStorage.setItem("markaZaBrisanje", $(e).attr('data-id'));
+		}
+		function getIDM(e){
+			localStorage.setItem("modelZaBrisanje", $(e).attr('data-id'));
+		}
+		function getIDG(e){
+			localStorage.setItem("gorivoZaBrisanje", $(e).attr('data-id'));
 		}
 		</script>
 		<script type="text/javascript">
@@ -74,12 +176,101 @@
 				}
 			});
 		});
+
+		function funkcija(){
+			document.getElementById("forma").style.visibility="visible";
+			
+			
+		}
+		function funkcijaModel(){
+			document.getElementById("formaModel").style.visibility="visible";
+			
+			
+		}
+		function funkcijaGorivo(){
+			document.getElementById("formaGorivo").style.visibility="visible";
+			
+			
+		}
 		</script>
+		<script type="text/javascript">
+		$(document).on("click", ".obrisiModel", function(event){
+
+			event.preventDefault();
+			
+			$.ajax({
+				url: "http://localhost:2020/adminservisapp/adminservlet/sifrarnik/obrisiModel/"  + localStorage.getItem("modelZaBrisanje"),
+				type: "DELETE",
+				success: function(data){
+					if(data){
+						location.href = "http://localhost:2020/adminservisapp/adminservlet/sifrarnik.html"			
+					}else
+						alert("BRISANJE MODELA NIJE USPELO.");
+				}
+			});
+		});
+
+		</script>
+			<script type="text/javascript">
+		$(document).on("click", ".obrisiGorivo", function(event){
+
+			event.preventDefault();
+			
+			$.ajax({
+				url: "http://localhost:2020/adminservisapp/adminservlet/sifrarnik/obrisiGorivo/"  + localStorage.getItem("gorivoZaBrisanje"),
+				type: "DELETE",
+				success: function(data){
+					if(data){
+						location.href = "http://localhost:2020/adminservisapp/adminservlet/sifrarnik.html"			
+					}else
+						alert("BRISANJE VRSTE GORIVA NIJE USPELO.");
+				}
+			});
+		});
+
+		</script>
+		<script type="text/javascript">
+		$(document).ready(function() {
+			$.ajax({
+		        url: "http://localhost:2020/adminservisapp/adminservlet/sifrarnik/modeli", 
+		   		type: "GET",
+		   		contentType: "application/json",
+		   		datatype: 'json',
+		    	   success: function(data){	   
+		    		  for (var i=0; i<data.length; i++){
+		    			
+		    		   newRow = 
+								"<tr>"
+									
+									+ "<td>" + data[i].model + "</td>"
+									+ "<td><a class=\"obrisiModel\" onclick=\"getIDM(this)\" data-id=\"" + data[i].identifikacioniBroj +"\" href='#'>obrisi</a></td>"
+								+ "</tr>"
+								
+							$("#modeli").append(newRow)	
+		    			 
+		    				 
+		    			
+		    	   }
+		      
+		       }
 		
+		 });
+			
+		});
+		</script>
 		
 <style>
 a:hover {
   color: red;
+}
+#forma{
+visibility: hidden;
+}
+#formaModel{
+visibility: hidden;
+}
+#formaGorivo{
+visibility: hidden;
 }
 </style>
 	</head>
@@ -92,5 +283,43 @@ a:hover {
 			</tr>
 			</table>
 			
+			<button onclick="funkcija()">definisi novu marku</button>
+			<form id="forma">
+			<div class="container" id="dodajMarku">
+			<input name="marka" placeholder="unesite naziv marke">
+			<button type="button" id="sacuvaj">sacuvaj</button>
+			</div>
+			</form>
+			<h3 id="modeliNaslov">Modeli vozila</h3>
+		<table id="modeli" class = "table " style= "width:700px">
+			<tr class="header">
+				<th>model</th>
+				<th>brisanje</th>
+			</tr>
+			</table>
+			
+			<button onclick="funkcijaModel()">definisi novi model</button>
+			<form id="formaModel">
+			<div class="container" id="dodajModel">
+			<input name="model" placeholder="unesite naziv modela">
+			<button type="button" id="sacuvajModel">sacuvaj</button>
+			</div>
+			</form>
+			
+			<h3 id="gorivoNaslov">Vrste goriva</h3>
+		<table id="goriva" class = "table " style= "width:700px">
+			<tr class="header">
+				<th>vrste goriva</th>
+				<th>brisanje</th>
+			</tr>
+			</table>
+			
+			<button onclick="funkcijaGorivo()">definisi novu vrstu goriva</button>
+			<form id="formaGorivo">
+			<div class="container" id="dodajGorivo">
+			<input type="text" name="gorivo" placeholder="unesite vrstu goriva">
+			<button type="button" id="sacuvajGorivo">sacuvaj</button>
+			</div>
+			</form>
 	</body>
 </html>

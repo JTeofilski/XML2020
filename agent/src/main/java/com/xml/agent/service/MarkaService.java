@@ -1,8 +1,9 @@
-package com.adminservis.AdminServis.service;
+package com.xml.agent.service;
 
 import java.util.List;
 
-import com.adminservis.AdminServis.model.MarkaVozila;
+import com.xml.agent.model.MarkaVozila;
+
 
 public interface MarkaService {
 
