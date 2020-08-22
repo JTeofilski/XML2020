@@ -18,6 +18,9 @@ public class AgentApplication {
     private static String tableToMerge = "agent";
     private static String tableToMerge2 = "marka_vozila";
     private static String tableToMerge3 = "vrsta_goriva";
+    private static String tableToMerge4 = "tip_menjaca";
+    private static String tableToMerge5 = "model_vozila";
+    private static String tableToMerge6 = "klasa_automobila";
     
 	public static void main(String[] args) throws SQLException {
 		SpringApplication.run(AgentApplication.class, args);
@@ -125,6 +128,81 @@ while(assets3.next()){
 
 
      }
+String sqlToExecute4 = "SELECT * FROM " + tableToMerge4;
+ResultSet assets4 = dbOriginStat.executeQuery(sqlToExecute4);
+ResultSetMetaData rsMeta4 = assets4.getMetaData();
+
+while(assets4.next()){
+    String insertSQL  = "INSERT INTO " + tableToMerge4 + " VALUES(";
+
+    for(int i = 1; i <= rsMeta4.getColumnCount(); i++){
+        String value = assets4.getString(i);
+        if(assets4.wasNull()){
+            insertSQL += "NULL,";
+        }else{
+            insertSQL += "'" + value + "',";
+        }               
+    }
+    insertSQL =insertSQL.substring(0, insertSQL.length()-1) + ")";
+
+    try{
+        dbDestStat.executeUpdate(insertSQL);
+    }catch(SQLException e){
+        //TODO: attempt to update the row in the event of duplicate key
+    }
+
+
+}
+String sqlToExecute5 = "SELECT * FROM " + tableToMerge5;
+ResultSet assets5 = dbOriginStat.executeQuery(sqlToExecute5);
+ResultSetMetaData rsMeta5 = assets5.getMetaData();
+
+while(assets5.next()){
+    String insertSQL  = "INSERT INTO " + tableToMerge5 + " VALUES(";
+
+    for(int i = 1; i <= rsMeta5.getColumnCount(); i++){
+        String value = assets5.getString(i);
+        if(assets5.wasNull()){
+            insertSQL += "NULL,";
+        }else{
+            insertSQL += "'" + value + "',";
+        }               
+    }
+    insertSQL =insertSQL.substring(0, insertSQL.length()-1) + ")";
+
+    try{
+        dbDestStat.executeUpdate(insertSQL);
+    }catch(SQLException e){
+        //TODO: attempt to update the row in the event of duplicate key
+    }
+
+
+}
+String sqlToExecute6 = "SELECT * FROM " + tableToMerge6;
+ResultSet assets6 = dbOriginStat.executeQuery(sqlToExecute6);
+ResultSetMetaData rsMeta6 = assets6.getMetaData();
+
+while(assets6.next()){
+    String insertSQL  = "INSERT INTO " + tableToMerge6 + " VALUES(";
+
+    for(int i = 1; i <= rsMeta6.getColumnCount(); i++){
+        String value = assets6.getString(i);
+        if(assets6.wasNull()){
+            insertSQL += "NULL,";
+        }else{
+            insertSQL += "'" + value + "',";
+        }               
+    }
+    insertSQL =insertSQL.substring(0, insertSQL.length()-1) + ")";
+
+    try{
+        dbDestStat.executeUpdate(insertSQL);
+    }catch(SQLException e){
+        //TODO: attempt to update the row in the event of duplicate key
+    }
+
+
+}
 	        return;
 	    }
 

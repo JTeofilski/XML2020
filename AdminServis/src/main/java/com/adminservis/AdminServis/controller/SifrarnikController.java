@@ -15,12 +15,16 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 
+import com.adminservis.AdminServis.model.KlasaAutomobila;
 import com.adminservis.AdminServis.model.MarkaVozila;
 import com.adminservis.AdminServis.model.ModelVozila;
 import com.adminservis.AdminServis.model.RegistrovaniKorisnik;
+import com.adminservis.AdminServis.model.TipMenjaca;
 import com.adminservis.AdminServis.model.VrstaGoriva;
 import com.adminservis.AdminServis.service.GorivoService;
+import com.adminservis.AdminServis.service.KlasaService;
 import com.adminservis.AdminServis.service.MarkaService;
+import com.adminservis.AdminServis.service.MenjacService;
 import com.adminservis.AdminServis.service.ModelService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -37,6 +41,12 @@ public class SifrarnikController {
 	
 	@Autowired
 	private GorivoService gorivoService;
+
+	@Autowired
+	private MenjacService menjacService;
+	
+	@Autowired
+	private KlasaService klasaService;
 	
 	@RequestMapping(method=RequestMethod.GET, value = "/marke")
 	public ResponseEntity<List<MarkaVozila>> sveMarke(){
@@ -56,6 +66,18 @@ public class SifrarnikController {
 		List<VrstaGoriva> goriva = gorivoService.findAll();
 		
 		return new ResponseEntity<List<VrstaGoriva>>(goriva, HttpStatus.OK);
+	}
+	@RequestMapping(method=RequestMethod.GET, value = "/menjaci")
+	public ResponseEntity<List<TipMenjaca>> sviTipoviMenjaca(){
+		List<TipMenjaca> menjaci = menjacService.findAll();
+		
+		return new ResponseEntity<List<TipMenjaca>>(menjaci, HttpStatus.OK);
+	}
+	@RequestMapping(method=RequestMethod.GET, value = "/klase")
+	public ResponseEntity<List<KlasaAutomobila>> sveKlase(){
+		List<KlasaAutomobila> klase = klasaService.findAll();
+		
+		return new ResponseEntity<List<KlasaAutomobila>>(klase, HttpStatus.OK);
 	}
 	
 	@RequestMapping(value="obrisiMarku/{id}", method=RequestMethod.DELETE)
@@ -109,6 +131,40 @@ public class SifrarnikController {
 			restTemplate.delete(uri);
 		   
 		return new ResponseEntity<VrstaGoriva>(gorivo, HttpStatus.OK);
+	}
+	@RequestMapping(value="obrisiMenjac/{id}", method=RequestMethod.DELETE)
+	public ResponseEntity<TipMenjaca> remove1(@PathVariable("id") Long id) {
+	
+		   TipMenjaca menjac = menjacService.delete(id);
+		   
+		   final String uri = "http://localhost:8099/sifrarnik/obrisiMenjac/" + id;
+			
+			
+			
+		   RestTemplate restTemplate = new RestTemplate();
+			
+			
+			
+			restTemplate.delete(uri);
+		   
+		return new ResponseEntity<TipMenjaca>(menjac, HttpStatus.OK);
+	}
+	@RequestMapping(value="obrisiKlasu/{id}", method=RequestMethod.DELETE)
+	public ResponseEntity<KlasaAutomobila> remove2(@PathVariable("id") Long id) {
+	
+		   KlasaAutomobila klasa = klasaService.delete(id);
+		   
+		   final String uri = "http://localhost:8099/sifrarnik/obrisiKlasu/" + id;
+			
+			
+			
+		   RestTemplate restTemplate = new RestTemplate();
+			
+			
+			
+			restTemplate.delete(uri);
+		   
+		return new ResponseEntity<KlasaAutomobila>(klasa, HttpStatus.OK);
 	}
 	
 	@RequestMapping(value="dodajMarku", method=RequestMethod.POST)
@@ -191,5 +247,59 @@ public class SifrarnikController {
 			HttpEntity<String> entity = new HttpEntity<String>(json,headers);
 			VrstaGoriva answer = restTemplate.postForObject(uri, entity, VrstaGoriva.class);
 		return new ResponseEntity<VrstaGoriva>(gorivo1, HttpStatus.OK);
+	}
+	@RequestMapping(value="dodajMenjac", method=RequestMethod.POST)
+	public ResponseEntity<TipMenjaca> add1(@RequestBody TipMenjaca menjac) {
+	
+		  TipMenjaca menjac1 = new TipMenjaca();
+		  menjac1 = menjac;
+		  menjacService.save(menjac1);
+		   
+		   final String uri = "http://localhost:8099/sifrarnik/dodajMenjac";
+			ObjectMapper mapper= new ObjectMapper();
+			String json = null;
+			
+			try {
+				json= mapper.writeValueAsString(menjac1);
+			} catch (JsonProcessingException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+		   RestTemplate restTemplate = new RestTemplate();
+			
+			HttpHeaders headers = new HttpHeaders();
+			headers.setContentType(MediaType.APPLICATION_JSON);
+			
+			HttpEntity<String> entity = new HttpEntity<String>(json,headers);
+			TipMenjaca answer = restTemplate.postForObject(uri, entity, TipMenjaca.class);
+		return new ResponseEntity<TipMenjaca>(menjac1, HttpStatus.OK);
+	}
+	@RequestMapping(value="dodajKlasu", method=RequestMethod.POST)
+	public ResponseEntity<KlasaAutomobila> add2(@RequestBody KlasaAutomobila klasa) {
+	
+		  KlasaAutomobila klasa1 = new KlasaAutomobila();
+		  klasa1 = klasa;
+		  klasaService.save(klasa1);
+		   
+		   final String uri = "http://localhost:8099/sifrarnik/dodajKlasu";
+			ObjectMapper mapper= new ObjectMapper();
+			String json = null;
+			
+			try {
+				json= mapper.writeValueAsString(klasa1);
+			} catch (JsonProcessingException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+		   RestTemplate restTemplate = new RestTemplate();
+			
+			HttpHeaders headers = new HttpHeaders();
+			headers.setContentType(MediaType.APPLICATION_JSON);
+			
+			HttpEntity<String> entity = new HttpEntity<String>(json,headers);
+			TipMenjaca answer = restTemplate.postForObject(uri, entity, TipMenjaca.class);
+		return new ResponseEntity<KlasaAutomobila>(klasa1, HttpStatus.OK);
 	}
 }

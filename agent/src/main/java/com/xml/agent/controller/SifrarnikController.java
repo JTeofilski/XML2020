@@ -17,11 +17,15 @@ import org.springframework.web.client.RestTemplate;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.xml.agent.model.KlasaAutomobila;
 import com.xml.agent.model.MarkaVozila;
 import com.xml.agent.model.ModelVozila;
+import com.xml.agent.model.TipMenjaca;
 import com.xml.agent.model.VrstaGoriva;
 import com.xml.agent.service.GorivoService;
+import com.xml.agent.service.KlasaService;
 import com.xml.agent.service.MarkaService;
+import com.xml.agent.service.MenjacService;
 import com.xml.agent.service.ModelService;
 
 @RestController
@@ -36,6 +40,12 @@ public class SifrarnikController {
 	
 	@Autowired
 	private GorivoService gorivoService;
+	
+	@Autowired
+	private MenjacService menjacService;
+	
+	@Autowired
+	private KlasaService klasaService;
 	
 	@RequestMapping(method=RequestMethod.GET, value = "/marke")
 	public ResponseEntity<List<MarkaVozila>> sveMarke(){
@@ -66,6 +76,20 @@ public class SifrarnikController {
 		   
 		return new ResponseEntity<VrstaGoriva>(gorivo, HttpStatus.OK);
 	}
+	@RequestMapping(value="obrisiMenjac/{id}", method=RequestMethod.DELETE)
+	public ResponseEntity<TipMenjaca> remove1(@PathVariable("id") Long id) {
+	
+		  TipMenjaca menjac = menjacService.delete(id);
+		   
+		return new ResponseEntity<TipMenjaca>(menjac, HttpStatus.OK);
+	}
+	@RequestMapping(value="obrisiKlasu/{id}", method=RequestMethod.DELETE)
+	public ResponseEntity<KlasaAutomobila> remove2(@PathVariable("id") Long id) {
+	
+		  KlasaAutomobila klasa = klasaService.delete(id);
+		   
+		return new ResponseEntity<KlasaAutomobila>(klasa, HttpStatus.OK);
+	}
 	@RequestMapping(value="dodajMarku", method=RequestMethod.POST)
 	public ResponseEntity<MarkaVozila> add(@RequestBody MarkaVozila marka) {
 	
@@ -92,5 +116,23 @@ public class SifrarnikController {
 		  gorivoService.save(gorivo1);
 		 
 		return new ResponseEntity<VrstaGoriva>(gorivo1, HttpStatus.OK);
+	}
+	@RequestMapping(value="dodajMenjac", method=RequestMethod.POST)
+	public ResponseEntity<TipMenjaca> add1(@RequestBody TipMenjaca menjac) {
+	
+		  TipMenjaca menjac1 = new TipMenjaca();
+		  menjac1 = menjac;
+		  menjacService.save(menjac1);
+		 
+		return new ResponseEntity<TipMenjaca>(menjac1, HttpStatus.OK);
+	}
+	@RequestMapping(value="dodajKlasu", method=RequestMethod.POST)
+	public ResponseEntity<KlasaAutomobila> add1(@RequestBody KlasaAutomobila klasa) {
+	
+		  KlasaAutomobila klasa1 = new KlasaAutomobila();
+		  klasa1 = klasa;
+		  klasaService.save(klasa1);
+		 
+		return new ResponseEntity<KlasaAutomobila>(klasa1, HttpStatus.OK);
 	}
 }

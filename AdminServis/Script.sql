@@ -18,4 +18,12 @@ insert into "public"."vrsta_goriva" ("gorivo") values ('benzin');
 insert into "public"."vrsta_goriva" ("gorivo") values ('plin');
 insert into "public"."vrsta_goriva" ("gorivo") values ('dizel');
 
+insert into "public"."tip_menjaca" ("menjac") values ('automatski');
+insert into "public"."tip_menjaca" ("menjac") values ('manuelni');
+insert into "public"."tip_menjaca" ("menjac") values ('poluautomatski');
+
+insert into "public"."klasa_automobila" ("klasa") values ('SUV');
+insert into "public"."klasa_automobila" ("klasa") values ('old tajmer');
+insert into "public"."klasa_automobila" ("klasa") values ('gradski auto');
+
 insert into "public"."administrator" ("korisnicko_ime", "lozinka", "ime", "prezime", "email", "adresa") values('Violeta', '111', 'Violeta', 'Marceta', 'violetamarceta1995@gmail.com', 'Ruma');

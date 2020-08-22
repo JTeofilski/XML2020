@@ -74,7 +74,54 @@
 			       }
 			
 			 });
-			 
+			 $.ajax({
+			        url: "http://localhost:2020/adminservisapp/adminservlet/sifrarnik/menjaci", 
+			   		type: "GET",
+			   		contentType: "application/json",
+			   		datatype: 'json',
+			    	   success: function(data){	   
+			    		  for (var i=0; i<data.length; i++){
+			    			
+			    		   newRow = 
+									"<tr>"
+										
+										+ "<td>" + data[i].menjac + "</td>"
+										+ "<td><a class=\"obrisiMenjac\" onclick=\"getIDMM(this)\" data-id=\"" + data[i].identifikacioniBroj +"\" href='#'>obrisi</a></td>"
+									+ "</tr>"
+									
+								$("#menjaci").append(newRow)	
+			    			 
+			    				 
+			    			
+			    	   }
+			      
+			       }
+			
+			 });
+			 $.ajax({
+			        url: "http://localhost:2020/adminservisapp/adminservlet/sifrarnik/klase", 
+			   		type: "GET",
+			   		contentType: "application/json",
+			   		datatype: 'json',
+			    	   success: function(data){	   
+			    		  for (var i=0; i<data.length; i++){
+			    			
+			    		   newRow = 
+									"<tr>"
+										
+										+ "<td>" + data[i].klasa + "</td>"
+										+ "<td><a class=\"obrisiKlasu\" onclick=\"getIDK(this)\" data-id=\"" + data[i].identifikacioniBroj +"\" href='#'>obrisi</a></td>"
+									+ "</tr>"
+									
+								$("#klase").append(newRow)	
+			    			 
+			    				 
+			    			
+			    	   }
+			      
+			       }
+			
+			 });
 			 $("#sacuvajModel").click(function(){
 					
 		            formData=JSON.stringify({
@@ -98,6 +145,29 @@
 			      
 			        
 			        });
+			 $("#sacuvajMenjac").click(function(){
+					
+		            formData=JSON.stringify({
+		            	 menjac:$("#formaMenjac [name='menjac']").val()
+		          
+		            });
+		            
+			       $.ajax({
+			        url: "http://localhost:2020/adminservisapp/adminservlet/sifrarnik/dodajMenjac",
+			   		type: "POST",
+			   		data: formData,
+			   		//saljemo json i ocekujemo json nazad
+			   		contentType: "application/json",
+			   		datatype: 'json',
+			    	   success: function(data){
+								
+			    		   location.href = "http://localhost:2020/adminservisapp/adminservlet/sifrarnik.html"			
+			    	   }
+			      
+			       });
+			      
+			        
+			        });
 			 $("#sacuvaj").click(function(){
 					
 		            formData=JSON.stringify({
@@ -107,6 +177,30 @@
 		            
 			       $.ajax({
 			        url: "http://localhost:2020/adminservisapp/adminservlet/sifrarnik/dodajMarku",
+			   		type: "POST",
+			   		data: formData,
+			   		//saljemo json i ocekujemo json nazad
+			   		contentType: "application/json",
+			   		datatype: 'json',
+			    	   success: function(data){
+								
+			    		   location.href = "http://localhost:2020/adminservisapp/adminservlet/sifrarnik.html"			
+			    	   }
+			      
+			       });
+			      
+			       //$('#inputModal').modal('toggle');
+			        
+			        });
+			 $("#sacuvajKlasu").click(function(){
+					
+		            formData=JSON.stringify({
+		            	 klasa:$("#formaKlasa [name='klasa']").val()
+		          
+		            });
+		            
+			       $.ajax({
+			        url: "http://localhost:2020/adminservisapp/adminservlet/sifrarnik/dodajKlasu",
 			   		type: "POST",
 			   		data: formData,
 			   		//saljemo json i ocekujemo json nazad
@@ -159,6 +253,16 @@
 		function getIDG(e){
 			localStorage.setItem("gorivoZaBrisanje", $(e).attr('data-id'));
 		}
+		function getIDK(e){
+			
+			localStorage.setItem("menjacZaBrisanje", $(e).attr('data-id'));
+			
+		}
+        function getIDK(e){
+			
+			localStorage.setItem("klasaZaBrisanje", $(e).attr('data-id'));
+			
+        }
 		</script>
 		<script type="text/javascript">
 		$(document).on("click", ".obrisiMarku", function(event){
@@ -192,6 +296,15 @@
 			
 			
 		}
+		function funkcijaMenjac(){
+			document.getElementById("formaMenjac").style.visibility="visible";
+			
+			
+		}
+		function funkcijaKlasa(){
+			document.getElementById("formaKlasa").style.visibility="visible";
+			
+		}
 		</script>
 		<script type="text/javascript">
 		$(document).on("click", ".obrisiModel", function(event){
@@ -211,6 +324,24 @@
 		});
 
 		</script>
+		<script type="text/javascript">
+		$(document).on("click", ".obrisiKlasu", function(event){
+
+			event.preventDefault();
+			
+			$.ajax({
+				url: "http://localhost:2020/adminservisapp/adminservlet/sifrarnik/obrisiKlasu/"  + localStorage.getItem("klasaZaBrisanje"),
+				type: "DELETE",
+				success: function(data){
+					if(data){
+						location.href = "http://localhost:2020/adminservisapp/adminservlet/sifrarnik.html"			
+					}else
+						alert("BRISANJE KLASE VOZILA NIJE USPELO.");
+				}
+			});
+		});
+
+		</script>
 			<script type="text/javascript">
 		$(document).on("click", ".obrisiGorivo", function(event){
 
@@ -224,6 +355,24 @@
 						location.href = "http://localhost:2020/adminservisapp/adminservlet/sifrarnik.html"			
 					}else
 						alert("BRISANJE VRSTE GORIVA NIJE USPELO.");
+				}
+			});
+		});
+
+		</script>
+		<script type="text/javascript">
+		$(document).on("click", ".obrisiMenjac", function(event){
+
+			event.preventDefault();
+			
+			$.ajax({
+				url: "http://localhost:2020/adminservisapp/adminservlet/sifrarnik/obrisiMenjac/"  + localStorage.getItem("menjacZaBrisanje"),
+				type: "DELETE",
+				success: function(data){
+					if(data){
+						location.href = "http://localhost:2020/adminservisapp/adminservlet/sifrarnik.html"			
+					}else
+						alert("BRISANJE TIPA MENJACA NIJE USPELO.");
 				}
 			});
 		});
@@ -270,6 +419,12 @@ visibility: hidden;
 visibility: hidden;
 }
 #formaGorivo{
+visibility: hidden;
+}
+#formaMenjac{
+visibility: hidden;
+}
+#formaKlasa{
 visibility: hidden;
 }
 </style>
@@ -319,6 +474,38 @@ visibility: hidden;
 			<div class="container" id="dodajGorivo">
 			<input type="text" name="gorivo" placeholder="unesite vrstu goriva">
 			<button type="button" id="sacuvajGorivo">sacuvaj</button>
+			</div>
+			</form>
+			
+			<h3 id="menjacNaslov">Tipovi menjaca</h3>
+		<table id="menjaci" class = "table " style= "width:700px">
+			<tr class="header">
+				<th>tip menjaca</th>
+				<th>brisanje</th>
+			</tr>
+			</table>
+			
+			<button onclick="funkcijaMenjac()">definisi novi tip menjaca</button>
+			<form id="formaMenjac">
+			<div class="container" id="dodajMenjac">
+			<input type="text" name="menjac" placeholder="unesite tip menjaca">
+			<button type="button" id="sacuvajMenjac">sacuvaj</button>
+			</div>
+			</form>
+			
+			<h3 id="klasaNaslov">Klase vozila</h3>
+		<table id="klase" class = "table " style= "width:700px">
+			<tr class="header">
+				<th>klase vozila</th>
+				<th>brisanje</th>
+			</tr>
+			</table>
+			
+			<button onclick="funkcijaKlasa()">definisi novu klasu vozila</button>
+			<form id="formaKlasa">
+			<div class="container" id="dodajKlasu">
+			<input type="text" name="klasa" placeholder="unesite klasu vozila">
+			<button type="button" id="sacuvajKlasu">sacuvaj</button>
 			</div>
 			</form>
 	</body>
