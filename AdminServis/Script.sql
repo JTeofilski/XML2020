@@ -1,7 +1,7 @@
 --<ScriptOptions statementTerminator=";"/>
 
 
-insert into "public"."agent" ("korisnicko_ime", "lozinka", "ime", "prezime", "email", "adresa", "status", "poslovni_maticni_broj") values ('viktorija', '111', 'violeta', 'marceta', 'ee', 'Ruma', 'cekanje', '0');
+insert into "public"."agent" ("korisnicko_ime", "lozinka", "ime", "prezime", "email", "adresa", "status", "poslovni_maticni_broj") values ('viktorija', '111', 'violeta', 'marceta', 'ee', 'Ruma', 'registrovan', '0');
 insert into "public"."agent" ("korisnicko_ime", "lozinka", "ime", "prezime", "email", "adresa", "status", "poslovni_maticni_broj") values ('savka', '222', 'savanka', 'savic', 'ee', 'Novi Sad', 'cekanje', '0');
 insert into "public"."agent" ("korisnicko_ime", "lozinka", "ime", "prezime", "email", "adresa", "status", "poslovni_maticni_broj") values ('mitar', '333', 'janos', 'janic', 'ee', 'Novi Sad', 'cekanje', '0');
 

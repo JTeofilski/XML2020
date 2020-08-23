@@ -7,4 +7,5 @@ import com.xml.agent.model.Agent;
 public interface AgentService {
 	List<Agent> findAll();
 	Agent save(Agent agent);
+	Agent getAgent(String email, String password);
 }
