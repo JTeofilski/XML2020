@@ -136,11 +136,34 @@ public class ZahtevZaIznajmljivanjeController {
 				
 				for (Narudzbenica nar:zahtevi.get(m).getNarudzbenica()) {
 					Narudzbenica temp= narServ.findByIdentifikacioniBroj(nar.getIdentifikacioniBroj());
-					System.out.println(temp.getIdentifikacioniBroj());
-					temp.setZahtev(zahtevi.get(m));
+				//	System.out.println(temp.getIdentifikacioniBroj());
+				//	temp.setZahtev(zahtevi.get(m));
 					temp.setKorpaId(0);
 					narServ.save(temp);
 				}
+				
+				//*************************************** proslednjivanje ka agentu
+				/*
+				final String uri = "http://localhost:8099/baza/zahtev";
+				ObjectMapper mapper= new ObjectMapper();
+				String json = null;
+				
+				try {
+					json= mapper.writeValueAsString(zahtevi.get(m));
+				} catch (JsonProcessingException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				System.out.println("json potencijalniiiii " + json);
+				RestTemplate restTemplate = new RestTemplate();
+				
+				HttpHeaders headers = new HttpHeaders();
+				headers.setContentType(MediaType.APPLICATION_JSON);
+				
+				HttpEntity<String> entity = new HttpEntity<String>(json,headers);
+				ZahtevZaIznajmljivanje answer = restTemplate.postForObject(uri, entity, ZahtevZaIznajmljivanje.class);
+				*/
+				//***************************************
 				
 				}
 		}
@@ -169,48 +192,57 @@ public class ZahtevZaIznajmljivanjeController {
 					//System.out.println(dani);
 					z.setUkupnaCena((dani+1)*cenovnik.getCenaZaDan().floatValue()); //za isti datum racuna 0, a mi vrv kao jedan dan?
 					z.setVremeKreiranja(date);
-					
 					zahtevService.save(z);
+					
 					//narudzbenice.get(i).setZahtev(z);
 					for (Narudzbenica nar:z.getNarudzbenica()) {
 						Narudzbenica temp= narServ.findByIdentifikacioniBroj(nar.getIdentifikacioniBroj());
-						System.out.println(temp.getIdentifikacioniBroj());
-						temp.setZahtev(z);
+						//System.out.println(temp.getIdentifikacioniBroj());
+						//temp.setZahtev(z);
 						temp.setKorpaId(0);
 						narServ.save(temp);
 					}
 					
+					//*************************************** proslednjivanje ka agentu
+					/*
+					final String uri = "http://localhost:8099/baza/zahtev";
+					ObjectMapper mapper= new ObjectMapper();
+					String json = null;
+					
+					try {
+						json= mapper.writeValueAsString(z);
+					} catch (JsonProcessingException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+					System.out.println("json potencijalniiiii " + json);
+					RestTemplate restTemplate = new RestTemplate();
+					
+					HttpHeaders headers = new HttpHeaders();
+					headers.setContentType(MediaType.APPLICATION_JSON);
+					
+					HttpEntity<String> entity = new HttpEntity<String>(json,headers);
+					ZahtevZaIznajmljivanje answer = restTemplate.postForObject(uri, entity, ZahtevZaIznajmljivanje.class);
+					*/
+					//*************************************** 
+
 					
 				}
 			
 			}
 					
 		}
-		final String uri = "http://localhost:8099/zahtevi/kreiraj";
-		ObjectMapper mapper= new ObjectMapper();
-		String json = null;
 		
-		try {
-			json= mapper.writeValueAsString(z);
-		} catch (JsonProcessingException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		System.out.println("json potencijalniiiii " + json);
-		RestTemplate restTemplate = new RestTemplate();
-		
-		HttpHeaders headers = new HttpHeaders();
-		headers.setContentType(MediaType.APPLICATION_JSON);
-		
-		HttpEntity<String> entity = new HttpEntity<String>(json,headers);
-		ZahtevZaIznajmljivanje answer = restTemplate.postForObject(uri, entity, ZahtevZaIznajmljivanje.class);
-		
-		
-	   // restTemplate.getMessageConverters().add(new StringHttpMessageConverter());
-	   // ZahtevZaIznajmljivanje result = restTemplate.postForObject(uri, json, ZahtevZaIznajmljivanje.class);
-
         System.out.println("prosao ");
 		return  new ResponseEntity<ZahtevZaIznajmljivanje>(z, HttpStatus.OK);
 	}
 	
+	
+	@RequestMapping(method=RequestMethod.GET, value = "/bazaAgent")
+	public List<ZahtevZaIznajmljivanje> proslediAgentu(){
+		List<ZahtevZaIznajmljivanje> zahtevi= zahtevService.findAll();
+		return zahtevi;
+	}
+
+
 }

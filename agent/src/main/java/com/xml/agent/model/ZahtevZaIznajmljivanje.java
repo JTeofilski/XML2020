@@ -19,6 +19,7 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.xml.bind.annotation.XmlAccessType;
@@ -110,7 +111,9 @@ public class ZahtevZaIznajmljivanje {
 
 
     
-    @OneToMany ( mappedBy = "zahtev")
+    @OneToMany (fetch = FetchType.EAGER)
+    @JoinColumn(name = "zahtev_id")
+    
     private Set<Narudzbenica> narudzbenica;
     
     
@@ -379,6 +382,21 @@ public class ZahtevZaIznajmljivanje {
 
 	public void setAgentFirmaID(long agentFirmaID) {
 		this.agentFirmaID = agentFirmaID;
+	}
+
+
+
+
+
+
+
+	@Override
+	public String toString() {
+		return "ZahtevZaIznajmljivanje [identifikacioniBroj=" + identifikacioniBroj + ", registrovaniKorisnkID="
+				+ registrovaniKorisnkID + ", agentFirmaID=" + agentFirmaID + ", statusIznajmljivanja="
+				+ statusIznajmljivanja + ", datumOD=" + datumOD + ", datumDO=" + datumDO + ", bundle=" + bundle
+				+ ", ukupnaCena=" + ukupnaCena + ", narudzbenica=" + narudzbenica + ", vremeKreiranja=" + vremeKreiranja
+				+ "]";
 	}
 
     

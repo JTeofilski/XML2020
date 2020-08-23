@@ -1,4 +1,4 @@
-package com.pretraga.Pretraga.service;
+package com.xml.agent.service;
 
 import java.util.List;
 
@@ -6,8 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.pretraga.Pretraga.model.Narudzbenica;
-import com.pretraga.Pretraga.repository.NarudzbenicaRepository;
+import com.xml.agent.model.Narudzbenica;
+import com.xml.agent.repository.NarudzbenicaRepository;
+
 
 @Transactional
 @Service

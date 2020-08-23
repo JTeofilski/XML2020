@@ -13,10 +13,18 @@ import org.joda.time.Hours;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
+import org.springframework.web.client.RestTemplate;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.pretraga.Pretraga.model.Narudzbenica;
 import com.pretraga.Pretraga.model.ZahtevZaIznajmljivanje;
+import com.pretraga.Pretraga.repository.NarudzbenicaRepository;
 import com.pretraga.Pretraga.repository.ZahtevZaIznajmljivanjeRepository;
 
 //The task which you want to execute
@@ -29,6 +37,9 @@ public class ScheduledTasks {
 	
 	@Autowired
 	private ZahtevZaIznajmljivanjeRepository repo;
+	
+	@Autowired
+	private NarudzbenicaRepository narRepo;
 
 	@Scheduled(fixedRate = 3600000) //1h
 	public void reportCurrentTime() {
@@ -56,4 +67,35 @@ public class ScheduledTasks {
 		}
 		
 	}
+	
+	
+	/*
+	@Scheduled(fixedRate = 3600000) //1h
+	public void updateNarudzbenica() {
+		List <Narudzbenica> narudzbenice=narRepo.findAll();
+		
+		final String uri = "http://localhost:8099/baza/narudzbenice";
+		ObjectMapper mapper= new ObjectMapper();
+		String json = null;
+		
+		try {
+			json= mapper.writeValueAsString(narudzbenice);
+			RestTemplate restTemplate = new RestTemplate();
+			
+			HttpHeaders headers = new HttpHeaders();
+			headers.setContentType(MediaType.APPLICATION_JSON);
+			
+			HttpEntity<String> entity = new HttpEntity<String>(json,headers);
+			String answer = restTemplate.postForObject(uri, entity, String.class);
+			
+			System.out.println(answer);
+		
+		} catch (Exception  e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			System.out.println("NIJE DOHVATIO CONTR");
+		}
+				
+	}
+	*/
 }

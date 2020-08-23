@@ -9,8 +9,10 @@ import java.sql.Statement;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.scheduling.annotation.EnableScheduling;
 
 @SpringBootApplication
+@EnableScheduling
 public class AgentApplication {
 	
 	private static String dbOrigin = "jdbc:postgresql://localhost:5432/postgres";

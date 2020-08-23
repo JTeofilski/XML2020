@@ -19,6 +19,7 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.xml.bind.annotation.XmlAccessType;
@@ -66,20 +67,33 @@ import javax.xml.datatype.XMLGregorianCalendar;
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "", propOrder = {
     "identifikacioniBroj",
-    "oglas",
     "registrovaniKorisnkID",
+    "agentFirmaID",
     "statusIznajmljivanja",
     "datumOD",
     "datumDO",
     "bundle",
     "ukupnaCena",
-    "izvestaj"
+    "narudzbenica",
+    "vremeKreiranja"
 })
 @XmlRootElement(name = "ZahtevZaIznajmljivanje", namespace = "http://www.ftn.uns.ac.rs/zahtevzaiznajmljivanje")
 @Entity
 public class ZahtevZaIznajmljivanje {
 
-    @XmlElement(namespace = "http://www.ftn.uns.ac.rs/zahtevzaiznajmljivanje")
+    @Override
+	public String toString() {
+		return "ZahtevZaIznajmljivanje [identifikacioniBroj=" + identifikacioniBroj + ", registrovaniKorisnkID="
+				+ registrovaniKorisnkID + ", agentFirmaID=" + agentFirmaID + ", statusIznajmljivanja="
+				+ statusIznajmljivanja + ", datumOD=" + datumOD + ", datumDO=" + datumDO + ", bundle=" + bundle
+				+ ", ukupnaCena=" + ukupnaCena + ", narudzbenica=" + narudzbenica + ", vremeKreiranja=" + vremeKreiranja
+				+ "]";
+	}
+
+
+
+
+	@XmlElement(namespace = "http://www.ftn.uns.ac.rs/zahtevzaiznajmljivanje")
     @Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
     protected long identifikacioniBroj;
@@ -93,11 +107,11 @@ public class ZahtevZaIznajmljivanje {
     
     @XmlElement(namespace = "http://www.ftn.uns.ac.rs/zahtevzaiznajmljivanje", required = true, defaultValue = "PENDING")
     protected String statusIznajmljivanja;
-    @XmlElement(namespace = "http://www.ftn.uns.ac.rs/zahtevzaiznajmljivanje", required = true)
-    @XmlSchemaType(name = "dateTime")
+   // @XmlElement(namespace = "http://www.ftn.uns.ac.rs/zahtevzaiznajmljivanje", required = true)
+   // @XmlSchemaType(name = "dateTime")
     protected Date datumOD;
-    @XmlElement(namespace = "http://www.ftn.uns.ac.rs/zahtevzaiznajmljivanje", required = true)
-    @XmlSchemaType(name = "dateTime")
+   // @XmlElement(namespace = "http://www.ftn.uns.ac.rs/zahtevzaiznajmljivanje", required = true)
+   // @XmlSchemaType(name = "dateTime")
     protected Date datumDO;
     @XmlElement(namespace = "http://www.ftn.uns.ac.rs/zahtevzaiznajmljivanje")
     protected boolean bundle;
@@ -109,7 +123,8 @@ public class ZahtevZaIznajmljivanje {
 
 
     
-    @OneToMany ( mappedBy = "zahtev")
+    @OneToMany 
+    @JoinColumn(name = "zahtev_id")
     private Set<Narudzbenica> narudzbenica;
     
     

@@ -1,8 +1,9 @@
-package com.pretraga.Pretraga.service;
+package com.xml.agent.service;
 
 import java.util.List;
 
-import com.pretraga.Pretraga.model.Narudzbenica;
+import com.xml.agent.model.Narudzbenica;
+
 
 public interface NarudzbenicaService {
 
@@ -16,5 +17,4 @@ public interface NarudzbenicaService {
 	void remove(Narudzbenica narudzbenica);
 	
 	List<Narudzbenica> findAll();
-
 }

@@ -136,6 +136,14 @@ public class Narudzbenica {
 	public long getIdentifikacioniBroj() {
 		return identifikacioniBroj;
 	}
+
+	@Override
+	public String toString() {
+		return "Narudzbenica [identifikacioniBroj=" + identifikacioniBroj + ", oglasId=" + oglasId
+				+ ", registrovaniKorisnikId=" + registrovaniKorisnikId + ", agentId=" + agentId + ", korpaId=" + korpaId
+				+ ", rentiranjeOd=" + rentiranjeOd + ", rentiranjeDo=" + rentiranjeDo + ", markaVozila=" + markaVozila
+				+ ", cenovnikId=" + cenovnikId + ", zahtev=" + zahtev + "]";
+	}
 	
 	
 }
