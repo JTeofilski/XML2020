@@ -2,8 +2,114 @@
 <html>
 <head>
 <meta charset="ISO-8859-1">
+<script src="scripts/jquery-3.2.1.min.js"></script>
+		<script src="scripts/tether.min.js"></script>
+		<script src="scripts/bootstrap.min.js"></script>
 <title>Insert title here</title>
 </head>
 <body>
+<script type="text/javascript">
+		var url_string = window.location.href;
+		var url = new URL(url_string);
+		var id = url.searchParams.get("id");
+		</script>
+	<script type="text/javascript">	
+	$(document).ready(function() {
+			 $.ajax({
+			        url: "http://localhost:8099/sifrarnik/marke", 
+			   		type: "GET",
+			   		contentType: "application/json",
+			   		datatype: 'json',
+			    	   success: function(data){	   
+			    		  for (var i=0; i<data.length; i++){
+			    			var select = document.getElementById('marke');
+			    			  var optionApple=document.createElement("option");
+			                  optionApple.text=data[i].marka;
+			                  select.add(optionApple,select.options[null]);
+								
+			    	   }
+			    	   }
+			      
+			       });
+			 $.ajax({
+			        url: "http://localhost:8099/sifrarnik/modeli", 
+			   		type: "GET",
+			   		contentType: "application/json",
+			   		datatype: 'json',
+			    	   success: function(data){	   
+			    		  for (var i=0; i<data.length; i++){
+			    			var select = document.getElementById('modeli');
+			    			  var optionApple=document.createElement("option");
+			                  optionApple.text=data[i].model;
+			                  select.add(optionApple,select.options[null]);
+								
+			    	   }
+			    	   }
+			      
+			       });
+			 $.ajax({
+			        url: "http://localhost:8099/sifrarnik/klase", 
+			   		type: "GET",
+			   		contentType: "application/json",
+			   		datatype: 'json',
+			    	   success: function(data){	   
+			    		  for (var i=0; i<data.length; i++){
+			    			var select = document.getElementById('klase');
+			    			  var optionApple=document.createElement("option");
+			                  optionApple.text=data[i].klasa;
+			                  select.add(optionApple,select.options[null]);
+								
+			    	   }
+			    	   }
+			      
+			       });
+			 $.ajax({
+			        url: "http://localhost:8099/sifrarnik/menjaci", 
+			   		type: "GET",
+			   		contentType: "application/json",
+			   		datatype: 'json',
+			    	   success: function(data){	   
+			    		  for (var i=0; i<data.length; i++){
+			    			var select = document.getElementById('menjaci');
+			    			  var optionApple=document.createElement("option");
+			                  optionApple.text=data[i].menjac;
+			                  select.add(optionApple,select.options[null]);
+								
+			    	   }
+			    	   }
+			      
+			       });
+			 $.ajax({
+			        url: "http://localhost:8099/sifrarnik/goriva", 
+			   		type: "GET",
+			   		contentType: "application/json",
+			   		datatype: 'json',
+			    	   success: function(data){	   
+			    		  for (var i=0; i<data.length; i++){
+			    			var select = document.getElementById('goriva');
+			    			  var optionApple=document.createElement("option");
+			                  optionApple.text=data[i].gorivo;
+			                  select.add(optionApple,select.options[null]);
+								
+			    	   }
+			    	   }
+			      
+			       });
+			       });
+			       </script>
+			       
+<form action="">
+<label>Izaberite marku vozila</label>			       
+<select name="marke" id="marke"></select></br>
+<label>Izaberite model vozila</label>			       
+<select name="modeli" id="modeli"></select></br>
+<label>Izaberite klasu vozila</label>			       
+<select name="klase" id="klase"></select></br>
+<label>Izaberite tip menjaca</label>			       
+<select name="menjaci" id="menjaci"></select></br>
+<label>Izaberite vrstu goriva</label>			       
+<select name="goriva" id="goriva"></select></br>
+</select>
+</form>
 </body>
 </html>

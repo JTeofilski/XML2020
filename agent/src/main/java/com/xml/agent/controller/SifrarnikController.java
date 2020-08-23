@@ -54,7 +54,34 @@ public class SifrarnikController {
 		
 		return new ResponseEntity<List<MarkaVozila>>(marke, HttpStatus.OK);
 	}
-	
+	@RequestMapping(method=RequestMethod.GET, value = "/modeli")
+	public ResponseEntity<List<ModelVozila>> sviModeli(){
+		List<ModelVozila> modeli = modelService.findAll();
+		
+		
+		return new ResponseEntity<List<ModelVozila>>(modeli, HttpStatus.OK);
+	}
+	@RequestMapping(method=RequestMethod.GET, value = "/klase")
+	public ResponseEntity<List<KlasaAutomobila>> sveKlase(){
+		List<KlasaAutomobila> klase = klasaService.findAll();
+		
+		
+		return new ResponseEntity<List<KlasaAutomobila>>(klase, HttpStatus.OK);
+	}
+	@RequestMapping(method=RequestMethod.GET, value = "/menjaci")
+	public ResponseEntity<List<TipMenjaca>> sviMenjaci(){
+		List<TipMenjaca> menjaci = menjacService.findAll();
+		
+		
+		return new ResponseEntity<List<TipMenjaca>>(menjaci, HttpStatus.OK);
+	}
+	@RequestMapping(method=RequestMethod.GET, value = "/goriva")
+	public ResponseEntity<List<VrstaGoriva>> svaGoriva(){
+		List<VrstaGoriva> goriva = gorivoService.findAll();
+		
+		
+		return new ResponseEntity<List<VrstaGoriva>>(goriva, HttpStatus.OK);
+	}
 	@RequestMapping(value="obrisiMarku/{id}", method=RequestMethod.DELETE)
 	public ResponseEntity<MarkaVozila> remove(@PathVariable("id") Long id) {
 	
