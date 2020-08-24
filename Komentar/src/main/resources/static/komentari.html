@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Komentari</title>
+
+<script src="scripts/jquery-3.2.1.min.js"></script>
+<script src="scripts/tether.min.js"></script>
+<script src="scripts/bootstrap.min.js"></script>
+<script src="scripts/fje.js" charset="UTF-8" type="text/javascript"></script>
+
+<script>
+var params = window.location.search.split('?')[1];
+var oglasId=params.split('&')[0].split('=')[1];
+var korisnikId=params.split('&')[1].split('=')[1];
+
+$(document).ready(function() {
+	 $.ajax({
+	        url: "http://localhost:2020/komentarapp/komentari/"+oglasId, 
+	   		type: "GET",
+	   		contentType: "application/json",
+	   		datatype: 'json',
+	    	   success: function(data){	 
+	    		   for(i=0;i<data.length;i++){
+	    			   var newDiv="<div> <p>Korisnik: "+data[i].imeKorisnika+"</p>"
+	    			   				+ "<p>Komentar: "+data[i].tekstKomentara+"</p>"
+	    			   				+ "<p>Datum: "+data[i].datumVremeKreiranja+"</p>"
+	    			   				+ "</div>";
+	    			   				$("body").append(newDiv)
+	    		   }
+	    		   
+	    	   }
+	 });
+});
+
+
+</script>
+
+<style>
+div{
+	margin-top:5px;
+	border-style: ridge;
+	
+}
+</style>		
+
+</head>
+<body>
+
+<h1>Komentari:</h1>
+
+</body>
+</html>

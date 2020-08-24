@@ -1,10 +1,13 @@
 package com.komentar.Komentar.controller;
 
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -35,7 +38,7 @@ public class KomentarController {
 	
 	
 	@RequestMapping(method=RequestMethod.POST, value = "/dodavanje/{idOglasa}", consumes="application/json")
-	public ResponseEntity<Komentar> registrovanje(@RequestBody Komentar komentar, @PathVariable("idOglasa") long idOglasa){
+	public ResponseEntity<Komentar> noviKomentar(@RequestBody Komentar komentar, @PathVariable("idOglasa") long idOglasa){
 		
 		RegistrovaniKorisnik korisnik= regKorService.findOne(komentar.getKreatorKomentaraID());
 		
@@ -57,5 +60,17 @@ public class KomentarController {
 		return null;
 		
 	}
-
+	
+	
+	@RequestMapping(method=RequestMethod.GET, value = "/{oglasId}", consumes="application/json")
+	public ResponseEntity<ArrayList<Komentar>> odobreniKomentari( @PathVariable("oglasId") long oglasId){
+		ArrayList<Komentar> odobreniKomentari= new ArrayList<Komentar>();
+		for(Komentar k:komentarService.findByOglasId(oglasId)) {
+			if(k.getStatusKomentara().equals("ODOBREN")) {
+				odobreniKomentari.add(k);
+			}
+		}
+		
+		return new ResponseEntity<ArrayList<Komentar>>(odobreniKomentari, HttpStatus.OK);
+	}
 }

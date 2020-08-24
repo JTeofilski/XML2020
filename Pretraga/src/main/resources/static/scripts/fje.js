@@ -139,6 +139,7 @@ function Komentar(idKorisnika, idOglasa, idNarudzbenice){
 	var textLabeleKomentara = document.createTextNode("Tekst komentara:");   
 	labelaKomentar.appendChild(textLabeleKomentara);
 	textKomentar.setAttribute("id", "komentar");
+	labelaKomentar.setAttribute("id", "idLabele");
 	
 	
 	
@@ -146,6 +147,7 @@ function Komentar(idKorisnika, idOglasa, idNarudzbenice){
 	var prosledi=document.createElement("BUTTON");
 	var textProsledi = document.createTextNode("Prosledi");   
 	prosledi.appendChild(textProsledi);
+	prosledi.setAttribute("id", "dugme");
 	
 	
 	document.getElementById("n"+idNarudzbenice).appendChild(labelaKomentar);
@@ -154,7 +156,7 @@ function Komentar(idKorisnika, idOglasa, idNarudzbenice){
 	document.getElementById("n"+idNarudzbenice).appendChild(prosledi);
 	
 	
-	prosledi.setAttribute("onclick", "ProslediKom("+idKorisnika+","+idOglasa+")"); 
+	prosledi.setAttribute("onclick", "ProslediKom("+idKorisnika+","+idOglasa+","+idNarudzbenice+")"); 
 
 
 }
@@ -179,8 +181,21 @@ function ProslediKom(idKorisnika, idOglasa){
 	   		datatype: 'json',
 	    	   success: function(data){	   
 	    		   alert("dodat komentar");
+	    		   var dugme=document.getElementById("dugme");
+	    		   dugme.parentNode.removeChild(dugme);
+	    		   
+	    		   var komentar=document.getElementById("komentar");
+	    		   komentar.parentNode.removeChild(komentar);
+	    		   
+	    		   var labela=document.getElementById("idLabele");
+	    		   labela.parentNode.removeChild(labela);
 	    	   }	 
 	    	   });
 	
 	
+}
+
+function Komentari(idOglasa, idKorisnika){
+	window.location.href = "http://localhost:2020/komentarapp/komentari.html?id="+idOglasa+"&korid="+idKorisnika;
+
 }
