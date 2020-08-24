@@ -48,6 +48,27 @@
 			      
 			       });
 			 $.ajax({
+			        url: "http://localhost:8099/cenovnici/sviCenovnici", 
+			   		type: "GET",
+			   		contentType: "application/json",
+			   		datatype: 'json',
+			    	   success: function(data){	   
+			    		  for (var i=0; i<data.length; i++){
+			    			  newRow = 
+									"<tr>"
+										+ "<td>" + data[i].cenaZaDan + "</td>"
+										+ "<td>" + data[i].cenaViseOd30 + "</td>"
+										+ "<td>" + data[i].cenaPoKilometruZaOgranicenuKilometrazu + "</td>"
+										+ "<td><a class=\"izaberi\" onclick=\"getIDD(this)\" data-id=\"" + data[i].identifikacioniBroj +"\" href='#'>izaberi</a></td>"
+										+ "</tr>"
+									
+								$("#cenovnici").append(newRow)	
+								
+			    	   }
+			    	   }
+			      
+			       });
+			 $.ajax({
 			        url: "http://localhost:8099/sifrarnik/klase", 
 			   		type: "GET",
 			   		contentType: "application/json",
@@ -97,8 +118,12 @@
 			       });
 			       });
 			       </script>
-			       
-<form action="">
+			       <script type="text/javascript">
+			       function getIDD(e){
+			    		localStorage.setItem("cenovnik", $(e).attr('data-id'));
+			    	}
+			       </script>
+<form action="" class="form" id="inputForm">
 <label>Izaberite marku vozila</label>			       
 <select name="marke" id="marke"></select></br>
 <label>Izaberite model vozila</label>			       
@@ -109,7 +134,68 @@
 <select name="menjaci" id="menjaci"></select></br>
 <label>Izaberite vrstu goriva</label>			       
 <select name="goriva" id="goriva"></select></br>
-</select>
+<label>Unesite predjenu kilometrazu</label>
+<input type="text" name="km"></br>
+<label>Unesite broj sedista za decu</label>
+<input type="text" name="sedista"></br>
+<label>Unesite ogranicenje kilometraze</label>
+<input type="text" name="kilometraza"></br>
+<label>Vozilo slobodno od-do</label>
+<input type="date" name="datumOd">
+<input type="date" name="datumDo"></br>
+<table id="cenovnici" class = "table " style= "width:700px">
+			<tr class="header">
+				<th>cena za dan</th>
+				<th>cena za vise od 30 dana</th>
+				<th>cena po kilometru za ogranicenu kilometrazu</th>
+			</tr>
+			</table>
+<label>Collision Damage Waiver</label>
+		<input type="radio" name="colors" id="da">da
+        <input type="radio" name="colors" id="ne">ne<br>
+       <button type="button" class="btn btn-primary col-3" id="dodavanje">Potvrda</button>
 </form>
+<script type="text/javascript">
+	  	$("#dodavanje").click(function() {
+if(document.getElementById("da").checked==true){
+	  			
+	  			var collisiondamageWaiver = true;
+	  		}else{
+	  			var collisiondamageWaiver = false;
+	  			
+	  		}
+voziloSlobodnoOd = $("#inputForm [name='datumOd']").val();
+  voziloSlobodnoDo = $("#inputForm [name='datumDo']").val();
+  cenovnik = localStorage.getItem("cenovnik");
+  
+	  		 var formData = JSON.stringify({
+	  	          nazivKlase:$("#inputForm [name='klase']").val(),
+	  	          nazvMarke:$("#inputForm [name='marke']").val(),
+	  	          nazivModela:$("#inputForm [name='modeli']").val(),
+	  	          nazivVrsteGoriva:$("#inputForm [name='goriva']").val(),
+	  	          nazivTipaMenjaca:$("#inputForm [name='menjaci']").val(),
+	  	          predjenaKilometraza:$("#inputForm [name='km']").val(),
+	  	          brojSedistaZaDecu:$("#inputForm [name='sedista']").val(),
+	  	          ogranicenjeKilometraze:$("#inputForm [name='kilometraza']").val(),
+	  	          
+	  	          
+	  	      });
+	  		 
+	  		$.ajax({
+				url: "http://localhost:8099/oglasi/dodajOglas/" + id + "/" + cenovnik + "/" + voziloSlobodnoOd + "/" + voziloSlobodnoDo + "/" + collisiondamageWaiver,
+				type: "POST",
+				data: formData,
+				//saljemo json i ocekujemo json nazad
+				contentType: "application/json",
+				datatype: 'json',
+				success: function(result){
+					
+					
+				alert("uspesno dodavanje!")
+				
+				}
+	  	});
+	  	});
+	  	</script>
 </body>
 </html>

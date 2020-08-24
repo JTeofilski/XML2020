@@ -2,15 +2,20 @@ package com.pretraga.Pretraga.service;
 
 import java.util.List;
 
+import javax.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.stereotype.Service;
 
 import com.netflix.discovery.converters.Auto;
 import com.pretraga.Pretraga.model.Vozilo;
 import com.pretraga.Pretraga.repository.VoziloRepository;
 
+@Transactional
+@Service
 public class VoziloServiceImpl implements VoziloService{
   @Autowired
   private VoziloRepository voziloRepository;

@@ -42,7 +42,7 @@ public class ModelServiceImpl implements ModelService{
 	@Override
 	public List<ModelVozila> findAll() {
 		// TODO Auto-generated method stub
-		return null;
+		return rep.findAll();
 	}
 
 }

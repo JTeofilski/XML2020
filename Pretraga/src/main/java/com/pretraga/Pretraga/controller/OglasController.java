@@ -15,14 +15,23 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.client.RestTemplate;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.pretraga.Pretraga.model.Agent;
+import com.pretraga.Pretraga.model.Cenovnik;
 import com.pretraga.Pretraga.model.Korpa;
 import com.pretraga.Pretraga.model.Oglas;
 import com.pretraga.Pretraga.model.RegistrovaniKorisnik;
@@ -30,8 +39,11 @@ import com.pretraga.Pretraga.model.RezervisaniDatumi;
 import com.pretraga.Pretraga.model.Vozilo;
 import com.pretraga.Pretraga.repository.OglasRepository;
 import com.pretraga.Pretraga.repository.VoziloRepository;
+import com.pretraga.Pretraga.service.AgentService;
+import com.pretraga.Pretraga.service.CenovnikService;
 import com.pretraga.Pretraga.service.KorpaService;
 import com.pretraga.Pretraga.service.OglasService;
+import com.pretraga.Pretraga.service.VoziloService;
 
 @RestController
 @RequestMapping(value = "/oglasi")
@@ -49,12 +61,36 @@ public class OglasController {
 	@Autowired
 	private VoziloRepository voziloRepository;
 	
+	@Autowired
+	private CenovnikService cenovnikService;
+	
+	@Autowired
+	private AgentService agentService;
+	
+	@Autowired 
+	private VoziloService voziloService;
+	
 	@RequestMapping(method=RequestMethod.GET, value = "/sviOglasi")
 	public ResponseEntity<List<Oglas>> getAds(){
 		List<Oglas> oglasi = oglasService.findAll(Sort.by(Sort.Direction.ASC, "identifikacioniBroj"));
 		
 		
 		return new ResponseEntity<List<Oglas>>(oglasi, HttpStatus.OK);
+	}
+	@RequestMapping(method=RequestMethod.POST, value = "/dodajOglas/{agent}/{cenovnik}/{collision}")
+	public ResponseEntity<Vozilo> addAd(@RequestBody Vozilo vozilo, @PathVariable("agent") Long id1,@PathVariable("cenovnik") Long id, @PathVariable("collisiondamageWaiver") boolean collision){
+	
+		Oglas oglasNovi = new Oglas();
+		Cenovnik cenovnik1 = cenovnikService.findOne(id);
+		oglasNovi.setCenovnik(cenovnik1);
+		oglasNovi.setVozilo(vozilo);
+		Agent agent = agentService.findOne(id1);
+		oglasNovi.setAgent(agent);
+		vozilo.setSlike("slike/crno_mece1.jpg;slike/crno_mece.jpg");
+		voziloService.save(vozilo);
+		oglasService.save(oglasNovi);	
+	    
+		return new ResponseEntity<>( vozilo, HttpStatus.OK);
 	}
 	 @RequestMapping(value="/pretraga/{adresa}/{voziloSlobodnoOd}/{voziloSlobodnoDo}", method=RequestMethod.GET)
 	  	@ResponseBody
