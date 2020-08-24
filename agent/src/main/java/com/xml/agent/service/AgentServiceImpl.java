@@ -28,5 +28,10 @@ public class AgentServiceImpl implements AgentService{
 		// TODO Auto-generated method stub
 		return r.findByEmailAndLozinka(email, password);
 	}
+	@Override
+	public Agent findOne(Long id) {
+		// TODO Auto-generated method stub
+		return r.findById(id).orElse(null);
+	}
 
 }

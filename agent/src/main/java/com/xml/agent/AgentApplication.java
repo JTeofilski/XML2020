@@ -23,6 +23,7 @@ public class AgentApplication {
     private static String tableToMerge4 = "tip_menjaca";
     private static String tableToMerge5 = "model_vozila";
     private static String tableToMerge6 = "klasa_automobila";
+    private static String tableToMerge7 = "cenovnik";
     
 	public static void main(String[] args) throws SQLException {
 		SpringApplication.run(AgentApplication.class, args);
@@ -190,6 +191,31 @@ while(assets6.next()){
     for(int i = 1; i <= rsMeta6.getColumnCount(); i++){
         String value = assets6.getString(i);
         if(assets6.wasNull()){
+            insertSQL += "NULL,";
+        }else{
+            insertSQL += "'" + value + "',";
+        }               
+    }
+    insertSQL =insertSQL.substring(0, insertSQL.length()-1) + ")";
+
+    try{
+        dbDestStat.executeUpdate(insertSQL);
+    }catch(SQLException e){
+        //TODO: attempt to update the row in the event of duplicate key
+    }
+
+
+}
+String sqlToExecute7 = "SELECT * FROM " + tableToMerge7;
+ResultSet assets7 = dbOriginStat.executeQuery(sqlToExecute7);
+ResultSetMetaData rsMeta7 = assets7.getMetaData();
+
+while(assets7.next()){
+    String insertSQL  = "INSERT INTO " + tableToMerge7 + " VALUES(";
+
+    for(int i = 1; i <= rsMeta7.getColumnCount(); i++){
+        String value = assets7.getString(i);
+        if(assets7.wasNull()){
             insertSQL += "NULL,";
         }else{
             insertSQL += "'" + value + "',";
