@@ -63,6 +63,7 @@
 									+ "</p>" ;
 							for (n=0;n<data[i].narudzbenica.length;n++){
 								newDiv=newDiv +		
+									"<div id='n"+data[i].narudzbenica[n].identifikacioniBroj+"'>"+
 									"<p> Vozilo:"+data[i].narudzbenica[n].markaVozila 
 									+ " od: " + data[i].narudzbenica[n].rentiranjeOd
 									+ " do: " + data[i].narudzbenica[n].rentiranjeDo
@@ -73,12 +74,15 @@
 								if(Date.parse(data[i].narudzbenica[n].rentiranjeDo)<Date.now()&& data[i].statusIznajmljivanja=="PAID")	{
 									
 									newDiv=newDiv+Zvezdice(data[i].identifikacioniBroj,id,data[i].narudzbenica[n].oglasId ); 
+									newDiv= newDiv+"<button onclick='Komentar("+id+","+data[i].narudzbenica[n].oglasId+","+data[i].narudzbenica[n].identifikacioniBroj+")'>Ostavi komentar</button>"
 									
 								}
 								
 								
 								//newDiv=+ "</div>";
+								newDiv=newDiv+ "</div>";
 							}
+							
 							newDiv=newDiv+ "</div>";
 									
 									$("body").append(newDiv);

@@ -127,3 +127,60 @@ function Zvezdice(zahtevId,korisnikId,idOglasa){
 	   +' <input type="radio" id="starhalf" name="rating" value="half" /><label class="half" for="starhalf" title="Sucks big time - 0.5 stars" onclick="Ocena(0.5,'+korisnikId+","+idOglasa+');"></label>'
 	   +' </fieldset> '
 }
+
+
+function Komentar(idKorisnika, idOglasa, idNarudzbenice){
+	
+	console.log(idNarudzbenice);
+	
+
+	var labelaKomentar = document.createElement("LABEL");
+	var textKomentar = document.createElement("TEXTAREA");
+	var textLabeleKomentara = document.createTextNode("Tekst komentara:");   
+	labelaKomentar.appendChild(textLabeleKomentara);
+	textKomentar.setAttribute("id", "komentar");
+	
+	
+	
+	
+	var prosledi=document.createElement("BUTTON");
+	var textProsledi = document.createTextNode("Prosledi");   
+	prosledi.appendChild(textProsledi);
+	
+	
+	document.getElementById("n"+idNarudzbenice).appendChild(labelaKomentar);
+	document.getElementById("n"+idNarudzbenice).appendChild(textKomentar);
+	
+	document.getElementById("n"+idNarudzbenice).appendChild(prosledi);
+	
+	
+	prosledi.setAttribute("onclick", "ProslediKom("+idKorisnika+","+idOglasa+")"); 
+
+
+}
+
+function ProslediKom(idKorisnika, idOglasa){
+	
+	var komentar=document.getElementById("komentar").value;
+	
+	
+	var formData = JSON.stringify({
+		kreatorKomentaraID:idKorisnika,
+		tekstKomentara:komentar
+         
+          
+      });
+	 // console.log(formData);
+	  $.ajax({
+	        url: "http://localhost:2020/komentarapp/komentari/dodavanje/"+idOglasa, 
+	   		type: "POST",
+	   		data: formData,
+	   		contentType: "application/json",
+	   		datatype: 'json',
+	    	   success: function(data){	   
+	    		   alert("dodat komentar");
+	    	   }	 
+	    	   });
+	
+	
+}

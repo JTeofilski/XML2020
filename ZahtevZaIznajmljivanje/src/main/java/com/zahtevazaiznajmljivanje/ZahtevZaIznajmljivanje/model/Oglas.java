@@ -12,6 +12,7 @@ import java.sql.Date;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -21,6 +22,7 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
@@ -90,8 +92,11 @@ public class Oglas {
     @XmlElement(name = "Ocena", namespace = "http://www.ftn.uns.ac.rs/ocenakomentarporuka")
     @OneToMany(mappedBy = "oglas")
     protected Set<Ocena> ocena;
-   // @XmlElement(name = "Komentar", namespace = "http://www.ftn.uns.ac.rs/ocenakomentarporuka")
-   // protected List<Komentar> komentar;
+   
+    @XmlElement(name = "Komentar", namespace = "http://www.ftn.uns.ac.rs/ocenakomentarporuka")
+    @OneToMany()
+    @JoinColumn(name = "oglas_id")
+    protected Set<Komentar> komentar;
     
     
     @XmlElement(name = "Vozilo", namespace = "http://www.ftn.uns.ac.rs/vozilo", required = true)
@@ -250,6 +255,21 @@ public class Oglas {
 
 
 
+	public Set<Komentar> getKomentar() {
+		if(komentar.equals(null))
+			return new HashSet<Komentar>();
+		else
+			return komentar;
+	}
+
+
+
+	public void setKomentar(Set<Komentar> komentar) {
+		this.komentar = komentar;
+	}
+
+
+
 	
 	
     
@@ -328,33 +348,6 @@ public class Oglas {
     */
 
    
-    /**
-     * Gets the value of the komentar property.
-     * 
-     * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the komentar property.
-     * 
-     * <p>
-     * For example, to add a new item, do as follows:
-     * <pre>
-     *    getKomentar().add(newItem);
-     * </pre>
-     * 
-     * 
-     * <p>
-     * Objects of the following type(s) are allowed in the list
-     * {@link Komentar }
-     * 
-     * 
-     
-    public List<Komentar> getKomentar() {
-        if (komentar == null) {
-            komentar = new ArrayList<Komentar>();
-        }
-        return this.komentar;
-    }
-*/
+   
+
 }

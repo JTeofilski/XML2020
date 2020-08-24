@@ -6,7 +6,7 @@
 //
 
 
-package com.xml.agent.model;
+package com.komentar.Komentar.model;
 
 import java.sql.Date;
 import java.text.ParseException;
