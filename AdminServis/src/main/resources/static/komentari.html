@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Komentari</title>
+
+<script src="scripts/jquery-3.2.1.min.js"></script>
+<script src="scripts/tether.min.js"></script>
+<script src="scripts/bootstrap.min.js"></script>
+<script src="scripts/fje.js" charset="UTF-8" type="text/javascript"></script>
+
+
+<script>
+$(document).ready(function() {
+	 $.ajax({
+	        url: "http://localhost:2020/adminservisapp/komentari", 
+	   		type: "GET",
+	   		contentType: "application/json",
+	   		datatype: 'json',
+	    	   success: function(data){	 
+	    		   console.log(data);
+	    		   for(i=0;i<data.length;i++){
+	    			   if(data[i].statusKomentara=="CEKANJE"){
+	    			   var newDiv="<div> <p>Korisnik: "+data[i].imeKorisnika+"</p>"
+	    			   				+ "<p>Komentar: "+data[i].tekstKomentara+"</p>"
+	    			   				+ "<p>Datum: "+data[i].datumVremeKreiranja+"</p>"
+	    			   				+ "<button onclick='OdobriKomentar("+data[i].identifikacioniBroj+")'>Odobri</button>"
+			   						+ "</div>";
+	    			   }
+	    			   
+	    			   				
+	    			   				$("body").append(newDiv)
+	    		   }
+	    		   
+	    	   }
+	 });
+});
+</script>
+
+<style>
+div{
+	margin-top:5px;
+	border-style: ridge;
+	
+}
+button{
+	margin-left: auto; display: block;
+}
+</style>		
+
+</head>
+<body>
+	<h1>Komentari na cekanju</h1>
+</body>
+</html>

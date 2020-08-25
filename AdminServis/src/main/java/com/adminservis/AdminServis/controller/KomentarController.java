@@ -1,8 +1,11 @@
 package com.adminservis.AdminServis.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -22,18 +25,23 @@ public class KomentarController {
 	private KomentarService service;
 	
 	@GetMapping
-	public ModelAndView findAll() {
-		List<Komentar> komentari=service.findAll();
-		return new ModelAndView("adminKomentari","komentari", komentari);
+	public ResponseEntity<List<Komentar>> naCekanju() {
+		List<Komentar> komentari=new ArrayList<Komentar>();
+		for(Komentar k:service.findAll())
+			if(k.getStatusKomentara().equals("CEKANJE"))
+				komentari.add(k);
+		return new ResponseEntity<List<Komentar>> (komentari, HttpStatus.OK);
 		
 	}
 	
 	
 	@GetMapping("/odobri/{id}")
-	public ModelAndView update(@PathVariable int id) {
-		service.update(id);
+	public ResponseEntity<List<Komentar>> update(@PathVariable int id) {
+		Komentar komentar= service.findOne(id);
+		komentar.setStatusKomentara("ODOBREN");
+		service.save(komentar);
 		List<Komentar> komentari=service.findAll();
-		return new ModelAndView("adminKomentari","komentari", komentari);
+		return new ResponseEntity<List<Komentar>> (komentari, HttpStatus.OK);
 		
 	}
 	
