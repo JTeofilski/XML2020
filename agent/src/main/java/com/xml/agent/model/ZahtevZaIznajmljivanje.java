@@ -83,7 +83,6 @@ public class ZahtevZaIznajmljivanje {
 
     @XmlElement(namespace = "http://www.ftn.uns.ac.rs/zahtevzaiznajmljivanje")
     @Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
     protected long identifikacioniBroj;
   
       
@@ -382,6 +381,16 @@ public class ZahtevZaIznajmljivanje {
 
 	public void setAgentFirmaID(long agentFirmaID) {
 		this.agentFirmaID = agentFirmaID;
+	}
+
+
+
+
+
+
+
+	public void setIdentifikacioniBroj(long identifikacioniBroj) {
+		this.identifikacioniBroj = identifikacioniBroj;
 	}
 
 

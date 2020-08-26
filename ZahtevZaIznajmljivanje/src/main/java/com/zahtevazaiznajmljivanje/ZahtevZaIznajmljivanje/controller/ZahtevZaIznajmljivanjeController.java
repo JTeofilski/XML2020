@@ -115,7 +115,7 @@ public class ZahtevZaIznajmljivanjeController {
 							zahtevi.get(k).setNarudzbenica(targetSet); //dodaju se bas u zahtev agenta k	
 							zahtevi.get(k).setAgentFirmaID(narudzbenice.get(i).getAgentId());
 							zahtevi.get(k).setStatusIznajmljivanja("PENDING");
-							zahtevi.get(k).setBundle(bundle);
+							zahtevi.get(k).setBundle(false);
 							zahtevi.get(k).setRegistrovaniKorisnkID(korid);
 							zahtevi.get(k).setUkupnaCena(zahtevi.get(k).getUkupnaCena()+(ChronoUnit.DAYS.between(LocalDate.parse(narudzbenice.get(i).getRentiranjeOd().toString()),LocalDate.parse(narudzbenice.get(i).getRentiranjeDo().toString()))+1)*cenovnik.getCenaZaDan().floatValue());
 						}
@@ -123,6 +123,7 @@ public class ZahtevZaIznajmljivanjeController {
 							System.out.println("isti agenti");
 							zahtevi.get(k).getNarudzbenica().add(narudzbenice.get(i));			
 							zahtevi.get(k).setUkupnaCena(zahtevi.get(k).getUkupnaCena()+(ChronoUnit.DAYS.between(LocalDate.parse(narudzbenice.get(i).getRentiranjeOd().toString()),LocalDate.parse(narudzbenice.get(i).getRentiranjeDo().toString()))+1)*cenovnik.getCenaZaDan().floatValue());
+							zahtevi.get(k).setBundle(bundle);
 
 						}
 					}
@@ -131,6 +132,7 @@ public class ZahtevZaIznajmljivanjeController {
 				
 			}
 			for(int m=0; m<zahtevi.size(); m++) {
+				zahtevi.get(m).setVremeKreiranja(new Date(System.currentTimeMillis()));
 				System.out.println("iznad zahtevi save");
 				zahtevService.save(zahtevi.get(m));
 				

@@ -15,4 +15,6 @@ public interface ZahtevZaIznajmljivanjeService {
 	ZahtevZaIznajmljivanje findOne(Long id);
 	
 	ZahtevZaIznajmljivanje save(ZahtevZaIznajmljivanje zahtev);
+	
+	List<ZahtevZaIznajmljivanje> findByAgentId(long id);
 }

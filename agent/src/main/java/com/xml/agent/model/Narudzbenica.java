@@ -17,7 +17,6 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 public class Narudzbenica {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long identifikacioniBroj;
 	
 	private long oglasId;
@@ -48,18 +47,24 @@ public class Narudzbenica {
 		// TODO Auto-generated constructor stub
 	}
 
-	public Narudzbenica(long oglasid, long registrovaniKorisnikId, long agentId, long korpaId, Date rentiranjeOd,
-			Date rentiranjeDo, String markaVozila, long cenovnikId) {
+	
+
+	public Narudzbenica(long identifikacioniBroj, long oglasId, long registrovaniKorisnikId, long agentId, long korpaId,
+			Date rentiranjeOd, Date rentiranjeDo, String markaVozila, long cenovnikId, ZahtevZaIznajmljivanje zahtev) {
 		super();
-		this.oglasId = oglasid;
+		this.identifikacioniBroj = identifikacioniBroj;
+		this.oglasId = oglasId;
 		this.registrovaniKorisnikId = registrovaniKorisnikId;
 		this.agentId = agentId;
 		this.korpaId = korpaId;
 		this.rentiranjeOd = rentiranjeOd;
 		this.rentiranjeDo = rentiranjeDo;
 		this.markaVozila = markaVozila;
-		this.cenovnikId=cenovnikId;
+		this.cenovnikId = cenovnikId;
+		this.zahtev = zahtev;
 	}
+
+
 
 	public long getCenovnikId() {
 		return cenovnikId;
@@ -136,6 +141,12 @@ public class Narudzbenica {
 	public long getIdentifikacioniBroj() {
 		return identifikacioniBroj;
 	}
+
+	public void setIdentifikacioniBroj(long identifikacioniBroj) {
+		this.identifikacioniBroj = identifikacioniBroj;
+	}
+
+
 
 	@Override
 	public String toString() {

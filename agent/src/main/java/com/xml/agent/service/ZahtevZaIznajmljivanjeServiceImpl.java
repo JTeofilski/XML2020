@@ -42,5 +42,12 @@ public class ZahtevZaIznajmljivanjeServiceImpl implements ZahtevZaIznajmljivanje
 		// TODO Auto-generated method stub
 		return repository.findById(id).orElse(null);
 	}
+
+
+
+	@Override
+	public List<ZahtevZaIznajmljivanje> findByAgentId(long id) {
+		return repository.findByAgentFirmaID(id);
+	}
 	
 }

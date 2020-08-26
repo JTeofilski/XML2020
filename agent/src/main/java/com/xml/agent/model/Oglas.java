@@ -232,6 +232,9 @@ public class Oglas {
 
 
 	public Set<RezervisaniDatumi> getRezervisaniDatumi() {
+		if(rezervisaniDatumi==null) {
+			rezervisaniDatumi=new HashSet<RezervisaniDatumi>();
+		}
 		return rezervisaniDatumi;
 	}
 
