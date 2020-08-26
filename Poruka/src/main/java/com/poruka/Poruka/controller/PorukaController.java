@@ -13,7 +13,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.poruka.Poruka.model.Poruka;
+import com.poruka.Poruka.model.ZahtevZaIznajmljivanje;
 import com.poruka.Poruka.service.PorukaService;
+import com.poruka.Poruka.service.ZahtevZaIznajmljivanjeService;
 
 @RestController
 @RequestMapping(value = "/poruke")
@@ -22,12 +24,15 @@ public class PorukaController {
 	@Autowired
 	private PorukaService porukaService;
 	
-	@RequestMapping(method=RequestMethod.POST, value = "/posaljiPoruku", consumes="application/json")
-	public ResponseEntity<Poruka> posalji(@RequestBody Poruka por){
+	@Autowired
+	private ZahtevZaIznajmljivanjeService zahtevService;
+	
+	@RequestMapping(method=RequestMethod.POST, value = "/posaljiPoruku/{id}", consumes="application/json")
+	public ResponseEntity<Poruka> posalji(@RequestBody Poruka por, @PathVariable("id") Long idZahteva){
 	    Poruka poruka = new Poruka();
+	    ZahtevZaIznajmljivanje zahtev = zahtevService.findOne(idZahteva);
 		poruka.setText(por.getText());
-		poruka.setAgent(1);
-		poruka.setKorisnik(1);
+		poruka.setZahtev(zahtev);
 		porukaService.save(poruka);
 		return new ResponseEntity<>( poruka, HttpStatus.OK);
 	}

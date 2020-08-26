@@ -1,4 +1,4 @@
-package com.xml.agent.service;
+package com.poruka.Poruka.service;
 
 import java.util.List;
 
@@ -6,9 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.xml.agent.model.ZahtevZaIznajmljivanje;
-import com.xml.agent.repository.ZahtevZaIznajmljivanjeRepository;
-
+import com.poruka.Poruka.model.ZahtevZaIznajmljivanje;
+import com.poruka.Poruka.repository.ZahtevZaIznajmljivanjeRepository;
 
 
 @Transactional

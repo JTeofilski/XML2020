@@ -1,11 +1,10 @@
-package com.xml.agent.service;
+package com.poruka.Poruka.service;
 
 import java.util.List;
 
 import org.springframework.data.domain.Sort;
 
-import com.xml.agent.model.ZahtevZaIznajmljivanje;
-
+import com.poruka.Poruka.model.ZahtevZaIznajmljivanje;
 
 
 public interface ZahtevZaIznajmljivanjeService {

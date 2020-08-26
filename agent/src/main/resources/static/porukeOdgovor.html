@@ -5,7 +5,6 @@
 <script src="scripts/jquery-3.2.1.min.js"></script>
 		<script src="scripts/tether.min.js"></script>
 		<script src="scripts/bootstrap.min.js"></script>
-		<script src="scripts/fje.js" charset="UTF-8" type="text/javascript"></script>
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 	
 <title>Poruka</title>
@@ -29,7 +28,7 @@
 		var id = url.searchParams.get("id");
 		$(document).ready(function() {
 			 $.ajax({
-			        url: "http://localhost:2020/pretragaapp/zahtevi/zahtev/" +id, 
+			        url: "http://localhost:8099/poruke/poruka/" +id, 
 			   		type: "GET",
 			   		contentType: "application/json",
 			   		datatype: 'json',
@@ -39,19 +38,19 @@
 			    		   newRow = 
 								"<tr>"
 									
-									+ "<td>" + data.datumOD + "</td>"
-									+ "<td>" + data.datumDO + "</td>"
-									+ "<td>" + data.ukupnaCena + "</td>"
+									+ "<td>" + data.text + "</td>"
+									+ "<td>" + data.zahtev.registrovaniKorisnkID + "</td>"
+									
 										
 								+ "</tr>"
 								
-								$("#zahtevi").append(newRow)	
+								$("#poruka").append(newRow)	
 			    		 
 			    	   
 			    	   }
 			      
 			       });
-			 $("#poruka").click(function() {
+			 $("#poruka1").click(function() {
 				 var formData = JSON.stringify({
 		  	          text:$("#inputMessage [name='text']").val(),
 		  	         
@@ -60,7 +59,7 @@
 		  		 
 		  		
 		  		$.ajax({
-					url: "http://localhost:2020/porukaapp/poruke/posaljiPoruku/" + id,
+					url: "http://localhost:8099/poruke/dodajPoruku/" + id,
 					type: "POST",
 					data: formData,
 					//saljemo json i ocekujemo json nazad
@@ -77,19 +76,18 @@
 </head>
 <body>
 <form id="inputMessage">
-<table id="zahtevi" class = "table " style= "width:700px">
+<table id="poruka" class = "table " style= "width:700px">
 			
 			<tr class="header">
-				<th>datum od</th>
-				<th>datum do</th>
-				<th>ukupna cena</th>
+				<th>text</th>
+				<th>korisnik id</th>
 				
 			</tr>
 			</table>
 			
 			<textarea id="text" name="text" rows="4" cols="50">
            </textarea>
-           <button type="button" id="poruka">posalji</button>
+           <button type="button" id="poruka1">posalji</button>
 
 </form>
 </body>

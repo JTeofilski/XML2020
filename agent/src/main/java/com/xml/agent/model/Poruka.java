@@ -1,4 +1,4 @@
-package com.poruka.Poruka.model;
+package com.xml.agent.model;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;

@@ -24,6 +24,8 @@ public class AgentApplication {
     private static String tableToMerge5 = "model_vozila";
     private static String tableToMerge6 = "klasa_automobila";
     private static String tableToMerge7 = "cenovnik";
+    private static String tableToMerge8 = "poruka";
+    private static String tableToMerge9 = "zahtev_za_iznajmljivanje";
     
 	public static void main(String[] args) throws SQLException {
 		SpringApplication.run(AgentApplication.class, args);
@@ -218,6 +220,56 @@ while(assets7.next()){
     for(int i = 1; i <= rsMeta7.getColumnCount(); i++){
         String value = assets7.getString(i);
         if(assets7.wasNull()){
+            insertSQL += "NULL,";
+        }else{
+            insertSQL += "'" + value + "',";
+        }               
+    }
+    insertSQL =insertSQL.substring(0, insertSQL.length()-1) + ")";
+
+    try{
+        dbDestStat.executeUpdate(insertSQL);
+    }catch(SQLException e){
+        //TODO: attempt to update the row in the event of duplicate key
+    }
+
+
+}
+String sqlToExecute8 = "SELECT * FROM " + tableToMerge8;
+ResultSet assets8 = dbOriginStat.executeQuery(sqlToExecute8);
+ResultSetMetaData rsMeta8 = assets8.getMetaData();
+
+while(assets8.next()){
+    String insertSQL  = "INSERT INTO " + tableToMerge8 + " VALUES(";
+
+    for(int i = 1; i <= rsMeta8.getColumnCount(); i++){
+        String value = assets8.getString(i);
+        if(assets8.wasNull()){
+            insertSQL += "NULL,";
+        }else{
+            insertSQL += "'" + value + "',";
+        }               
+    }
+    insertSQL =insertSQL.substring(0, insertSQL.length()-1) + ")";
+
+    try{
+        dbDestStat.executeUpdate(insertSQL);
+    }catch(SQLException e){
+        //TODO: attempt to update the row in the event of duplicate key
+    }
+
+
+}
+String sqlToExecute9 = "SELECT * FROM " + tableToMerge9;
+ResultSet assets9 = dbOriginStat.executeQuery(sqlToExecute9);
+ResultSetMetaData rsMeta9 = assets9.getMetaData();
+
+while(assets9.next()){
+    String insertSQL  = "INSERT INTO " + tableToMerge9 + " VALUES(";
+
+    for(int i = 1; i <= rsMeta9.getColumnCount(); i++){
+        String value = assets9.getString(i);
+        if(assets9.wasNull()){
             insertSQL += "NULL,";
         }else{
             insertSQL += "'" + value + "',";
