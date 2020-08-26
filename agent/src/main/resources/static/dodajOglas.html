@@ -100,6 +100,28 @@
 			    	   }
 			      
 			       });
+			 $("#file-upload-form").on("submit", function (e) {
+
+			        // cancel the default behavior
+			        e.preventDefault();
+
+			        // use $.ajax() to upload file
+			        $.ajax({
+			            url: "http://localhost:8099/oglasi/file-upload",
+			            type: "POST",
+			            data: new FormData(this),
+			            enctype: 'multipart/form-data',
+			            processData: false,
+			            contentType: false,
+			            cache: false,
+			            success: function (res) {
+			                console.log(res);
+			            },
+			            error: function (err) {
+			                console.error(err);
+			            }
+			        });
+			    });
 			 $.ajax({
 			        url: "http://localhost:8099/sifrarnik/goriva", 
 			   		type: "GET",
@@ -123,7 +145,7 @@
 			    		localStorage.setItem("cenovnik", $(e).attr('data-id'));
 			    	}
 			       </script>
-<form action="" class="form" id="inputForm">
+<form action="" class="form" enctype="multipart/form-data" id="inputForm">
 <label>Izaberite marku vozila</label>			       
 <select name="marke" id="marke"></select></br>
 <label>Izaberite model vozila</label>			       
@@ -140,6 +162,8 @@
 <input type="text" name="sedista"></br>
 <label>Unesite ogranicenje kilometraze</label>
 <input type="text" name="kilometraza"></br>
+<label>Unesite sliku vozila</label>
+<input type="file" name="slika" id="slika" accept="image/*" size=30></br>
 <label>Vozilo slobodno od-do</label>
 <input type="date" name="datumOd">
 <input type="date" name="datumDo"></br>
@@ -155,6 +179,11 @@
         <input type="radio" name="colors" id="ne">ne<br>
        <button type="button" class="btn btn-primary col-3" id="dodavanje">Potvrda</button>
 </form>
+<form id="file-upload-form">
+    <label for="file-upload-input">Select file to upload</label>
+    <input type="file" id="file-upload-input" name="file">
+    <button type="submit">Start Upload</button>
+</form>
 <script type="text/javascript">
 	  	$("#dodavanje").click(function() {
 if(document.getElementById("da").checked==true){
@@ -164,6 +193,14 @@ if(document.getElementById("da").checked==true){
 	  			var collisiondamageWaiver = false;
 	  			
 	  		}
+	  		
+var file = document.getElementById('slika').files[0]; //Files[0] = 1st file
+
+//var fileInput = document.getElementById('image_input_field');
+//var file = fileInput.files[0];
+//var formData = new FormData();
+//formData.append('file', file);
+
 voziloSlobodnoOd = $("#inputForm [name='datumOd']").val();
   voziloSlobodnoDo = $("#inputForm [name='datumDo']").val();
   cenovnik = localStorage.getItem("cenovnik");
@@ -182,12 +219,12 @@ voziloSlobodnoOd = $("#inputForm [name='datumOd']").val();
 	  	      });
 	  		 
 	  		$.ajax({
-				url: "http://localhost:8099/oglasi/dodajOglas/" + id + "/" + cenovnik + "/" + voziloSlobodnoOd + "/" + voziloSlobodnoDo + "/" + collisiondamageWaiver,
+				url: "http://localhost:8099/oglasi/dodajOglas/" + file + "/" + id + "/" + cenovnik + "/" + voziloSlobodnoOd + "/" + voziloSlobodnoDo + "/" + collisiondamageWaiver,
 				type: "POST",
 				data: formData,
-				//saljemo json i ocekujemo json nazad
-				contentType: "application/json",
-				datatype: 'json',
+				
+				enctype: 'multipart/form-data',
+				
 				success: function(result){
 					
 					
@@ -195,6 +232,18 @@ voziloSlobodnoOd = $("#inputForm [name='datumOd']").val();
 				
 				}
 	  	});
+	  		function readURL(input) {
+	  		  if (input.files && input.files[0]) {
+	  		    var reader = new FileReader();
+	  		    reader.onload = function (e) {
+	  		      $('#blah')
+	  		        .attr('src', e.target.result)
+	  		        .width(150)
+	  		        .height(200);
+	  		    };
+	  		    reader.readAsDataURL(input.files[0]);
+	  		  }
+	  		}
 	  	});
 	  	</script>
 </body>

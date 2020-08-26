@@ -10,4 +10,6 @@ public interface CenovnikService {
 	Cenovnik findOne(Long id);
 	
 	List<Cenovnik> findAll();
+	
+	Cenovnik save(Cenovnik cenovnik);
 }

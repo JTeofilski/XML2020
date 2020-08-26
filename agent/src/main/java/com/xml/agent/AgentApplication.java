@@ -37,12 +37,14 @@ public class AgentApplication {
 	        String sqlToExecute = "SELECT * FROM " + tableToMerge;
 	        ResultSet assets = dbOriginStat.executeQuery(sqlToExecute);
 	        ResultSetMetaData rsMeta = assets.getMetaData();
-
+	        
 	 while(assets.next()){
+		 
 	            String insertSQL  = "INSERT INTO " + tableToMerge + " VALUES(";
 
 	            for(int i = 1; i <= rsMeta.getColumnCount(); i++){
 	                String value = assets.getString(i);
+	                
 	                if(assets.wasNull()){
 	                    insertSQL += "NULL,";
 	                }else{
@@ -50,7 +52,7 @@ public class AgentApplication {
 	                }               
 	            }
 	            insertSQL =insertSQL.substring(0, insertSQL.length()-1) + ")";
-
+	            
 	            try{
 	                dbDestStat.executeUpdate(insertSQL);
 	            }catch(SQLException e){

@@ -29,4 +29,10 @@ public class CenovnikServiceImpl implements CenovnikService{
 		return rep.findById(id).orElse(null);
 	}
 
+	@Override
+	public Cenovnik save(Cenovnik cenovnik) {
+		// TODO Auto-generated method stub
+		return rep.save(cenovnik);
+	}
+
 }
