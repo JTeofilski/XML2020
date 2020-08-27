@@ -110,7 +110,11 @@ public class Oglas {
     
     
     
-    @OneToMany (cascade = CascadeType.ALL, mappedBy = "oglas", fetch = FetchType.LAZY)
+    @OneToMany (
+            cascade = CascadeType.ALL,
+            orphanRemoval = true,
+            fetch = FetchType.EAGER)
+   @JoinColumn(name = "oglas")
     public Set<RezervisaniDatumi> rezervisaniDatumi;
     
     

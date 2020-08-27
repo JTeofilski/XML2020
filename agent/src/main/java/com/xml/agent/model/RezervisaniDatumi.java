@@ -69,6 +69,10 @@ public class RezervisaniDatumi {
 		this.oglas = oglas;
 	}
 
+	public long getIdentifikacioniBroj() {
+		return identifikacioniBroj;
+	}
+
 	
 	
 

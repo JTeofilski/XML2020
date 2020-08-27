@@ -22,6 +22,7 @@ import org.apache.tomcat.util.http.fileupload.disk.DiskFileItemFactory;
 import org.apache.tomcat.util.http.fileupload.servlet.ServletFileUpload;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpRequest;
@@ -183,4 +184,11 @@ public class OglasController {
 	    
 		return new ResponseEntity<>( oglasNovi, HttpStatus.OK);
 	}
+	
+	@RequestMapping(method=RequestMethod.GET)
+	public ResponseEntity<List<Oglas>> dobaviSve()
+	{
+		return new ResponseEntity<List<Oglas>>(oglasService.findAll(Sort.by(Sort.Direction.ASC, "identifikacioniBroj")), HttpStatus.OK);
+	}
+
 }

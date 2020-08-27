@@ -28,7 +28,7 @@ public class RezervisaniDatumi {
 	@Column
 	protected Date datumDo;
 	
-	@ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name="oglas")
 	@JsonIgnore
 	public Oglas oglas;
@@ -67,6 +67,16 @@ public class RezervisaniDatumi {
 
 	public void setOglas(Oglas oglas) {
 		this.oglas = oglas;
+	}
+
+	public long getIdentifikacioniBroj() {
+		return identifikacioniBroj;
+	}
+
+	@Override
+	public String toString() {
+		return "RezervisaniDatumi [datumOd=" + datumOd + ", datumDo="
+				+ datumDo + "]";
 	}
 
 	
