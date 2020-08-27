@@ -57,7 +57,6 @@ public class Ocena {
 
     @XmlElement(namespace = "http://www.ftn.uns.ac.rs/ocenakomentarporuka")
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     protected long identifikacioniBroj;
     @XmlElement(namespace = "http://www.ftn.uns.ac.rs/ocenakomentarporuka")
     protected double vrednostOcene;
@@ -132,5 +131,10 @@ public class Ocena {
     public void setOglas(Oglas oglas) {
         this.oglas = oglas;
     }
+
+	@Override
+	public String toString() {
+		return "Ocena [vrednostOcene=" + vrednostOcene + ", kreatorOceneID=" + kreatorOceneID + "]";
+	}
 
 }

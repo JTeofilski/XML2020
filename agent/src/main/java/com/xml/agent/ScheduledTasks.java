@@ -22,9 +22,15 @@ import org.springframework.web.client.RestTemplate;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.xml.agent.model.Komentar;
 import com.xml.agent.model.Narudzbenica;
+import com.xml.agent.model.Ocena;
+import com.xml.agent.model.Oglas;
 import com.xml.agent.model.ZahtevZaIznajmljivanje;
+import com.xml.agent.repository.KomentarRepository;
 import com.xml.agent.repository.NarudzbenicaRepository;
+import com.xml.agent.repository.OcenaRepository;
+import com.xml.agent.repository.OglasRepository;
 import com.xml.agent.repository.ZahtevZaIznajmljivanjeRepository;
 
 //The task which you want to execute
@@ -36,6 +42,16 @@ public class ScheduledTasks {
 	
 	@Autowired
 	private NarudzbenicaRepository narRepo;
+	
+	@Autowired
+	private OcenaRepository ocenaRepo;
+	
+	@Autowired 
+	private OglasRepository oglasRepo;
+	
+	@Autowired 
+	private KomentarRepository komentarRepo;
+	
 
 	@Scheduled(fixedRate = 30000) // update na 30 sec 
 	public void dobaviIzMikroservisa() {
@@ -110,11 +126,12 @@ public class ScheduledTasks {
 
 				if(zahtev.getIdentifikacioniBroj()==zahtevMicro.getIdentifikacioniBroj()){
 					System.out.println("Usao u iste zahteve!");
-					postoji=true;	
-					if(!zahtev.getStatusIznajmljivanja().toString().equals(zahtevMicro.getStatusIznajmljivanja().toString())) {				
-						zahtev=zahtevMicro;
-						zahRepo.save(zahtev);	
-					}
+					postoji=true;
+					//status zahteva se menja kad se kupi sa agenta a ne mikroservisa
+					//if(!zahtev.getStatusIznajmljivanja().toString().equals(zahtevMicro.getStatusIznajmljivanja().toString())) {				
+						//zahtev=zahtevMicro;
+						//zahRepo.save(zahtev);	
+					//}
 				}
 			}
 			if(postoji==false) {
@@ -141,6 +158,52 @@ public class ScheduledTasks {
 			}
 		}
 		
+		//preko oglasa dobavljam ocene, komentare 
+		
+		List <Oglas> oglasi = oglasRepo.findAll();
+
+		url = "http://localhost:2020/pretragaapp/oglasi/bazaAgent";
+
+		Oglas[] oglasiMikro= restTemplate.getForObject(url, Oglas[].class);
+
+		
+		for(Oglas oglas:oglasi) {
+			boolean postoji=false;
+			for(Oglas oglasMikro:oglasiMikro) {	
+				if(oglas.getIdentifikacioniBroj()==oglasMikro.getIdentifikacioniBroj()){
+					postoji=true;	
+					if(oglas.getOcena().size()!=oglasMikro.getOcena().size()) {
+						for (Ocena o:oglasMikro.getOcena()) {
+							if(!oglas.getOcena().toString().contains(o.toString())) {
+								o.setOglas(oglas);
+								System.out.println("sacuva za id ocene: "+o.getIdentifikacioniBroj());
+								ocenaRepo.save(o);
+								
+								
+
+								
+							}
+						}
+					}
+					
+					if(oglas.getKomentar().size()!=oglasMikro.getKomentar().size()) {
+						for (Komentar k:oglasMikro.getKomentar()) {
+							if(!oglas.getKomentar().toString().contains(k.toString())) {
+								k.setOglas(oglas);
+								System.out.println("sacuva za id ocene: "+k.getIdentifikacioniBroj());
+								komentarRepo.save(k);
+								
+								
+
+								
+							}
+						}
+					}
+					
+				}
+			}
+			
+		}
 	}
 
 		

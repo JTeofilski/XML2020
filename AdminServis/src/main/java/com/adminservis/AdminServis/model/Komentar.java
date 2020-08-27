@@ -238,4 +238,11 @@ public class Komentar {
 		// TODO Auto-generated constructor stub
 	}
 
+	@Override
+	public String toString() {
+		return "Komentar [kreatorKomentaraID=" + kreatorKomentaraID + ", tekstKomentara=" + tekstKomentara
+				+ ", datumVremeKreiranja=" + datumVremeKreiranja + ", statusKomentara=" + statusKomentara
+				+ ", imeKorisnika=" + imeKorisnika + "]";
+	}
+
 }

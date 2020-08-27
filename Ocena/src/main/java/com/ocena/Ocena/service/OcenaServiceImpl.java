@@ -1,5 +1,7 @@
 package com.ocena.Ocena.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,6 +19,13 @@ public class OcenaServiceImpl implements OcenaService {
 	public Ocena save (Ocena ocena) {
 		
 		return repository.save(ocena);
+	}
+
+
+	@Override
+	public List<Ocena> findAll() {
+		
+		return repository.findAll();
 	}
 
 }

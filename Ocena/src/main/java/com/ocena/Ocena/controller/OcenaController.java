@@ -1,5 +1,7 @@
 package com.ocena.Ocena.controller;
 
+import java.util.List;
+
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,4 +42,7 @@ public class OcenaController {
 		return new ResponseEntity<>( ocena, HttpStatus.OK);
 		
 	}
+	
+	
+
 }

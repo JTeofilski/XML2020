@@ -133,4 +133,9 @@ public class Ocena {
         this.oglas = oglas;
     }
 
+	@Override
+	public String toString() {
+		return "Ocena [vrednostOcene=" + vrednostOcene + ", kreatorOceneID=" + kreatorOceneID + "]";
+	}
+
 }

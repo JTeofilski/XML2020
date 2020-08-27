@@ -229,5 +229,8 @@ public class OglasController {
 			return new ResponseEntity<Set<Oglas>>(oglasiIzKorpe, HttpStatus.OK);
 		}
 		*/
-		
+		@RequestMapping(method=RequestMethod.GET,  value = "/bazaAgent")
+		public List<Oglas> zaBazu(){
+			return oglasService.findAll(Sort.by(Sort.Direction.ASC, "identifikacioniBroj"));
+		}
 }

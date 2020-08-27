@@ -90,11 +90,11 @@ public class Oglas {
     @ManyToOne
      protected Cenovnik cenovnik;
     @XmlElement(name = "Ocena", namespace = "http://www.ftn.uns.ac.rs/ocenakomentarporuka")
-    @OneToMany(mappedBy = "oglas")
+    @OneToMany(mappedBy = "oglas",fetch = FetchType.EAGER)
     protected Set<Ocena> ocena;
    
     @XmlElement(name = "Komentar", namespace = "http://www.ftn.uns.ac.rs/ocenakomentarporuka")
-    @OneToMany()
+    @OneToMany(fetch = FetchType.EAGER)
     @JoinColumn(name = "oglas_id")
     protected Set<Komentar> komentar;
     
