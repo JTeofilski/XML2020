@@ -13,6 +13,7 @@ import org.joda.time.Hours;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
@@ -23,9 +24,13 @@ import org.springframework.web.client.RestTemplate;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.pretraga.Pretraga.model.Narudzbenica;
+import com.pretraga.Pretraga.model.Oglas;
+import com.pretraga.Pretraga.model.RezervisaniDatumi;
 import com.pretraga.Pretraga.model.ZahtevZaIznajmljivanje;
 import com.pretraga.Pretraga.repository.NarudzbenicaRepository;
 import com.pretraga.Pretraga.repository.ZahtevZaIznajmljivanjeRepository;
+import com.pretraga.Pretraga.service.OglasService;
+import com.pretraga.Pretraga.service.RezervisaniDatumiService;
 
 //The task which you want to execute
 @Component
@@ -40,6 +45,13 @@ public class ScheduledTasks {
 	
 	@Autowired
 	private NarudzbenicaRepository narRepo;
+	
+	@Autowired
+	private OglasService oglasService;
+	
+	@Autowired
+	private RezervisaniDatumiService rezDatService;
+	
 
 	@Scheduled(fixedRate = 3600000) //1h
 	public void reportCurrentTime() {
@@ -68,34 +80,46 @@ public class ScheduledTasks {
 		
 	}
 	
-	
-	/*
-	@Scheduled(fixedRate = 3600000) //1h
-	public void updateNarudzbenica() {
-		List <Narudzbenica> narudzbenice=narRepo.findAll();
+	@Scheduled(fixedRate = 30000) //1h
+	public void dobaviIzAgenta() {
 		
-		final String uri = "http://localhost:8099/baza/narudzbenice";
-		ObjectMapper mapper= new ObjectMapper();
-		String json = null;
+		List<Oglas> oglasi = oglasService.findAll(Sort.by(Sort.Direction.ASC, "identifikacioniBroj"));
 		
-		try {
-			json= mapper.writeValueAsString(narudzbenice);
-			RestTemplate restTemplate = new RestTemplate();
-			
-			HttpHeaders headers = new HttpHeaders();
-			headers.setContentType(MediaType.APPLICATION_JSON);
-			
-			HttpEntity<String> entity = new HttpEntity<String>(json,headers);
-			String answer = restTemplate.postForObject(uri, entity, String.class);
-			
-			System.out.println(answer);
+		String url = "http://localhost:8099/oglasi";
 		
-		} catch (Exception  e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			System.out.println("NIJE DOHVATIO CONTR");
-		}
+
+		RestTemplate restTemplate = new RestTemplate();
+		Oglas[] oglasiAgent= restTemplate.getForObject(url, Oglas[].class);
+		
+		// provera za update i delete
+				for(Oglas oglas:oglasi) {
+					boolean postoji=false;
+					for(Oglas oglasAgent:oglasiAgent) {	
+						if(oglas.getIdentifikacioniBroj()==oglasAgent.getIdentifikacioniBroj()){
+							postoji=true;	
+							if(oglas.getRezervisaniDatumi().size()<oglasAgent.getRezervisaniDatumi().size()) {
+								for (RezervisaniDatumi rd:oglasAgent.getRezervisaniDatumi()) {
+									if(!oglas.getRezervisaniDatumi().toString().contains(rd.toString())) {
+										rd.setOglas(oglas);
+										System.out.println("sacuva za id datuma: "+rd.getIdentifikacioniBroj());
+										rezDatService.save(rd);
+										
+										
+
+										
+									}
+								}
+							}
+							
+						}
+					}
+					
+				}
 				
+	
+
 	}
-	*/
+	
+	
+	
 }

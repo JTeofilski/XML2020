@@ -25,6 +25,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
 
+
 /**
  * <p>Java class for anonymous complex type.
  * 
@@ -92,6 +93,12 @@ public class Agent {
     protected String status;
     @XmlElement(required = false)
     protected int poslovniMaticniBroj;
+    
+    @XmlElement(name = "Oglas", namespace = "http://www.ftn.uns.ac.rs/oglas")
+    @OneToMany(mappedBy="agent")
+    protected Set<Oglas> oglasi= new HashSet<Oglas>();
+    
+    
 
     public Agent() {
 		super();
@@ -308,12 +315,12 @@ public class Agent {
      * 
      * 
      */
-  /*  public List<Oglas> getOglas() {
-        if (oglas == null) {
-            oglas = new ArrayList<Oglas>();
+    public Set<Oglas> getOglas() {
+        if (oglasi == null) {
+            oglasi = new HashSet<Oglas>();
         }
-        return this.oglas;
-    }*/
+        return this.oglasi;
+    }
 
     /**
      * Gets the value of the izvestaj property.

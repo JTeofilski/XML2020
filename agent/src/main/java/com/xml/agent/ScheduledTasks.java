@@ -40,6 +40,9 @@ public class ScheduledTasks {
 	@Scheduled(fixedRate = 30000) // update na 30 sec 
 	public void dobaviIzMikroservisa() {
 		
+		
+		
+		
 		// *** provera za narudzbenice 
 		List<Narudzbenica> narudzbenice= narRepo.findAll();	
 		
@@ -77,11 +80,17 @@ public class ScheduledTasks {
 				}
 			}
 			if(!postoji) {
-				narRepo.save(narudzbenicaMicro);
+			System.out.println("dodaje novu narudzbenicu "+narudzbenicaMicro.getIdentifikacioniBroj());
+				Narudzbenica n=new Narudzbenica();
+				n=narudzbenicaMicro;
+				n.setIdentifikacioniBroj(narudzbenicaMicro.getIdentifikacioniBroj());
+				
+				narRepo.save(n);
 			}
 		}
 		
 		// *** kraj provere za narudzbenice
+		
 		
 		// *** provera za zahteve
 		
@@ -100,6 +109,7 @@ public class ScheduledTasks {
 				
 
 				if(zahtev.getIdentifikacioniBroj()==zahtevMicro.getIdentifikacioniBroj()){
+					System.out.println("Usao u iste zahteve!");
 					postoji=true;	
 					if(!zahtev.getStatusIznajmljivanja().toString().equals(zahtevMicro.getStatusIznajmljivanja().toString())) {				
 						zahtev=zahtevMicro;
@@ -108,6 +118,8 @@ public class ScheduledTasks {
 				}
 			}
 			if(postoji==false) {
+				System.out.println("Brise");
+
 				zahRepo.delete(zahtev);	
 			}
 		}
@@ -121,7 +133,11 @@ public class ScheduledTasks {
 				}
 			}
 			if(!postoji) {
-				zahRepo.save(zahtevMicro);
+				System.out.println("dodaje nov "+zahtevMicro.getIdentifikacioniBroj());
+				ZahtevZaIznajmljivanje z=new ZahtevZaIznajmljivanje();
+				z=zahtevMicro;
+				z.setIdentifikacioniBroj(zahtevMicro.getIdentifikacioniBroj());
+				zahRepo.save(z);
 			}
 		}
 		
