@@ -103,7 +103,7 @@ public class OglasController {
 	  			adresa="";
 	  		}
 	  		for(int i=0; i<oglasi.size(); i++) {
-	  			
+	  			zauzeto = false;
 	  			for(RezervisaniDatumi temp : oglasi.get(i).getRezervisaniDatumi()) {
 	  	
 	  			if(temp.getDatumOd().compareTo(slobodnoOd)<=0&&temp.getDatumDo().compareTo(slobodnoDo)>=0){
@@ -114,10 +114,11 @@ public class OglasController {
 	  			}
 	  			
 	  			
-	  		}
+	  		
 	  			if(zauzeto==false&&oglasi.get(i).getAgent().getAdresa().toLowerCase().contains(adresa.toLowerCase())) {
 	  				oglasiPretraga.add(oglasi.get(i));
 	  			}
+	  		}
 	  		}
 	  		
 	  		return new ResponseEntity<List<Oglas>>(oglasiPretraga, HttpStatus.OK);
