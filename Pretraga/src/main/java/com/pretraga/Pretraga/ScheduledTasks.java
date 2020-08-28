@@ -116,7 +116,27 @@ public class ScheduledTasks {
 					
 				}
 				
+				
+				
+				List<ZahtevZaIznajmljivanje> zahtevi = repo.findAll();
+				
+				url = "http://localhost:8099/zahtevi";
+				
+
+				restTemplate = new RestTemplate();
+				ZahtevZaIznajmljivanje[] zahteviAgent= restTemplate.getForObject(url, ZahtevZaIznajmljivanje[].class);
 	
+				for (ZahtevZaIznajmljivanje zahtev:zahtevi) {
+					for (ZahtevZaIznajmljivanje zahtevAgent :zahteviAgent) {
+						if(zahtev.getIdentifikacioniBroj()==zahtevAgent.getIdentifikacioniBroj()) {
+							
+							if(!zahtev.getStatusIznajmljivanja().toString().equals(zahtevAgent.getStatusIznajmljivanja().toString())) {				
+								zahtev=zahtevAgent;
+								repo.save(zahtev);	
+							}
+						}
+					}
+				}
 
 	}
 	

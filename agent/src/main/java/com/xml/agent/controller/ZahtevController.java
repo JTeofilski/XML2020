@@ -62,6 +62,12 @@ public class ZahtevController {
 		return null;
 		
 	}
+	
+	@RequestMapping(method=RequestMethod.GET)
+	public List<ZahtevZaIznajmljivanje> proslediNaMikroservis(){
+		return zahtevService.findAll();
+	}
+
 
 	
 }
