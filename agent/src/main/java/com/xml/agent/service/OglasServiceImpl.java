@@ -58,5 +58,11 @@ public class OglasServiceImpl implements OglasService{
 		return oglasRepository.findAll(sort);
 	}
 
+	@Override
+	public List<Oglas> findByAgentId(long id) {
+		
+		return oglasRepository.findByAgentIdentifikacioniBroj(id);
+	}
+
 
 }

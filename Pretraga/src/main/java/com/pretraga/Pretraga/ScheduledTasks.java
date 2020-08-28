@@ -99,10 +99,12 @@ public class ScheduledTasks {
 							postoji=true;	
 							if(oglas.getRezervisaniDatumi().size()<oglasAgent.getRezervisaniDatumi().size()) {
 								for (RezervisaniDatumi rd:oglasAgent.getRezervisaniDatumi()) {
-									if(!oglas.getRezervisaniDatumi().toString().contains(rd.toString())) {
-										rd.setOglas(oglas);
+									if(oglas.getRezervisaniDatumi().toString().contains(rd.toString())==false) {
+										RezervisaniDatumi rezd= new RezervisaniDatumi();
+										rezd=rd;
+										rezd.setOglas(oglas);
 										System.out.println("sacuva za id datuma: "+rd.getIdentifikacioniBroj());
-										rezDatService.save(rd);
+										rezDatService.save(rezd);
 										
 										
 

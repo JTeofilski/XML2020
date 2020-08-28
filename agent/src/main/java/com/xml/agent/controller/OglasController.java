@@ -46,10 +46,12 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.xml.agent.model.Cenovnik;
 import com.xml.agent.model.Oglas;
+import com.xml.agent.model.RezervisaniDatumi;
 import com.xml.agent.model.Vozilo;
 import com.xml.agent.service.AgentService;
 import com.xml.agent.service.CenovnikService;
 import com.xml.agent.service.OglasService;
+import com.xml.agent.service.RezervisaniDatumiService;
 import com.xml.agent.service.VoziloService;
 
 @RestController
@@ -67,6 +69,9 @@ public class OglasController {
 	
 	@Autowired
 	private VoziloService voziloService;
+	
+	@Autowired
+	private RezervisaniDatumiService rezDatumiService;
 	
 	@PostMapping("/file-upload")
 	@ResponseBody
@@ -190,5 +195,20 @@ public class OglasController {
 	{
 		return new ResponseEntity<List<Oglas>>(oglasService.findAll(Sort.by(Sort.Direction.ASC, "identifikacioniBroj")), HttpStatus.OK);
 	}
+	
+	@RequestMapping(method=RequestMethod.GET, value ="/{id}" )
+	public ResponseEntity<List<Oglas>> dobaviZaAgenta(@PathVariable("id") long idAgenta){
+		return new  ResponseEntity<List<Oglas>>(oglasService.findByAgentId(idAgenta), HttpStatus.OK);
+	}
+	
+	
+	@RequestMapping(method=RequestMethod.GET, value ="/rezervacija/{datumOd}/{datumDo}/{oglasId}" )
+	public void rezervisi(@PathVariable("datumOd") Date datumOd, @PathVariable("datumDo") Date datumDo, @PathVariable("oglasId") long oglasId){
+		Oglas oglas= oglasService.findOne(oglasId);
+		RezervisaniDatumi rd= new RezervisaniDatumi(datumOd, datumDo, oglas);
+		rezDatumiService.save(rd);
+		
+	}
 
+		
 }

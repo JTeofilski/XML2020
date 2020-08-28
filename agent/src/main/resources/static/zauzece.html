@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Zauzece</title>
+<script src="scripts/jquery-3.2.1.min.js"></script>
+		<script src="scripts/tether.min.js"></script>
+		<script src="scripts/bootstrap.min.js"></script>
+		<script src="scripts/fje.js" charset="UTF-8" type="text/javascript"></script>
+	
+	
+<script>
+
+var url_string = window.location.href;
+var url = new URL(url_string);
+var id = url.searchParams.get("id");
+
+$(document).ready(function() {
+	 $.ajax({
+	        url: "http://localhost:8099/oglasi/"+id, 
+	   		type: "GET",
+	   		contentType: "application/json",
+	   		datatype: 'json',
+	    	   success: function(data){
+	    		   
+	    		   for(i=0;i<data.length; i++){
+	    			  var sel="<option value='"+data[i].identifikacioniBroj+"'>"+data[i].vozilo.nazivMarke+"</option>";
+	    			  $("#vozila").append(sel);
+	    		   }
+	    	   }
+	 });
+});
+
+
+
+
+</script>
+		
+</head>
+<body>
+
+<p>Unesite zauzece vozila:</p>
+<label> Datum od:</label>
+<input type="date" id="datumOd" name="datumOd" >
+<label> Datum do:</label>
+<input type="date" id="datumDo" name="datumDo" >
+<label> Vozilo:</label>
+<select id="vozila" name="vozila">
+  
+</select>
+<button onclick='Rezervacija()'> Rezervisi</button>
+
+</body>
+</html>

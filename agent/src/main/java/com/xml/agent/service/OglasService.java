@@ -24,5 +24,7 @@ public interface OglasService {
 	
 	List<Oglas> save(List<Oglas> oglasi);
 	
+	List<Oglas> findByAgentId(long id);
+	 
 	
 }

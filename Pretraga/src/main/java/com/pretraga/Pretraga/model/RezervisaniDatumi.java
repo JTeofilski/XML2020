@@ -75,8 +75,11 @@ public class RezervisaniDatumi {
 
 	@Override
 	public String toString() {
-		return "RezervisaniDatumi [datumOd=" + datumOd + ", datumDo=" + datumDo + ", oglas=" + oglas + "]";
+		return "RezervisaniDatumi [identifikacioniBroj=" + identifikacioniBroj + ", datumOd=" + datumOd + ", datumDo="
+				+ datumDo + ", oglas=" + oglas + "]";
 	}
+
+	
 
 	
 

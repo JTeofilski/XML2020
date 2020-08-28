@@ -1,5 +1,6 @@
 package com.xml.agent.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +16,7 @@ import com.xml.agent.model.Oglas;
 import com.xml.agent.model.RezervisaniDatumi;
 import com.xml.agent.model.ZahtevZaIznajmljivanje;
 import com.xml.agent.service.OglasService;
+import com.xml.agent.service.RezervisaniDatumiService;
 import com.xml.agent.service.ZahtevZaIznajmljivanjeService;
 
 @RestController
@@ -29,6 +31,8 @@ public class ZahtevController {
 	@Autowired 
 	private OglasService oglasService;
 	
+	@Autowired 
+	private RezervisaniDatumiService rdService;
 	
 	
 	
@@ -37,29 +41,57 @@ public class ZahtevController {
 	
 	@RequestMapping(method=RequestMethod.GET, value = "/{idAgenta}", consumes = "application/json", produces = "application/json")
 	public  ResponseEntity<List<ZahtevZaIznajmljivanje>> agentoviZahtevi(@PathVariable("idAgenta") long idAgenta){
-		
-		return new ResponseEntity<List<ZahtevZaIznajmljivanje>>(zahtevService.findByAgentId(idAgenta), HttpStatus.OK);
+		List<ZahtevZaIznajmljivanje> zahtevi = new ArrayList<ZahtevZaIznajmljivanje>();
+		for(ZahtevZaIznajmljivanje z:zahtevService.findByAgentId(idAgenta)) {
+			if(z.getStatusIznajmljivanja()=="RESERVED") {
+				zahtevi.add(z);
+			}
+		}
+		return new ResponseEntity<List<ZahtevZaIznajmljivanje>>(zahtevi, HttpStatus.OK);
 	
 	}
 	
-	@RequestMapping(method=RequestMethod.GET, value = "/odobri{idZahteva}", consumes = "application/json", produces = "application/json")
-	public  ResponseEntity<List<ZahtevZaIznajmljivanje>> odobriZahtev(@PathVariable("idZahteva") long idZahteva){
+	@RequestMapping(method=RequestMethod.GET, value = "/odobri/{idZahteva}", consumes = "application/json")
+	public  String odobriZahtev(@PathVariable("idZahteva") long idZahteva){
 		
 		ZahtevZaIznajmljivanje zahtev= zahtevService.findOne(idZahteva);
-		zahtev.setStatusIznajmljivanja("PAID");
 		
 		
 		for (Narudzbenica n:zahtev.getNarudzbenica()) {
 			Oglas oglas= oglasService.findOne(n.getOglasId());
+			
+			List<RezervisaniDatumi> postojeci = rdService.findByOglasId(oglas.getIdentifikacioniBroj());
+			//novi
 			RezervisaniDatumi rd= new RezervisaniDatumi(n.getRentiranjeOd(),n.getRentiranjeDo(),oglas);
 			
+			//proci kroz listu postojecih datuma 
+			
+			for (RezervisaniDatumi p:postojeci) {
+				if((p.getDatumOd().compareTo(rd.getDatumOd())*rd.getDatumOd().compareTo(p.getDatumDo())>=0)||(p.getDatumOd().compareTo(rd.getDatumDo())*rd.getDatumDo().compareTo(p.getDatumDo())>=0) ) {
+					System.out.println("postoji vec taj datum u rezervacijama!");
+					zahtev.setStatusIznajmljivanja("CANCELED");
+					zahtevService.save(zahtev);	
+					return "datum je vec rezervisan i zahtev ce biti otkazan";
+
+				}
+					
+			}
+		}
+		
+		// ako nijednom ne upadne u return znaci da su svi datumi ok
+		for (Narudzbenica n:zahtev.getNarudzbenica()) {
+				
+			Oglas oglas= oglasService.findOne(n.getOglasId());
+			RezervisaniDatumi rd= new RezervisaniDatumi(n.getRentiranjeOd(),n.getRentiranjeDo(),oglas);
+
 			oglas.getRezervisaniDatumi().add(rd);
 			oglasService.save(oglas);
 		}
+	
 		
-		
+		zahtev.setStatusIznajmljivanja("PAID");
 		zahtevService.save(zahtev);		
-		return null;
+		return "svi datumi su ok";
 		
 	}
 	
