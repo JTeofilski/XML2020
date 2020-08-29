@@ -54,7 +54,7 @@ public class PorukaController {
 			poruka.setZahtev(zahtev);
 			poruka.setIdentifikacioniBroj(poruke.size()+3);
 			service.save(poruka);
-		
+		//preneti kod korisnika
 		return new ResponseEntity<Poruka>(poruka, HttpStatus.OK);
 	}
 	@RequestMapping(method=RequestMethod.GET, value = "/poruka/{id}")

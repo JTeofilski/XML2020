@@ -145,7 +145,7 @@
 			    		localStorage.setItem("cenovnik", $(e).attr('data-id'));
 			    	}
 			       </script>
-<form action="" class="form" enctype="multipart/form-data" id="inputForm">
+<form action="" class="form" id="inputForm">
 <label>Izaberite marku vozila</label>			       
 <select name="marke" id="marke"></select></br>
 <label>Izaberite model vozila</label>			       
@@ -194,7 +194,7 @@ if(document.getElementById("da").checked==true){
 	  			
 	  		}
 	  		
-var file = document.getElementById('slika').files[0]; //Files[0] = 1st file
+//var file = document.getElementById('slika').files[0]; //Files[0] = 1st file
 
 //var fileInput = document.getElementById('image_input_field');
 //var file = fileInput.files[0];
@@ -219,12 +219,11 @@ voziloSlobodnoOd = $("#inputForm [name='datumOd']").val();
 	  	      });
 	  		 
 	  		$.ajax({
-				url: "http://localhost:8099/oglasi/dodajOglas/" + file + "/" + id + "/" + cenovnik + "/" + voziloSlobodnoOd + "/" + voziloSlobodnoDo + "/" + collisiondamageWaiver,
+				url: "http://localhost:8099/oglasi/dodajOglas/" + id + "/" + cenovnik + "/" + voziloSlobodnoOd + "/" + voziloSlobodnoDo + "/" + collisiondamageWaiver,
 				type: "POST",
 				data: formData,
-				
-				enctype: 'multipart/form-data',
-				
+				contentType: "application/json",
+				datatype: 'json',
 				success: function(result){
 					
 					

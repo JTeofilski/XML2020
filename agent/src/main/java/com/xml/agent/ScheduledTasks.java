@@ -22,11 +22,13 @@ import org.springframework.web.client.RestTemplate;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.xml.agent.model.Cenovnik;
 import com.xml.agent.model.Komentar;
 import com.xml.agent.model.Narudzbenica;
 import com.xml.agent.model.Ocena;
 import com.xml.agent.model.Oglas;
 import com.xml.agent.model.ZahtevZaIznajmljivanje;
+import com.xml.agent.repository.CenovnikRepository;
 import com.xml.agent.repository.KomentarRepository;
 import com.xml.agent.repository.NarudzbenicaRepository;
 import com.xml.agent.repository.OcenaRepository;
@@ -51,6 +53,9 @@ public class ScheduledTasks {
 	
 	@Autowired 
 	private KomentarRepository komentarRepo;
+	
+	@Autowired 
+	private CenovnikRepository cenovnikRepo;
 	
 
 	@Scheduled(fixedRate = 30000) // update na 30 sec 
@@ -202,10 +207,54 @@ public class ScheduledTasks {
 					
 				}
 			}
+		}	
+		
+		
+		// *** provera za cenovnike
+				List<Cenovnik> cenovnici= cenovnikRepo.findAll();	
+				
+				String url1 = "http://localhost:2020/adminservisapp/cenovnici/bazaAdminCenovnik";
+				
+				RestTemplate restTemplate1 = new RestTemplate();
+				Cenovnik[] cenovniciMicro = restTemplate1.getForObject(url1, Cenovnik[].class);
 			
-		}
+				// provera za update i delete
+				for(Cenovnik cenovnik:cenovnici) {
+					boolean postojiC=false;
+					for(Cenovnik cenovnikMicro:cenovniciMicro) {	
+						
+
+						if(cenovnik.getIdentifikacioniBroj()==cenovnikMicro.getIdentifikacioniBroj()){
+							postojiC=true;	
+							
+						}
+					}
+					if(postojiC==false) {
+						cenovnikRepo.delete(cenovnik);	
+					}
+				}
+				// provera za dodavanje novih
+				for(Cenovnik cenovnikMicro:cenovniciMicro) {
+					boolean postoji1=false;
+					for (Cenovnik cenovnik:cenovnici) {
+						if(cenovnikMicro.getIdentifikacioniBroj()==cenovnik.getIdentifikacioniBroj()) {
+							postoji1=true;
+						}
+					}
+					if(!postoji1) {
+					System.out.println("dodaje novi cenovnik "+ cenovnikMicro.getIdentifikacioniBroj());
+						Cenovnik c= new Cenovnik();
+						c=cenovnikMicro;
+						c.setIdentifikacioniBroj(cenovnikMicro.getIdentifikacioniBroj());
+						
+						cenovnikRepo.save(c);
+					}
+				}
+				
+				// *** kraj provere za cenovnike
+				
+				
 	}
 
-		
+	}	
 	
-}

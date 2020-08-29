@@ -27,7 +27,7 @@
 		
 		$(document).ready(function() {
 			 $.ajax({
-			        url: "http://localhost:2020/adminservisapp/adminservlet/sifrarnik/marke", 
+			        url: "http://localhost:2020/adminservisapp/sifrarnik/marke", 
 			   		type: "GET",
 			   		contentType: "application/json",
 			   		datatype: 'json',
@@ -51,7 +51,7 @@
 			
 			 });
 			 $.ajax({
-			        url: "http://localhost:2020/adminservisapp/adminservlet/sifrarnik/goriva", 
+			        url: "http://localhost:2020/adminservisapp/sifrarnik/goriva", 
 			   		type: "GET",
 			   		contentType: "application/json",
 			   		datatype: 'json',
@@ -75,7 +75,7 @@
 			
 			 });
 			 $.ajax({
-			        url: "http://localhost:2020/adminservisapp/adminservlet/sifrarnik/menjaci", 
+			        url: "http://localhost:2020/adminservisapp/sifrarnik/menjaci", 
 			   		type: "GET",
 			   		contentType: "application/json",
 			   		datatype: 'json',
@@ -99,7 +99,7 @@
 			
 			 });
 			 $.ajax({
-			        url: "http://localhost:2020/adminservisapp/adminservlet/sifrarnik/klase", 
+			        url: "http://localhost:2020/adminservisapp/sifrarnik/klase", 
 			   		type: "GET",
 			   		contentType: "application/json",
 			   		datatype: 'json',
@@ -130,7 +130,7 @@
 		            });
 		            
 			       $.ajax({
-			        url: "http://localhost:2020/adminservisapp/adminservlet/sifrarnik/dodajModel",
+			        url: "http://localhost:2020/adminservisapp/sifrarnik/dodajModel",
 			   		type: "POST",
 			   		data: formData,
 			   		//saljemo json i ocekujemo json nazad
@@ -138,7 +138,7 @@
 			   		datatype: 'json',
 			    	   success: function(data){
 								
-			    		   location.href = "http://localhost:2020/adminservisapp/adminservlet/sifrarnik.html"			
+			    		   location.href = "http://localhost:2020/adminservisapp/sifrarnik.html"			
 			    	   }
 			      
 			       });
@@ -153,7 +153,7 @@
 		            });
 		            
 			       $.ajax({
-			        url: "http://localhost:2020/adminservisapp/adminservlet/sifrarnik/dodajMenjac",
+			        url: "http://localhost:2020/adminservisapp/sifrarnik/dodajMenjac",
 			   		type: "POST",
 			   		data: formData,
 			   		//saljemo json i ocekujemo json nazad
@@ -161,7 +161,7 @@
 			   		datatype: 'json',
 			    	   success: function(data){
 								
-			    		   location.href = "http://localhost:2020/adminservisapp/adminservlet/sifrarnik.html"			
+			    		   location.href = "http://localhost:2020/adminservisapp/sifrarnik.html"			
 			    	   }
 			      
 			       });
@@ -176,7 +176,7 @@
 		            });
 		            
 			       $.ajax({
-			        url: "http://localhost:2020/adminservisapp/adminservlet/sifrarnik/dodajMarku",
+			        url: "http://localhost:2020/adminservisapp/sifrarnik/dodajMarku",
 			   		type: "POST",
 			   		data: formData,
 			   		//saljemo json i ocekujemo json nazad
@@ -184,7 +184,7 @@
 			   		datatype: 'json',
 			    	   success: function(data){
 								
-			    		   location.href = "http://localhost:2020/adminservisapp/adminservlet/sifrarnik.html"			
+			    		   location.href = "http://localhost:2020/adminservisapp/sifrarnik.html"			
 			    	   }
 			      
 			       });
@@ -200,7 +200,7 @@
 		            });
 		            
 			       $.ajax({
-			        url: "http://localhost:2020/adminservisapp/adminservlet/sifrarnik/dodajKlasu",
+			        url: "http://localhost:2020/adminservisapp/sifrarnik/dodajKlasu",
 			   		type: "POST",
 			   		data: formData,
 			   		//saljemo json i ocekujemo json nazad
@@ -208,7 +208,7 @@
 			   		datatype: 'json',
 			    	   success: function(data){
 								
-			    		   location.href = "http://localhost:2020/adminservisapp/adminservlet/sifrarnik.html"			
+			    		   location.href = "http://localhost:2020/adminservisapp/sifrarnik.html"			
 			    	   }
 			      
 			       });
@@ -224,7 +224,7 @@
 		            });
 		            
 			       $.ajax({
-			        url: "http://localhost:2020/adminservisapp/adminservlet/sifrarnik/dodajGorivo",
+			        url: "http://localhost:2020/adminservisapp/sifrarnik/dodajGorivo",
 			   		type: "POST",
 			   		data: formData,
 			   		//saljemo json i ocekujemo json nazad
@@ -270,11 +270,11 @@
 			event.preventDefault();
 			
 			$.ajax({
-				url: "http://localhost:2020/adminservisapp/adminservlet/sifrarnik/obrisiMarku/"  + localStorage.getItem("markaZaBrisanje"),
+				url: "http://localhost:2020/adminservisapp/sifrarnik/obrisiMarku/"  + localStorage.getItem("markaZaBrisanje"),
 				type: "DELETE",
 				success: function(data){
 					if(data){
-						location.href = "http://localhost:2020/adminservisapp/adminservlet/sifrarnik.html"			
+						location.href = "http://localhost:2020/adminservisapp/sifrarnik.html"			
 					}else
 						alert("BRISANJE MARKE NIJE USPELO.");
 				}
@@ -312,11 +312,11 @@
 			event.preventDefault();
 			
 			$.ajax({
-				url: "http://localhost:2020/adminservisapp/adminservlet/sifrarnik/obrisiModel/"  + localStorage.getItem("modelZaBrisanje"),
+				url: "http://localhost:2020/adminservisapp/sifrarnik/obrisiModel/"  + localStorage.getItem("modelZaBrisanje"),
 				type: "DELETE",
 				success: function(data){
 					if(data){
-						location.href = "http://localhost:2020/adminservisapp/adminservlet/sifrarnik.html"			
+						location.href = "http://localhost:2020/adminservisapp/sifrarnik.html"			
 					}else
 						alert("BRISANJE MODELA NIJE USPELO.");
 				}
@@ -330,11 +330,11 @@
 			event.preventDefault();
 			
 			$.ajax({
-				url: "http://localhost:2020/adminservisapp/adminservlet/sifrarnik/obrisiKlasu/"  + localStorage.getItem("klasaZaBrisanje"),
+				url: "http://localhost:2020/adminservisapp/sifrarnik/obrisiKlasu/"  + localStorage.getItem("klasaZaBrisanje"),
 				type: "DELETE",
 				success: function(data){
 					if(data){
-						location.href = "http://localhost:2020/adminservisapp/adminservlet/sifrarnik.html"			
+						location.href = "http://localhost:2020/adminservisapp/sifrarnik.html"			
 					}else
 						alert("BRISANJE KLASE VOZILA NIJE USPELO.");
 				}
@@ -348,11 +348,11 @@
 			event.preventDefault();
 			
 			$.ajax({
-				url: "http://localhost:2020/adminservisapp/adminservlet/sifrarnik/obrisiGorivo/"  + localStorage.getItem("gorivoZaBrisanje"),
+				url: "http://localhost:2020/adminservisapp/sifrarnik/obrisiGorivo/"  + localStorage.getItem("gorivoZaBrisanje"),
 				type: "DELETE",
 				success: function(data){
 					if(data){
-						location.href = "http://localhost:2020/adminservisapp/adminservlet/sifrarnik.html"			
+						location.href = "http://localhost:2020/adminservisapp/sifrarnik.html"			
 					}else
 						alert("BRISANJE VRSTE GORIVA NIJE USPELO.");
 				}
@@ -366,11 +366,11 @@
 			event.preventDefault();
 			
 			$.ajax({
-				url: "http://localhost:2020/adminservisapp/adminservlet/sifrarnik/obrisiMenjac/"  + localStorage.getItem("menjacZaBrisanje"),
+				url: "http://localhost:2020/adminservisapp/sifrarnik/obrisiMenjac/"  + localStorage.getItem("menjacZaBrisanje"),
 				type: "DELETE",
 				success: function(data){
 					if(data){
-						location.href = "http://localhost:2020/adminservisapp/adminservlet/sifrarnik.html"			
+						location.href = "http://localhost:2020/adminservisapp/sifrarnik.html"			
 					}else
 						alert("BRISANJE TIPA MENJACA NIJE USPELO.");
 				}
@@ -381,7 +381,7 @@
 		<script type="text/javascript">
 		$(document).ready(function() {
 			$.ajax({
-		        url: "http://localhost:2020/adminservisapp/adminservlet/sifrarnik/modeli", 
+		        url: "http://localhost:2020/adminservisapp/sifrarnik/modeli", 
 		   		type: "GET",
 		   		contentType: "application/json",
 		   		datatype: 'json',

@@ -1,5 +1,8 @@
 package com.xml.agent.controller;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,7 +44,15 @@ public class CenovnikController {
 		  cenovnik1.setCenaViseOd30(cenovnik.getCenaViseOd30());
 		  cenovnik1.setCenaPoKilometruZaOgranicenuKilometrazu(cenovnik.getCenaPoKilometruZaOgranicenuKilometrazu());
 		  cenovnik1.setCenaCDW(cenovnik.getCenaCDW());
-		  cenovnik1.setIdentifikacioniBroj(cenovnici.size()+2);
+		 
+		  List<Long> cenovniciSort = new ArrayList<Long>();
+		  for(int i=0; i<cenovnici.size(); i++) {
+			  cenovniciSort.add(cenovnici.get(i).getIdentifikacioniBroj());
+			  
+		  }
+		  
+		  cenovnik1.setIdentifikacioniBroj(Collections.max(cenovniciSort)+1);
+		  
 		  service.save(cenovnik1);
 		 
 		return new ResponseEntity<Cenovnik>(cenovnik1, HttpStatus.OK);

@@ -210,6 +210,7 @@ while(assets6.next()){
 
 
 }
+/*
 String sqlToExecute7 = "SELECT * FROM " + tableToMerge7;
 ResultSet assets7 = dbOriginStat.executeQuery(sqlToExecute7);
 ResultSetMetaData rsMeta7 = assets7.getMetaData();
@@ -235,6 +236,7 @@ while(assets7.next()){
 
 
 }
+*/
 String sqlToExecute8 = "SELECT * FROM " + tableToMerge8;
 ResultSet assets8 = dbOriginStat.executeQuery(sqlToExecute8);
 ResultSetMetaData rsMeta8 = assets8.getMetaData();

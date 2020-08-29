@@ -53,7 +53,7 @@
 	  	      });
 	  		 
 	  		$.ajax({
-				url: "http://localhost:2020/adminservisapp/adminservlet/agenti/registruj/" + id,
+				url: "http://localhost:2020/adminservisapp/agenti/registruj/" + id,
 				type: "PUT",
 				data: formData,
 				//saljemo json i ocekujemo json nazad
@@ -63,7 +63,7 @@
 					
 					
 				//alert("uspesna registracija!")
-				window.location.href = "http://localhost:2020/adminservisapp/adminservlet/agenti.html";	 
+				window.location.href = "http://localhost:2020/adminservisapp/agenti.html";	 
 				}
 	  	});
 	  	});

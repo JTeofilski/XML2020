@@ -6,12 +6,16 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.sql.Date;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Properties;
+import java.util.Set;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
@@ -45,6 +49,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.xml.agent.model.Cenovnik;
+import com.xml.agent.model.Komentar;
 import com.xml.agent.model.Oglas;
 import com.xml.agent.model.RezervisaniDatumi;
 import com.xml.agent.model.Vozilo;
@@ -73,90 +78,17 @@ public class OglasController {
 	@Autowired
 	private RezervisaniDatumiService rezDatumiService;
 	
-	@PostMapping("/file-upload")
-	@ResponseBody
-	public ResponseEntity<String> fileUpload(MultipartFile file) {
-	    try {
-	    	 String uri = ServletUriComponentsBuilder.fromCurrentContextPath()
-	                 .path("/slike/")
-	                 .toUriString();
-
-	        // upload directory - change it to your own
-	        //String UPLOAD_DIR = "C:\\Users\\Violeta\\git\\XML2020\\xml3\\agent\\src\\main\\resources\\static\\slike";
-
-	        // create a path from file name
-	       // Path path = Paths.get(uri + "/");
-
-	        // save the file to `UPLOAD_DIR`
-	        // make sure you have permission to write
-	       // Files.write(uri, file.getBytes());
-	      //  Resource item = (Resource) file.getResource();
-	      //  File uploadedFile = new File(uri);
-	        //Path filepath = Paths.get(path.toString(), file.getOriginalFilename());
-	        //ClassPathResource res = new ClassPathResource("slike/" + file.getOriginalFilename());   
-	        
-	       // ClassLoader classLoader = getClass().getClassLoader();
-	       // String UPLOAD_DIR = "../resurces/static/slike";
-	       // File f = file.getResource().getFile();
-	        
-	        //Path filepath = Paths.get(file1.toString());
-	    	// upload directory - change it to your own
-	         String UPLOAD_DIR = "src/resources/static/slike";
-
-	         // create a path from file name
-	         Path path = Paths.get(UPLOAD_DIR, file.getOriginalFilename());
-
-	         // save the file to `UPLOAD_DIR`
-	         // make sure you have permission to write
-	        // Files.write(path, file.getBytes());
-//System.out.println(path);
-	        
-	        
-	         byte[] bytes = file.getBytes(); 
-
-             //bytes to string conversion
-             String fileToStr = new String(bytes, "UTF-8");
-             System.out.println(fileToStr);                    
-             String name=file.getOriginalFilename(); 
-
-             String ext=name.substring(name.lastIndexOf("."),name.length()); 
-             String fileName = ""+System.currentTimeMillis()+ext; 
-
-
-           
-			
-			String rpath= path.toString(); //path forstoring the file
-             System.out.println(rpath); 
-             File filea=new File(rpath); 
-             if(!filea.exists()){ 
-                             filea.mkdirs(); 
-             } 
-
-             
-
-             FileOutputStream fos= new FileOutputStream(filea); 
-             fos.write(bytes); 
-             fos.close(); 
-	    }
-	    catch (Exception ex) {
-	        ex.printStackTrace();
-	        return new ResponseEntity<>("Invalid file format!!", HttpStatus.BAD_REQUEST);
-	    }
-
-	    return new ResponseEntity<>("File uploaded!!", HttpStatus.OK);
-	}
-	
-	@RequestMapping(method=RequestMethod.POST, value = "/dodajOglas/{file}/{agent}/{cenovnik}/{voziloSlobodnoOd}/{voziloSlobodnoDo}/{collisiondamageWaiver}")
-	public ResponseEntity<Oglas> addAd(@RequestParam("file") MultipartFile file, @RequestBody Vozilo vozilo, @PathVariable("agent") Long id1,@PathVariable("cenovnik") Long id, @PathVariable("voziloSlobodnoOd") Date date1, @PathVariable("voziloSlobodnoDo") Date date2, @PathVariable("collisiondamageWaiver") boolean collision) throws IOException{
+	@RequestMapping(method=RequestMethod.POST, value = "/dodajOglas/{agent}/{cenovnik}/{voziloSlobodnoOd}/{voziloSlobodnoDo}/{collisiondamageWaiver}")
+	public ResponseEntity<Oglas> addAd(@RequestBody Vozilo vozilo, @PathVariable("agent") Long id1,@PathVariable("cenovnik") Long id, @PathVariable("voziloSlobodnoOd") Date date1, @PathVariable("voziloSlobodnoDo") Date date2, @PathVariable("collisiondamageWaiver") boolean collision){
 		// upload directory - change it to your own
         String UPLOAD_DIR = "/slike";
 
         // create a path from file name
-        Path path = Paths.get(UPLOAD_DIR, file.getOriginalFilename());
+       // Path path = Paths.get(UPLOAD_DIR, file.getOriginalFilename());
 
         // save the file to `UPLOAD_DIR`
         // make sure you have permission to write
-        Files.write(path, file.getBytes());
+        //Files.write(path, file.getBytes());
 		
 		
 		Oglas oglasNovi = new Oglas();
@@ -164,28 +96,27 @@ public class OglasController {
 		oglasNovi.setCenovnik(cenovnik1);
 		oglasNovi.setVozilo(vozilo);
 		oglasNovi.setAgent(agentService.findOne(id1));
+		Komentar kom = new Komentar();
+		Set<Komentar> komentari = new HashSet<>();
+	    komentari.add(kom);
+	    oglasNovi.setKomentar(komentari);
 		vozilo.setSlike("slike/crno_mece1.jpg;slike/crno_mece.jpg");
 		voziloService.save(vozilo);
 		oglasService.save(oglasNovi);
 		
 		 final String uri = "http://localhost:2020/pretragaapp/oglasi/dodajOglas/" + id1 + "/" + id + "/"  + collision;
-			ObjectMapper mapper= new ObjectMapper();
-			String json = null;
-			
-			try {
-				json= mapper.writeValueAsString(vozilo);
-			} catch (JsonProcessingException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			
+		 
+			//URI url = new URI(uri);
+		/*	
 		   RestTemplate restTemplate = new RestTemplate();
 			
 			HttpHeaders headers = new HttpHeaders();
 			headers.setContentType(MediaType.APPLICATION_JSON);
 			
-			HttpEntity<String> entity = new HttpEntity<String>(json,headers);
-			restTemplate.postForObject(uri, entity, Vozilo.class);
+			HttpEntity<Oglas> entity = new HttpEntity<>(oglasNovi,headers);
+			
+			
+			ResponseEntity<String> result =  restTemplate.postForEntity(url, entity, String.class);*/
 	    
 		return new ResponseEntity<>( oglasNovi, HttpStatus.OK);
 	}
