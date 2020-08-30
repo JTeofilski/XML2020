@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Zavrseni zahtevi</title>
+
+<script src="scripts/jquery-3.2.1.min.js"></script>
+		<script src="scripts/tether.min.js"></script>
+		<script src="scripts/bootstrap.min.js"></script>
+		<script src="scripts/fje.js"></script>
+
+
+<script>
+
+var url_string = window.location.href;
+var url = new URL(url_string);
+var idAgenta = url.searchParams.get("id");
+
+$(document).ready(function() {
+	 $.ajax({
+	        url: "http://localhost:8099/zahtevi/zaIzvestaj/"+idAgenta, 
+	   		type: "GET",
+	   		contentType: "application/json",
+	   		datatype: 'json',
+	    	   success: function(data){	
+	    		   for(i=0;i<data.length; i++){
+	    		   newDiv="";
+	    			  newDiv = 
+							"<div id='"+data[i].identifikacioniBroj+"'>"
+							
+								+ "<p>Zahtev:"
+								+ data[i].identifikacioniBroj + 		", Ukupna cena za placanje:"		
+							    + data[i].ukupnaCena + ", Status iznajmljivanja: "	
+								+ data[i].statusIznajmljivanja + ","
+									
+							+ "</p>" ;
+					for (n=0;n<data[i].narudzbenica.length;n++){
+						newDiv=newDiv +		
+							"<div id='n"+data[i].narudzbenica[n].identifikacioniBroj+"'>"+
+							"<p> Vozilo:"+data[i].narudzbenica[n].markaVozila 
+							+ " od: " + data[i].narudzbenica[n].rentiranjeOd
+							+ " do: " + data[i].narudzbenica[n].rentiranjeDo
+							"</p>";
+							
+							console.log(Date.parse(data[i].narudzbenica[n].rentiranjeDo));
+							console.log(Date.now());
+						if(Date.parse(data[i].narudzbenica[n].rentiranjeDo)<Date.now()&& data[i].statusIznajmljivanja=="PAID")	{
+							
+							newDiv= newDiv+"<button onclick='Izvestaj("+idAgenta+","+data[i].narudzbenica[n].oglasId+","+data[i].narudzbenica[n].identifikacioniBroj+")'>Izvestaj</button>"
+							
+						}
+						
+						
+						//newDiv=+ "</div>";
+						newDiv=newDiv+ "</div>";
+					}
+					
+					newDiv=newDiv+ "</div>";
+	    		   }	
+							$("body").append(newDiv);
+	    	   }
+	 });
+});
+
+</script>
+
+<style>
+div{
+	margin-top:5px;
+	border-style: ridge;
+	
+}
+</style>		
+
+</head>
+<body>
+
+</body>
+</html>

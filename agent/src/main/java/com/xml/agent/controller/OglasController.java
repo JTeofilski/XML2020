@@ -47,14 +47,18 @@ import org.springframework.web.client.RestTemplate;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.xml.agent.model.Cenovnik;
+import com.xml.agent.model.Narudzbenica;
 import com.xml.agent.model.Oglas;
 import com.xml.agent.model.RezervisaniDatumi;
 import com.xml.agent.model.Vozilo;
+import com.xml.agent.model.ZahtevZaIznajmljivanje;
 import com.xml.agent.service.AgentService;
 import com.xml.agent.service.CenovnikService;
 import com.xml.agent.service.OglasService;
 import com.xml.agent.service.RezervisaniDatumiService;
 import com.xml.agent.service.VoziloService;
+import com.xml.agent.service.ZahtevZaIznajmljivanjeService;
+
 
 @RestController
 @RequestMapping(value = "/oglasi")
@@ -74,6 +78,9 @@ public class OglasController {
 	
 	@Autowired
 	private RezervisaniDatumiService rezDatumiService;
+	
+	@Autowired
+	private ZahtevZaIznajmljivanjeService zahtevService;
 	
 	@RequestMapping(method=RequestMethod.POST, value = "/dodajOglas/{agent}/{cenovnik}/{voziloSlobodnoOd}/{voziloSlobodnoDo}/{collisiondamageWaiver}")
 	public ResponseEntity<Oglas> addAd(@RequestBody Vozilo vozilo, @PathVariable("agent") Long id1,@PathVariable("cenovnik") Long id, @PathVariable("voziloSlobodnoOd") Date date1, @PathVariable("voziloSlobodnoDo") Date date2, @PathVariable("collisiondamageWaiver") boolean collision) throws URISyntaxException{
@@ -143,6 +150,21 @@ public class OglasController {
 		Oglas oglas= oglasService.findOne(oglasId);
 		RezervisaniDatumi rd= new RezervisaniDatumi(datumOd, datumDo, oglas);
 		rezDatumiService.save(rd);
+		
+		List<ZahtevZaIznajmljivanje> zahtevi = zahtevService.findAll();
+		
+		for (ZahtevZaIznajmljivanje zahtev:zahtevi) {
+			if(zahtev.getStatusIznajmljivanja().equals("PENDING")) {
+				for (Narudzbenica narudzbenica : zahtev.getNarudzbenica()) {
+					if((narudzbenica.getRentiranjeOd().compareTo(rd.getDatumOd())*rd.getDatumOd().compareTo(narudzbenica.getRentiranjeDo())>=0)||(narudzbenica.getRentiranjeOd().compareTo(rd.getDatumDo())*rd.getDatumDo().compareTo(narudzbenica.getRentiranjeDo())>=0)) {
+						zahtev.setStatusIznajmljivanja("CANCELED");
+						zahtevService.save(zahtev);
+						return;
+					}
+				}
+			}
+		}
+		
 		
 	}
 

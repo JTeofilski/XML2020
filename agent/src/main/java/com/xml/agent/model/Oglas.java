@@ -99,7 +99,7 @@ public class Oglas {
     @XmlElement(name = "Komentar", namespace = "http://www.ftn.uns.ac.rs/ocenakomentarporuka")
     @OneToMany(fetch = FetchType.EAGER)
     @JoinColumn(name = "oglas_id")
-    @JsonIgnore
+    //@JsonIgnore
     protected Set<Komentar> komentar;
     
     
@@ -277,9 +277,7 @@ public class Oglas {
 
 
 	public Set<Komentar> getKomentar() {
-		if(komentar.equals(null))
-			return new HashSet<Komentar>();
-		else
+		
 			return komentar;
 	}
 

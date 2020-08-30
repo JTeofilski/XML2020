@@ -43,7 +43,8 @@ public class ZahtevController {
 	public  ResponseEntity<List<ZahtevZaIznajmljivanje>> agentoviZahtevi(@PathVariable("idAgenta") long idAgenta){
 		List<ZahtevZaIznajmljivanje> zahtevi = new ArrayList<ZahtevZaIznajmljivanje>();
 		for(ZahtevZaIznajmljivanje z:zahtevService.findByAgentId(idAgenta)) {
-			if(z.getStatusIznajmljivanja()=="RESERVED") {
+			System.out.println("status: "+z.getStatusIznajmljivanja());
+			if(z.getStatusIznajmljivanja().equals("PENDING")) {
 				zahtevi.add(z);
 			}
 		}
@@ -101,5 +102,17 @@ public class ZahtevController {
 	}
 
 
+	@RequestMapping(method=RequestMethod.GET, value = "/zaIzvestaj/{idAgenta}", consumes = "application/json", produces = "application/json")
+	public  ResponseEntity<List<ZahtevZaIznajmljivanje>> agentoviZahteviZaIzvestaj(@PathVariable("idAgenta") long idAgenta){
+		List<ZahtevZaIznajmljivanje> zahtevi = new ArrayList<ZahtevZaIznajmljivanje>();
+		for(ZahtevZaIznajmljivanje z:zahtevService.findByAgentId(idAgenta)) {
+			System.out.println("status: "+z.getStatusIznajmljivanja());
+			if(z.getStatusIznajmljivanja().equals("PAID")) {
+				zahtevi.add(z);
+			}
+		}
+		return new ResponseEntity<List<ZahtevZaIznajmljivanje>>(zahtevi, HttpStatus.OK);
+	
+	}
 	
 }
