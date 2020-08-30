@@ -7,6 +7,7 @@ import java.time.LocalDateTime;
 import java.time.Period;
 import java.time.ZoneId;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -78,16 +79,26 @@ public class OglasController {
 		return new ResponseEntity<List<Oglas>>(oglasi, HttpStatus.OK);
 	}
 	@RequestMapping(method=RequestMethod.POST, value = "/dodajOglas/{agent}/{cenovnik}/{collision}")
-	public ResponseEntity<Vozilo> addAd(@RequestBody Vozilo vozilo, @PathVariable("agent") Long id1,@PathVariable("cenovnik") Long id, @PathVariable("collisiondamageWaiver") boolean collision){
+	public ResponseEntity<Vozilo> addAd(@RequestBody Vozilo vozilo, @PathVariable("agent") Long id1,@PathVariable("cenovnik") Long id, @PathVariable("collision") boolean collision){
 	
+		List<Vozilo> vozila = new ArrayList<>();
+		vozila = voziloService.findAll(Sort.by(Sort.Direction.ASC, "identifikacioniBroj"));
+		List<Long> vozilaSort = new ArrayList<>();
+		
+		for(int i=0; i<vozila.size(); i++) {
+			vozilaSort.add(vozila.get(i).getIdentifikacioniBroj());
+			
+		}
 		Oglas oglasNovi = new Oglas();
 		Cenovnik cenovnik1 = cenovnikService.findOne(id);
 		oglasNovi.setCenovnik(cenovnik1);
-		oglasNovi.setVozilo(vozilo);
+		
 		Agent agent = agentService.findOne(id1);
 		oglasNovi.setAgent(agent);
 		vozilo.setSlike("slike/crno_mece1.jpg;slike/crno_mece.jpg");
+		vozilo.setIdentifikacioniBroj(Collections.max(vozilaSort)+1);
 		voziloService.save(vozilo);
+		oglasNovi.setVozilo(vozilo);
 		oglasService.save(oglasNovi);	
 	    
 		return new ResponseEntity<>( vozilo, HttpStatus.OK);

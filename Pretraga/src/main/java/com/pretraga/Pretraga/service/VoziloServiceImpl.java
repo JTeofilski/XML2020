@@ -47,7 +47,7 @@ public class VoziloServiceImpl implements VoziloService{
 	@Override
 	public Vozilo save(Vozilo vozilo) {
 		// TODO Auto-generated method stub
-		return null;
+		return voziloRepository.save(vozilo);
 	}
 
 	@Override

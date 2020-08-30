@@ -67,11 +67,12 @@ import javax.xml.bind.annotation.XmlType;
     "nazivModela",
     "nazivVrsteGoriva",
     "nazivTipaMenjaca",
-    "slika",
+    "slike",
     "predjenaKilometraza",
     "brojSedistaZaDecu",
     "ogranicenjeKilometraze",
-    "collisiondamageWaiver"
+    "collisiondamageWaiver",
+    "oglasi"
 })
 @XmlRootElement(name = "Vozilo", namespace = "http://www.ftn.uns.ac.rs/vozilo")
 @Entity
@@ -79,7 +80,7 @@ public class Vozilo {
 
     @XmlElement(namespace = "http://www.ftn.uns.ac.rs/vozilo")
     @Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+    //@GeneratedValue(strategy = GenerationType.IDENTITY)
     protected long identifikacioniBroj;
     @XmlElement(namespace = "http://www.ftn.uns.ac.rs/vozilo", required = true)
     protected String klasaVozila;

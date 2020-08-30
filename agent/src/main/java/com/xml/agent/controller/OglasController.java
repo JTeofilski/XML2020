@@ -43,13 +43,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
-import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.xml.agent.model.Cenovnik;
-import com.xml.agent.model.Komentar;
 import com.xml.agent.model.Oglas;
 import com.xml.agent.model.RezervisaniDatumi;
 import com.xml.agent.model.Vozilo;
@@ -79,7 +76,7 @@ public class OglasController {
 	private RezervisaniDatumiService rezDatumiService;
 	
 	@RequestMapping(method=RequestMethod.POST, value = "/dodajOglas/{agent}/{cenovnik}/{voziloSlobodnoOd}/{voziloSlobodnoDo}/{collisiondamageWaiver}")
-	public ResponseEntity<Oglas> addAd(@RequestBody Vozilo vozilo, @PathVariable("agent") Long id1,@PathVariable("cenovnik") Long id, @PathVariable("voziloSlobodnoOd") Date date1, @PathVariable("voziloSlobodnoDo") Date date2, @PathVariable("collisiondamageWaiver") boolean collision){
+	public ResponseEntity<Oglas> addAd(@RequestBody Vozilo vozilo, @PathVariable("agent") Long id1,@PathVariable("cenovnik") Long id, @PathVariable("voziloSlobodnoOd") Date date1, @PathVariable("voziloSlobodnoDo") Date date2, @PathVariable("collisiondamageWaiver") boolean collision) throws URISyntaxException{
 		// upload directory - change it to your own
         String UPLOAD_DIR = "/slike";
 
@@ -96,28 +93,32 @@ public class OglasController {
 		oglasNovi.setCenovnik(cenovnik1);
 		oglasNovi.setVozilo(vozilo);
 		oglasNovi.setAgent(agentService.findOne(id1));
-		Komentar kom = new Komentar();
-		Set<Komentar> komentari = new HashSet<>();
-	    komentari.add(kom);
-	    oglasNovi.setKomentar(komentari);
+		
 		vozilo.setSlike("slike/crno_mece1.jpg;slike/crno_mece.jpg");
 		voziloService.save(vozilo);
 		oglasService.save(oglasNovi);
 		
+		
 		 final String uri = "http://localhost:2020/pretragaapp/oglasi/dodajOglas/" + id1 + "/" + id + "/"  + collision;
 		 
-			//URI url = new URI(uri);
-		/*	
+			ObjectMapper mapper= new ObjectMapper();
+			String json = null;
+			
+			try {
+				json= mapper.writeValueAsString(vozilo);
+			} catch (JsonProcessingException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
 		   RestTemplate restTemplate = new RestTemplate();
 			
 			HttpHeaders headers = new HttpHeaders();
 			headers.setContentType(MediaType.APPLICATION_JSON);
 			
-			HttpEntity<Oglas> entity = new HttpEntity<>(oglasNovi,headers);
+			HttpEntity<String> entity = new HttpEntity<String>(json,headers);
+			restTemplate.postForObject(uri, entity, Vozilo.class);
 			
-			
-			ResponseEntity<String> result =  restTemplate.postForEntity(url, entity, String.class);*/
-	    
 		return new ResponseEntity<>( oglasNovi, HttpStatus.OK);
 	}
 	
@@ -132,6 +133,10 @@ public class OglasController {
 		return new  ResponseEntity<List<Oglas>>(oglasService.findByAgentId(idAgenta), HttpStatus.OK);
 	}
 	
+	@RequestMapping(method=RequestMethod.GET, value ="/vozila" )
+	public ResponseEntity<List<Vozilo>> dobaviZaMS(){
+		return new  ResponseEntity<List<Vozilo>>(voziloService.findAll(), HttpStatus.OK);
+	}
 	
 	@RequestMapping(method=RequestMethod.GET, value ="/rezervacija/{datumOd}/{datumDo}/{oglasId}" )
 	public void rezervisi(@PathVariable("datumOd") Date datumOd, @PathVariable("datumDo") Date datumDo, @PathVariable("oglasId") long oglasId){

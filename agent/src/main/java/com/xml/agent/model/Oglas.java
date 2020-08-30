@@ -17,6 +17,7 @@ import java.util.List;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -35,6 +36,8 @@ import javax.xml.bind.annotation.XmlType;
 import javax.xml.datatype.XMLGregorianCalendar;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
 
 
 /**
@@ -96,6 +99,7 @@ public class Oglas {
     @XmlElement(name = "Komentar", namespace = "http://www.ftn.uns.ac.rs/ocenakomentarporuka")
     @OneToMany(fetch = FetchType.EAGER)
     @JoinColumn(name = "oglas_id")
+    @JsonIgnore
     protected Set<Komentar> komentar;
     
     
@@ -152,6 +156,15 @@ public class Oglas {
 		this.rezervisaniDatumi = rezervisaniDatumi;
 		this.ocena=ocena;
 		
+	}
+
+
+
+	public Oglas(Cenovnik cenovnik, Vozilo vozilo, Agent agent) {
+		super();
+		this.cenovnik = cenovnik;
+		this.vozilo = vozilo;
+		this.agent = agent;
 	}
 
 

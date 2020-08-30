@@ -1,5 +1,7 @@
 package com.xml.agent.service;
 
+import java.util.List;
+
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +21,12 @@ public class VoziloServiceImpl implements VoziloService{
 	public Vozilo save(Vozilo vozilo) {
 		// TODO Auto-generated method stub
 		return rep.save(vozilo);
+	}
+
+	@Override
+	public List<Vozilo> findAll() {
+		// TODO Auto-generated method stub
+		return rep.findAll();
 	}
 
 }

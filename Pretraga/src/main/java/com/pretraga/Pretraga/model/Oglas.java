@@ -63,6 +63,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "", propOrder = {
+    "identifikacioniBroj",
     "vozilo",
     "voziloSlodobnoOd",
     "voziloSlobodnoDo",
@@ -232,6 +233,12 @@ public class Oglas {
 
 
 
+
+
+
+	public void setIdentifikacioniBroj(long identifikacioniBroj) {
+		this.identifikacioniBroj = identifikacioniBroj;
+	}
 
 
 

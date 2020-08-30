@@ -3,7 +3,9 @@ import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.time.temporal.ChronoUnit;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
@@ -26,11 +28,14 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.pretraga.Pretraga.model.Narudzbenica;
 import com.pretraga.Pretraga.model.Oglas;
 import com.pretraga.Pretraga.model.RezervisaniDatumi;
+import com.pretraga.Pretraga.model.Vozilo;
 import com.pretraga.Pretraga.model.ZahtevZaIznajmljivanje;
 import com.pretraga.Pretraga.repository.NarudzbenicaRepository;
+import com.pretraga.Pretraga.repository.OglasRepository;
 import com.pretraga.Pretraga.repository.ZahtevZaIznajmljivanjeRepository;
 import com.pretraga.Pretraga.service.OglasService;
 import com.pretraga.Pretraga.service.RezervisaniDatumiService;
+import com.pretraga.Pretraga.service.VoziloService;
 
 //The task which you want to execute
 @Component
@@ -50,7 +55,13 @@ public class ScheduledTasks {
 	private OglasService oglasService;
 	
 	@Autowired
+	private OglasRepository oglasRepo;
+	
+	@Autowired
 	private RezervisaniDatumiService rezDatService;
+	
+	@Autowired
+	private VoziloService voziloService;
 	
 
 	@Scheduled(fixedRate = 3600000) //1h
@@ -85,11 +96,29 @@ public class ScheduledTasks {
 		
 		List<Oglas> oglasi = oglasService.findAll(Sort.by(Sort.Direction.ASC, "identifikacioniBroj"));
 		
+		List<Vozilo> vozila = voziloService.findAll(Sort.by(Sort.Direction.ASC, "identifikacioniBroj"));
+		
+		List<Long> oglasiSort = new ArrayList<Long>();
+		for(int i=0; i<oglasi.size(); i++) {
+			oglasiSort.add(oglasi.get(i).getIdentifikacioniBroj());
+			
+		}
+		
+		List<Long> vozilaSort = new ArrayList<Long>();
+		for(int i=0; i<vozila.size(); i++) {
+			vozilaSort.add(vozila.get(i).getIdentifikacioniBroj());
+			
+		}
+		
 		String url = "http://localhost:8099/oglasi";
+		
+		String urlVozila = "http://localhost:8099/oglasi/vozila";
 		
 
 		RestTemplate restTemplate = new RestTemplate();
 		Oglas[] oglasiAgent= restTemplate.getForObject(url, Oglas[].class);
+		
+		Vozilo[] vozilaAgent= restTemplate.getForObject(urlVozila, Vozilo[].class);
 		
 		// provera za update i delete
 				for(Oglas oglas:oglasi) {
@@ -117,9 +146,50 @@ public class ScheduledTasks {
 					}
 					
 				}
+			/*	//provera za dodavanje novih vozila (pre samih oglasa)
+				for(Vozilo voziloAgent:vozilaAgent) {
+					boolean postoji1=false;
+					for (Vozilo vozilo:vozila) {
+						if(voziloAgent.getBrojSedistaZaDecu()==vozilo.getBrojSedistaZaDecu()) {
+							if(voziloAgent.getNazivModela().equals(vozilo.getNazivModela())&&voziloAgent.getNazivTipaMenjaca().equals(vozilo.getNazivTipaMenjaca())) {
+							if(voziloAgent.getOgranicenjeKilometraze()==vozilo.getOgranicenjeKilometraze()) {	
+							
+							
+							postoji1=true;
+							
+							}
+						}
+					}
+					}
+					if(!postoji1) {
+					System.out.println("dodaje novo vozilo "+ voziloAgent.getIdentifikacioniBroj());
+						
+						Vozilo v = new Vozilo();	
+						v = voziloAgent;
+						v.setIdentifikacioniBroj(Collections.max(vozilaSort)+1);
+						voziloService.save(v);
+					}
+				}
+				// provera za dodavanje novih oglasa
+				for(Oglas oglasAgent:oglasiAgent) {
+					boolean postoji1=false;
+					for (Oglas oglas:oglasi) {
+						if(oglasAgent.getVozilo().getNazivKlase().equals(oglas.getVozilo().getNazivKlase())) {
+							postoji1=true;
+						}
+					}
+					if(!postoji1) {
+					System.out.println("dodaje novi oglas "+ oglasAgent.getIdentifikacioniBroj());
+						Oglas o = new Oglas();
+						
+						o = oglasAgent;
+						o.setIdentifikacioniBroj(Collections.max(oglasiSort)+1);
+						//ne doda mu vozila...
+						oglasRepo.save(o);
+					}
+				}
 				
-				
-				
+				*/
 				List<ZahtevZaIznajmljivanje> zahtevi = repo.findAll();
 				
 				url = "http://localhost:8099/zahtevi";
