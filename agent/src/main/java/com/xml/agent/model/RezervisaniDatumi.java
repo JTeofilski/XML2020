@@ -29,7 +29,7 @@ public class RezervisaniDatumi {
 	@Column
 	protected Date datumDo;
 	
-	 @XmlElement(namespace = "http://www.ftn.uns.ac.rs/oglas")
+	 @XmlElement(name="Oglas", namespace = "http://www.ftn.uns.ac.rs/oglas")
 	@ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
 	@JoinColumn(name="oglas")
 	@JsonIgnore

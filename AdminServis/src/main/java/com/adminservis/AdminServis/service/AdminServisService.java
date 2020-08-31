@@ -6,20 +6,11 @@ import org.springframework.stereotype.Service;
 import com.adminservis.AdminServis.model.Administrator;
 import com.adminservis.AdminServis.repository.AdminServisRepository;
 
-@Service
-public class AdminServisService {
+
+public interface AdminServisService {
 	
-	@Autowired
-    private  AdminServisRepository repository;
-	
-	
-	public Administrator updateTKorisnik(Administrator k) {
-		
-	//	Administrator korisnik=repository.findById(k.getId());
-	//	System.out.println(k.getStatus());
-	//	korisnik.setStatus(k.getStatus());
-		return repository.save(k);
-		
-	}
+	Administrator findOne(Long id);
+	Administrator save(Administrator admin);
+	Administrator getAdmin(String email, String password);
 
 }

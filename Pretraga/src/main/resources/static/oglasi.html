@@ -94,10 +94,34 @@
 		  		var rezervacijaOd= voziloSlobodnoOd.replace(/-/g, "\_");
 		  		var rezervacijaDo= voziloSlobodnoDo.replace(/-/g, "\_");
 
+		  		var today = new Date();
+		  		var dd = String(today.getDate()).padStart(2, '0');
+		  		var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+		  		var yyyy = today.getFullYear();
+		  		var dd2;
+		  		var mm2;
+                
+		  		if(dd<=30){
+		  			dd = dd + "02";
+		  		}else
+		  		if(dd==31){
+		  		 dd = "02";
+		  		 mm = String(today.getMonth() + 2).padStart(2, '0');
+                }else if(dd==30){
+                	dd = "01";
+    		  	    mm = String(today.getMonth() + 2).padStart(2, '0');	
+                }
+                
+		  		today = yyyy + '-' + mm + '-' + dd;
+		  		console.log(today)
+		  		console.log(voziloSlobodnoOd)
 		  		
 		  		if(adresa==""){
 		  			adresa="0";
 		  		}
+		  		if(voziloSlobodnoOd<today){
+		  			alert("greska! Morate uneti datum najmanje 48h pre rezervacije.");
+		  		}else
 		  		if(voziloSlobodnoOd>voziloSlobodnoDo){
 		  			alert("Greska! Unesite datum povratka vozila veci od datuma preuzimanja.");
 		  		}else{
