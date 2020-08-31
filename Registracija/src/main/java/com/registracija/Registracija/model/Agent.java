@@ -63,6 +63,7 @@ import javax.xml.bind.annotation.XmlType;
     "prezime",
     "email",
     "adresa",
+    "status",
     "oglas",
     "izvestaj",
     "komentar",
@@ -87,18 +88,29 @@ public class Agent {
     protected String email;
     @XmlElement(required = true)
     protected String adresa;
-    
-    @XmlElement(name = "Oglas", namespace = "http://www.ftn.uns.ac.rs/oglas")
-    @OneToMany(mappedBy="agent")
-    protected Set<Oglas> oglasi= new HashSet<Oglas>();
-  //  @XmlElement(name = "Izvestaj", namespace = "http://www.ftn.uns.ac.rs/izvestaj")
-  //  protected List<Izvestaj> izvestaj;
-  //  @XmlElement(name = "Komentar", namespace = "http://www.ftn.uns.ac.rs/ocenakomentarporuka")
-  //  protected List<Komentar> komentar;
-  //  @XmlElement(name = "Poruka", namespace = "http://www.ftn.uns.ac.rs/ocenakomentarporuka")
-  //  protected List<Poruka> poruka;
+    @XmlElement(required = true)
+    protected String status;
+    @XmlElement(required = false)
+    protected int poslovniMaticniBroj;
 
-    /**
+    public Agent() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
+	public Agent(String korisnickoIme, String lozinka, String ime, String prezime, String email, String adresa,
+			String status) {
+		super();
+		this.korisnickoIme = korisnickoIme;
+		this.lozinka = lozinka;
+		this.ime = ime;
+		this.prezime = prezime;
+		this.email = email;
+		this.adresa = adresa;
+		this.status = status;
+	}
+
+	/**
      * Gets the value of the identifikacioniBroj property.
      * 
      */
@@ -114,7 +126,15 @@ public class Agent {
         this.identifikacioniBroj = value;
     }
 
-    /**
+    public int getPoslovniMaticniBroj() {
+		return poslovniMaticniBroj;
+	}
+
+	public void setPoslovniMaticniBroj(int poslovniMaticniBroj) {
+		this.poslovniMaticniBroj = poslovniMaticniBroj;
+	}
+
+	/**
      * Gets the value of the korisnickoIme property.
      * 
      * @return
@@ -257,6 +277,14 @@ public class Agent {
     public void setAdresa(String value) {
         this.adresa = value;
     }
+
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
+	}
 
     /**
      * Gets the value of the oglas property.
