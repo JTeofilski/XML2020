@@ -71,7 +71,8 @@ import javax.xml.bind.annotation.XmlType;
     "predjenaKilometraza",
     "brojSedistaZaDecu",
     "ogranicenjeKilometraze",
-    "collisiondamageWaiver"
+    "collisiondamageWaiver",
+    "oglasi"
 })
 @XmlRootElement(name = "Vozilo", namespace = "http://www.ftn.uns.ac.rs/vozilo")
 @Entity
@@ -106,7 +107,7 @@ public class Vozilo {
     protected boolean collisiondamageWaiver;
     
     
-    
+    @XmlElement(namespace = "http://www.ftn.uns.ac.rs/oglas")
     @OneToMany(mappedBy="vozilo")
     protected Set<Oglas> oglasi= new HashSet<Oglas>();
     

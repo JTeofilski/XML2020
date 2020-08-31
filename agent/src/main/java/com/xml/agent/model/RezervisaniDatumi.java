@@ -11,6 +11,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.xml.bind.annotation.XmlElement;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -28,6 +29,7 @@ public class RezervisaniDatumi {
 	@Column
 	protected Date datumDo;
 	
+	 @XmlElement(namespace = "http://www.ftn.uns.ac.rs/oglas")
 	@ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
 	@JoinColumn(name="oglas")
 	@JsonIgnore
@@ -73,7 +75,12 @@ public class RezervisaniDatumi {
 		return identifikacioniBroj;
 	}
 
-	
+	@Override
+	public String toString() {
+		return "RezervisaniDatumi [identifikacioniBroj=" + identifikacioniBroj + ", datumOd=" + datumOd + ", datumDo="
+				+ datumDo + ", oglas=" + oglas + "]";
+	}
+
 	
 
 }

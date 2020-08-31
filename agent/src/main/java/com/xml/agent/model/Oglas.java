@@ -66,6 +66,7 @@ import com.fasterxml.jackson.annotation.JsonInclude.Include;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "", propOrder = {
+    "identifikacioniBroj",
     "vozilo",
     "voziloSlodobnoOd",
     "voziloSlobodnoDo",
@@ -108,7 +109,6 @@ public class Oglas {
     protected Vozilo vozilo;
     
     @ManyToOne
-    @JsonIgnore
     protected Agent agent;
     
     
@@ -250,9 +250,9 @@ public class Oglas {
 
 
 	public Set<RezervisaniDatumi> getRezervisaniDatumi() {
-		if(rezervisaniDatumi==null) {
+		/*if(rezervisaniDatumi==null) {
 			rezervisaniDatumi=new HashSet<RezervisaniDatumi>();
-		}
+		}*/
 		return rezervisaniDatumi;
 	}
 

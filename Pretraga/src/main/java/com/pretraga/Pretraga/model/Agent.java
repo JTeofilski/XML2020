@@ -63,10 +63,9 @@ import javax.xml.bind.annotation.XmlType;
     "prezime",
     "email",
     "adresa",
-    "oglas",
-    "izvestaj",
-    "komentar",
-    "poruka"
+    "status",
+    "poslovniMaticniBroj",
+    "oglasi"
 })
 @XmlRootElement(name = "Agent")
 @Entity
@@ -87,6 +86,10 @@ public class Agent {
     protected String email;
     @XmlElement(required = true)
     protected String adresa;
+    @XmlElement(required = true)
+    protected String status;
+    @XmlElement(required = false)
+    protected int poslovniMaticniBroj;
     
     @XmlElement(name = "Oglas", namespace = "http://www.ftn.uns.ac.rs/oglas")
     @OneToMany(mappedBy="agent")

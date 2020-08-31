@@ -65,11 +65,11 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 @XmlType(name = "", propOrder = {
     "identifikacioniBroj",
     "vozilo",
-    "voziloSlodobnoOd",
-    "voziloSlobodnoDo",
     "cenovnik",
     "ocena",
-    "komentar"
+    "komentar",
+    "agent",
+    "rezervisaniDatumi"
 })
 @XmlRootElement(name = "Oglas", namespace = "http://www.ftn.uns.ac.rs/oglas")
 @Entity
@@ -110,7 +110,7 @@ public class Oglas {
     
     
     
-    
+   
     @OneToMany (
             cascade = CascadeType.ALL,
             orphanRemoval = true,
@@ -243,9 +243,9 @@ public class Oglas {
 
 
 	public Set<RezervisaniDatumi> getRezervisaniDatumi() {
-		if(rezervisaniDatumi==null) {
+		/*if(rezervisaniDatumi==null) {
 			rezervisaniDatumi=new HashSet<RezervisaniDatumi>();
-		}
+		}*/
 		return rezervisaniDatumi;
 	}
 

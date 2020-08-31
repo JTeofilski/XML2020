@@ -78,7 +78,7 @@ public class OglasController {
 		
 		return new ResponseEntity<List<Oglas>>(oglasi, HttpStatus.OK);
 	}
-	@RequestMapping(method=RequestMethod.POST, value = "/dodajOglas/{agent}/{cenovnik}/{collision}")
+	@RequestMapping(method=RequestMethod.POST, value = "/dodajOglas/{agent}/{cenovnik}/{collision}", consumes="application/json")
 	public ResponseEntity<Vozilo> addAd(@RequestBody Vozilo vozilo, @PathVariable("agent") Long id1,@PathVariable("cenovnik") Long id, @PathVariable("collision") boolean collision){
 	
 		List<Vozilo> vozila = new ArrayList<>();

@@ -316,9 +316,6 @@ public class Agent {
      * 
      */
     public Set<Oglas> getOglas() {
-        if (oglasi == null) {
-            oglasi = new HashSet<Oglas>();
-        }
         return this.oglasi;
     }
 

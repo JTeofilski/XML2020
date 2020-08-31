@@ -56,7 +56,8 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
     "cenaZaDan",
     "cenaViseOd30",
     "cenaPoKilometruZaOgranicenuKilometrazu",
-    "cenaCDW"
+    "cenaCDW",
+    "oglasi"
 })
 @XmlRootElement(name = "Cenovnik", namespace = "http://www.ftn.uns.ac.rs/cenovnik")
 @Entity
