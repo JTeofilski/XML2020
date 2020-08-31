@@ -47,6 +47,7 @@ import org.springframework.web.client.RestTemplate;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.xml.agent.model.Cenovnik;
+import com.xml.agent.model.Komentar;
 import com.xml.agent.model.Narudzbenica;
 import com.xml.agent.model.Ocena;
 import com.xml.agent.model.Oglas;
@@ -209,5 +210,11 @@ public class OglasController {
 		return new ResponseEntity<String>(odgovor, HttpStatus.OK);
 	}
 
+	@RequestMapping(method=RequestMethod.GET, value ="/komentari/{oglasId}" )
+	public ResponseEntity<Set<Komentar>> dobaviKomentare(@PathVariable("oglasId") long oglasId){
+		Oglas oglas= oglasService.findOne(oglasId);
+		
+		return new  ResponseEntity<Set<Komentar>>(oglas.getKomentar(), HttpStatus.OK);
+	}
 		
 }

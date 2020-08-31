@@ -113,7 +113,9 @@ var izvestaj=document.getElementById("izvestaj").value;
 	    		   labelaKm.parentNode.removeChild(labelaKm);
 	    	   }	 
 	    	   });
-	
-	
-	
+}
+
+function Komentari(idOglasa, idAgenta){
+	window.location.href = "http://localhost:8099/komentari.html?id="+idOglasa+"&agentId="+idAgenta;
+
 }

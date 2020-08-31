@@ -42,6 +42,9 @@ public class IzvestajController {
 		
 		izvestaj.setIdVozila(oglas.getVozilo().getIdentifikacioniBroj());
 		izvestajService.save(izvestaj);
+		
+		oglas.getVozilo().setPredjenaKilometraza(oglas.getVozilo().getPredjenaKilometraza()+izvestaj.getBrKilometara());  
+		oglasService.save(oglas);
 		return new ResponseEntity<Izvestaj>(izvestaj, HttpStatus.OK);
 	}
 	
