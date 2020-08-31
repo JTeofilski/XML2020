@@ -125,10 +125,11 @@ public class OglasController {
 	  			}
 	  			
 	  			  		
+	  			
+	  		}
 	  			if(zauzeto==false&&oglasi.get(i).getAgent().getAdresa().toLowerCase().contains(adresa.toLowerCase())) {
 	  				oglasiPretraga.add(oglasi.get(i));
 	  			}
-	  		}
 	  		}
 	  		
 	  		return new ResponseEntity<List<Oglas>>(oglasiPretraga, HttpStatus.OK);
