@@ -62,7 +62,7 @@ public class ScheduledTasks {
 	public void dobaviIzMikroservisa() {
 		
 		
-		/*
+		
 		
 		// *** provera za narudzbenice 
 		List<Narudzbenica> narudzbenice= narRepo.findAll();	
@@ -208,7 +208,7 @@ public class ScheduledTasks {
 				}
 			}
 		}	
-		*/
+	
 		
 		// *** provera za cenovnike
 				List<Cenovnik> cenovnici= cenovnikRepo.findAll();	

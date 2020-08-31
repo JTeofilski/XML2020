@@ -9,4 +9,8 @@ public interface VoziloService {
 	Vozilo save(Vozilo vozilo);
 
 	List<Vozilo> findAll();
+	
+	Vozilo findOne(long id);
+	
+	Vozilo findByOglasId(long id);
 }

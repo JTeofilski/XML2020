@@ -6,4 +6,5 @@ import com.xml.agent.model.Vozilo;
 
 public interface VoziloRepository extends JpaRepository<Vozilo, Long>{
 
+	Vozilo findByOglasiIdentifikacioniBroj(long id);
 }

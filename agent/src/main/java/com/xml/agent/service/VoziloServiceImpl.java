@@ -29,4 +29,16 @@ public class VoziloServiceImpl implements VoziloService{
 		return rep.findAll();
 	}
 
+	@Override
+	public Vozilo findOne(long id) {
+		
+		return rep.getOne(id);
+	}
+
+	@Override
+	public Vozilo findByOglasId(long id) {
+		
+		return rep.findByOglasiIdentifikacioniBroj(id);
+	}
+
 }

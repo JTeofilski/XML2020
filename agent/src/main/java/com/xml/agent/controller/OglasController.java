@@ -48,6 +48,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.xml.agent.model.Cenovnik;
 import com.xml.agent.model.Narudzbenica;
+import com.xml.agent.model.Ocena;
 import com.xml.agent.model.Oglas;
 import com.xml.agent.model.RezervisaniDatumi;
 import com.xml.agent.model.Vozilo;
@@ -166,6 +167,46 @@ public class OglasController {
 		}
 		
 		
+	}
+	
+	
+	@RequestMapping(method=RequestMethod.GET, value ="/statistika/{idAgenta}" )
+	public ResponseEntity<String> brKomentara(@PathVariable("idAgenta") long idAgenta){
+		
+		List<Oglas> oglasi= oglasService.findByAgentId(idAgenta);
+		int brKom=0;
+		String odgovor="";
+		for(Oglas o:oglasi) {
+			int brKomTemp=o.getKomentar().size();
+			if(brKomTemp>brKom) {
+				Vozilo vozilo= voziloService.findByOglasId(o.getIdentifikacioniBroj());
+				brKom=brKomTemp;
+				odgovor="Max komentara ima "+vozilo.getNazivMarke()+":"+brKom;
+			}
+		}
+		return new ResponseEntity<String>(odgovor, HttpStatus.OK);
+	}
+	
+	@RequestMapping(method=RequestMethod.GET, value ="/statistika/ocena/{idAgenta}" )
+	public ResponseEntity<String> brOcena(@PathVariable("idAgenta") long idAgenta){
+		
+		List<Oglas> oglasi= oglasService.findByAgentId(idAgenta);
+		double ocena=0;
+		String odgovor="";
+		for(Oglas o:oglasi) {
+			double ocenaTemp=0;
+			for (Ocena oc:o.getOcena()) {
+				ocenaTemp=+ oc.getVrednostOcene();
+			}
+			ocenaTemp=+ocenaTemp/o.getOcena().size();
+			
+			if(ocenaTemp>ocena) {
+				Vozilo vozilo= voziloService.findByOglasId(o.getIdentifikacioniBroj());
+				ocena=ocenaTemp;
+				odgovor="Max ocenu ima "+vozilo.getNazivMarke()+":"+ocena;
+			}
+		}
+		return new ResponseEntity<String>(odgovor, HttpStatus.OK);
 	}
 
 		

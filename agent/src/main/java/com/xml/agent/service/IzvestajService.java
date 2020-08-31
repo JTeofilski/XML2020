@@ -9,4 +9,8 @@ public interface IzvestajService {
 	void save (Izvestaj izvestaj);
 	
 	List<Izvestaj> findAll();
+	
+	List<Izvestaj> findByIdAgenta(long id);
+	
+	List<Izvestaj> findByIdVozila(long id);
 }

@@ -24,4 +24,15 @@ public class IzvestajServiceImpl implements IzvestajService {
 		return repository.findAll();
 	}
 
+	@Override
+	public List<Izvestaj> findByIdAgenta(long id) {
+		return repository.findByIdAgenta(id);
+	}
+
+	@Override
+	public List<Izvestaj> findByIdVozila(long id) {
+		
+		return repository.findByIdVozila(id);
+	}
+
 }

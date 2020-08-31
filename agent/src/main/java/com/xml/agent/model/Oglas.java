@@ -109,6 +109,7 @@ public class Oglas {
     protected Vozilo vozilo;
     
     @ManyToOne
+    @JsonIgnore
     protected Agent agent;
     
     
