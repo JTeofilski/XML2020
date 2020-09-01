@@ -1,15 +1,26 @@
 package com.xml.agent;
 
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.net.URL;
+import java.nio.channels.Channels;
+import java.nio.channels.ReadableByteChannel;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.Map;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.scheduling.annotation.EnableScheduling;
+
+import com.cloudinary.Cloudinary;
+import com.cloudinary.utils.ObjectUtils;
 
 @SpringBootApplication
 @EnableScheduling
@@ -27,7 +38,24 @@ public class AgentApplication {
     private static String tableToMerge8 = "poruka";
     private static String tableToMerge9 = "zahtev_za_iznajmljivanje";
     
-	public static void main(String[] args) throws SQLException {
+	public static void main(String[] args) throws SQLException, IOException {
+		
+		Cloudinary cloudinary = new Cloudinary(ObjectUtils.asMap(
+				"cloud_name", "olgam",
+				"api_key", "236159187479245",
+				"api_secret", "6SAYa9LDdLPfqYCHSTzM5wmiIXI"));
+		Map upload=cloudinary.uploader().upload("C:\\Users\\OlgaM\\Desktop\\rent-a-car\\crno_mece.jpg", ObjectUtils.asMap("public_id", "mece" ));
+		URL imageURL = new URL((String) upload.get("url"));
+		
+		
+		
+
+		
+			System.out.println("dobavio je nesto?: "+ upload.get("url").toString());
+			
+        
+		
+		
 		SpringApplication.run(AgentApplication.class, args);
 		
 		 Connection dbConnOrigin = DriverManager.getConnection(dbOrigin, "postgres", "postgres");
@@ -288,6 +316,9 @@ while(assets9.next()){
 
 
 }*/
+
+
+
 	        return;
 	    }
 

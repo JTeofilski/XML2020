@@ -8,12 +8,14 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.sql.Date;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
 
@@ -44,6 +46,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 
+import com.cloudinary.*;
+import com.cloudinary.utils.ObjectUtils;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.xml.agent.model.Cenovnik;
@@ -85,7 +89,7 @@ public class OglasController {
 	private ZahtevZaIznajmljivanjeService zahtevService;
 	
 	@RequestMapping(method=RequestMethod.POST, value = "/dodajOglas/{agent}/{cenovnik}/{voziloSlobodnoOd}/{voziloSlobodnoDo}/{collisiondamageWaiver}")
-	public ResponseEntity<Oglas> addAd(@RequestBody Vozilo vozilo, @PathVariable("agent") Long id1,@PathVariable("cenovnik") Long id, @PathVariable("voziloSlobodnoOd") Date date1, @PathVariable("voziloSlobodnoDo") Date date2, @PathVariable("collisiondamageWaiver") boolean collision) throws URISyntaxException{
+	public ResponseEntity<Oglas> addAd(@RequestBody Vozilo vozilo, @PathVariable("agent") Long id1,@PathVariable("cenovnik") Long id, @PathVariable("voziloSlobodnoOd") Date date1, @PathVariable("voziloSlobodnoDo") Date date2, @PathVariable("collisiondamageWaiver") boolean collision) throws URISyntaxException, IOException{
 		// upload directory - change it to your own
         String UPLOAD_DIR = "/slike";
 
@@ -96,6 +100,21 @@ public class OglasController {
         // make sure you have permission to write
         //Files.write(path, file.getBytes());
 		
+        
+        Cloudinary cloudinary = new Cloudinary(ObjectUtils.asMap(
+				"cloud_name", "olgam",
+				"api_key", "236159187479245",
+				"api_secret", "6SAYa9LDdLPfqYCHSTzM5wmiIXI"));
+		Map upload=cloudinary.uploader().upload("crno_mece1.jpg", ObjectUtils.asMap("public_id", "mece" ));
+		URL imageURL = new URL((String) upload.get("url"));
+		
+		
+		
+
+		
+			System.out.println("dobavio je nesto?: "+ upload.get("url").toString());
+			
+        
 		
 		Oglas oglasNovi = new Oglas();
 		Cenovnik cenovnik1 = cenovnik.findOne(id);

@@ -163,7 +163,7 @@
 <label>Unesite ogranicenje kilometraze</label>
 <input type="text" name="kilometraza"></br>
 <label>Unesite sliku vozila</label>
-<input type="file" name="slika" id="slika" accept="image/*" size=30></br>
+<input type="file" name="slika" id="slika" ></br>
 <label>Vozilo slobodno od-do</label>
 <input type="date" name="datumOd">
 <input type="date" name="datumDo"></br>
@@ -194,7 +194,8 @@ if(document.getElementById("da").checked==true){
 	  			
 	  		}
 	  		
-//var file = document.getElementById('slika').files[0]; //Files[0] = 1st file
+var file = document.getElementById('slika').value; //Files[0] = 1st file
+alert(file);
 
 //var fileInput = document.getElementById('image_input_field');
 //var file = fileInput.files[0];
@@ -240,7 +241,7 @@ voziloSlobodnoOd = $("#inputForm [name='datumOd']").val();
 	  		        .width(150)
 	  		        .height(200);
 	  		    };
-	  		    reader.readAsDataURL(input.files[0]);
+	  		    alert(reader.readAsDataURL(input.files[0]));
 	  		  }
 	  		}
 	  	});
