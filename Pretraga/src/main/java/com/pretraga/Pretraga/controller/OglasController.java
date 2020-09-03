@@ -182,7 +182,7 @@ public class OglasController {
 	  		}
 	  		
 	  		for(int i=0; i<oglasi.size(); i++) {
-	  			zauzeto=false;
+	  			//zauzeto=false;
 	  			for(RezervisaniDatumi temp : oglasi.get(i).getRezervisaniDatumi()) {
 	  	
 	  			if(temp.getDatumOd().compareTo(slobodnoOd)<=0&&temp.getDatumDo().compareTo(slobodnoDo)>=0){
