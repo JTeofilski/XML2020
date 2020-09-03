@@ -68,7 +68,8 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
     "tekstKomentara",
     "datumVremeKreiranja",
     "statusKomentara",
-    "pomocnoPoljeZaOglas"
+    "imeKorisnika",
+    "oglas"
 })
 @XmlRootElement(name = "Komentar", namespace = "http://www.ftn.uns.ac.rs/ocenakomentarporuka")
 @Entity

@@ -78,7 +78,7 @@ public class OglasController {
 		
 		return new ResponseEntity<List<Oglas>>(oglasi, HttpStatus.OK);
 	}
-	@RequestMapping(method=RequestMethod.POST, value = "/dodajOglas/{agent}/{cenovnik}/{collision}", consumes="application/json")
+	@RequestMapping(method=RequestMethod.POST, value = "/dodajOglas/{agent}/{cenovnik}/{collision}", consumes="application/json", produces="application/json")
 	public ResponseEntity<Vozilo> addAd(@RequestBody Vozilo vozilo, @PathVariable("agent") Long id1,@PathVariable("cenovnik") Long id, @PathVariable("collision") boolean collision){
 	
 		List<Vozilo> vozila = new ArrayList<>();
@@ -182,7 +182,7 @@ public class OglasController {
 	  		}
 	  		
 	  		for(int i=0; i<oglasi.size(); i++) {
-	  			
+	  			zauzeto=false;
 	  			for(RezervisaniDatumi temp : oglasi.get(i).getRezervisaniDatumi()) {
 	  	
 	  			if(temp.getDatumOd().compareTo(slobodnoOd)<=0&&temp.getDatumDo().compareTo(slobodnoDo)>=0){

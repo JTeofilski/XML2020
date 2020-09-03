@@ -68,11 +68,11 @@ import com.fasterxml.jackson.annotation.JsonInclude.Include;
 @XmlType(name = "", propOrder = {
     "identifikacioniBroj",
     "vozilo",
-    "voziloSlodobnoOd",
-    "voziloSlobodnoDo",
     "cenovnik",
     "ocena",
-    "komentar"
+    "komentar",
+    "agent",
+    "rezervisaniDatumi"
 })
 @XmlRootElement(name = "Oglas", namespace = "http://www.ftn.uns.ac.rs/oglas")
 @Entity

@@ -1,5 +1,7 @@
 package com.pretraga.Pretraga.service;
 
+import java.util.List;
+
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +27,12 @@ public class CenovnikServiceImpl implements CenovnikService{
 	public Cenovnik save(Cenovnik cenovnik) {
 		// TODO Auto-generated method stub
 		return rep.save(cenovnik);
+	}
+
+	@Override
+	public List<Cenovnik> findAll() {
+		// TODO Auto-generated method stub
+		return rep.findAll();
 	}
 
 }
