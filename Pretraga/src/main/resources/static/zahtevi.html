@@ -37,7 +37,7 @@
 			   		datatype: 'json',
 			    	   success: function(data){	 
 			    		   for(i=0; i<data.length; i++){
-			    		 if(data[i].statusIznajmljivanja=="RESERVED"){
+			    		 if(data[i].statusIznajmljivanja=="PAID"){
 			    		   newRow = 
 								"<tr>"
 									
@@ -50,7 +50,8 @@
 								
 								$("#zahtevi").append(newRow)	
 			    		 }
-			    		 else{
+			    		 //else{
+			    			 if(data[i].statusIznajmljivanja=="PAID"||data[i].statusIznajmljivanja=="CANCELED"){
 			    			 newDiv="";
 			    			  newDiv = 
 									"<div id='"+data[i].identifikacioniBroj+"'>"
@@ -87,8 +88,8 @@
 									
 									$("body").append(newDiv);
 			    			 		//document.getElementById("zahtevi_cekanje").style.visibility="visible";
-			    			 
-			    		 }
+			    			 }
+			    		 
 			    	   }
 			    	   }
 			      
