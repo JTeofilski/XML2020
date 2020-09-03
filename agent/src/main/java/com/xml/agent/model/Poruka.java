@@ -10,7 +10,7 @@ import javax.persistence.ManyToOne;
 public class Poruka {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	//@GeneratedValue(strategy = GenerationType.IDENTITY)
 	protected long identifikacioniBroj;
 	
 	protected String text;
