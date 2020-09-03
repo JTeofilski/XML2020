@@ -134,7 +134,10 @@ public class Ocena {
 
 	@Override
 	public String toString() {
-		return "Ocena [vrednostOcene=" + vrednostOcene + ", kreatorOceneID=" + kreatorOceneID + "]";
+		return "Ocena [identifikacioniBroj=" + identifikacioniBroj + ", vrednostOcene=" + vrednostOcene
+				+ ", kreatorOceneID=" + kreatorOceneID + ", oglas=" + oglas + "]";
 	}
+
+	
 
 }

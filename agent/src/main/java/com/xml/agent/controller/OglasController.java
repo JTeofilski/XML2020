@@ -241,9 +241,11 @@ public class OglasController {
 		for(Oglas o:oglasi) {
 			double ocenaTemp=0;
 			for (Ocena oc:o.getOcena()) {
-				ocenaTemp=+ oc.getVrednostOcene();
+				ocenaTemp+= oc.getVrednostOcene();
+				System.out.println("sabrao: "+ oc.getVrednostOcene());
 			}
-			ocenaTemp=+ocenaTemp/o.getOcena().size();
+			System.out.println("rez posle fora: "+ ocenaTemp);
+			ocenaTemp=ocenaTemp/o.getOcena().size();
 			
 			if(ocenaTemp>ocena) {
 				Vozilo vozilo= voziloService.findByOglasId(o.getIdentifikacioniBroj());
