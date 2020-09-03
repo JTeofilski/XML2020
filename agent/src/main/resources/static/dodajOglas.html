@@ -145,7 +145,7 @@
 			    		localStorage.setItem("cenovnik", $(e).attr('data-id'));
 			    	}
 			       </script>
-<form action="" class="form" id="inputForm">
+<form action="" enctype="multipart/form-data" class="form" id="inputForm">
 <label>Izaberite marku vozila</label>			       
 <select name="marke" id="marke"></select></br>
 <label>Izaberite model vozila</label>			       
@@ -162,11 +162,6 @@
 <input type="text" name="sedista"></br>
 <label>Unesite ogranicenje kilometraze</label>
 <input type="text" name="kilometraza"></br>
-<label>Unesite sliku vozila</label>
-<input type="file" name="slika" id="slika" ></br>
-<label>Vozilo slobodno od-do</label>
-<input type="date" name="datumOd">
-<input type="date" name="datumDo"></br>
 <table id="cenovnici" class = "table " style= "width:700px">
 			<tr class="header">
 				<th>cena za dan</th>
@@ -181,7 +176,7 @@
 </form>
 <form id="file-upload-form">
     <label for="file-upload-input">Select file to upload</label>
-    <input type="file" id="file-upload-input" name="file">
+    <input type="file" id="file-upload-input" accept="image" name="file">
     <button type="submit">Start Upload</button>
 </form>
 <script type="text/javascript">
@@ -193,34 +188,23 @@ if(document.getElementById("da").checked==true){
 	  			var collisiondamageWaiver = false;
 	  			
 	  		}
-	  		
-var file = document.getElementById('slika').value; //Files[0] = 1st file
-alert(file);
-
-//var fileInput = document.getElementById('image_input_field');
-//var file = fileInput.files[0];
-//var formData = new FormData();
-//formData.append('file', file);
-
-voziloSlobodnoOd = $("#inputForm [name='datumOd']").val();
-  voziloSlobodnoDo = $("#inputForm [name='datumDo']").val();
   cenovnik = localStorage.getItem("cenovnik");
-  
+
 	  		 var formData = JSON.stringify({
 	  	          nazivKlase:$("#inputForm [name='klase']").val(),
-	  	          nazvMarke:$("#inputForm [name='marke']").val(),
+	  	          nazivMarke:$("#inputForm [name='marke']").val(),
 	  	          nazivModela:$("#inputForm [name='modeli']").val(),
 	  	          nazivVrsteGoriva:$("#inputForm [name='goriva']").val(),
 	  	          nazivTipaMenjaca:$("#inputForm [name='menjaci']").val(),
 	  	          predjenaKilometraza:$("#inputForm [name='km']").val(),
 	  	          brojSedistaZaDecu:$("#inputForm [name='sedista']").val(),
 	  	          ogranicenjeKilometraze:$("#inputForm [name='kilometraza']").val(),
-	  	          
-	  	          
+	  	         
+	  	       
 	  	      });
-	  		 
+	  		
 	  		$.ajax({
-				url: "http://localhost:8099/oglasi/dodajOglas/" + id + "/" + cenovnik + "/" + voziloSlobodnoOd + "/" + voziloSlobodnoDo + "/" + collisiondamageWaiver,
+				url: "http://localhost:8099/oglasi/dodajOglas/"+ id + "/" + cenovnik + "/" + collisiondamageWaiver,	
 				type: "POST",
 				data: formData,
 				contentType: "application/json",
@@ -228,22 +212,10 @@ voziloSlobodnoOd = $("#inputForm [name='datumOd']").val();
 				success: function(result){
 					
 					
-				alert("uspesno dodavanje!")
+					window.location.href="http://localhost:8099/dodajSliku.html?id=" +id;
 				
 				}
 	  	});
-	  		function readURL(input) {
-	  		  if (input.files && input.files[0]) {
-	  		    var reader = new FileReader();
-	  		    reader.onload = function (e) {
-	  		      $('#blah')
-	  		        .attr('src', e.target.result)
-	  		        .width(150)
-	  		        .height(200);
-	  		    };
-	  		    alert(reader.readAsDataURL(input.files[0]));
-	  		  }
-	  		}
 	  	});
 	  	</script>
 </body>

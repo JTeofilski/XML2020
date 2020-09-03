@@ -1,5 +1,6 @@
 package com.xml.agent.controller;
 
+import java.awt.Image;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -13,7 +14,10 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.sql.Date;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
@@ -42,14 +46,17 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.cloudinary.*;
 import com.cloudinary.utils.ObjectUtils;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.xml.agent.model.Agent;
 import com.xml.agent.model.Cenovnik;
 import com.xml.agent.model.Komentar;
 import com.xml.agent.model.Narudzbenica;
@@ -88,52 +95,55 @@ public class OglasController {
 	@Autowired
 	private ZahtevZaIznajmljivanjeService zahtevService;
 	
-	@RequestMapping(method=RequestMethod.POST, value = "/dodajOglas/{agent}/{cenovnik}/{voziloSlobodnoOd}/{voziloSlobodnoDo}/{collisiondamageWaiver}")
-	public ResponseEntity<Oglas> addAd(@RequestBody Vozilo vozilo, @PathVariable("agent") Long id1,@PathVariable("cenovnik") Long id, @PathVariable("voziloSlobodnoOd") Date date1, @PathVariable("voziloSlobodnoDo") Date date2, @PathVariable("collisiondamageWaiver") boolean collision) throws URISyntaxException, IOException{
-		// upload directory - change it to your own
-        String UPLOAD_DIR = "/slike";
+	
+	@RequestMapping(method=RequestMethod.POST, value = "/file-upload/{id}",  consumes = "multipart/form-data")
+	public ResponseEntity<String> fileUpload(MultipartFile file, @PathVariable("id") Long id) throws Exception {
+	 
 
-        // create a path from file name
-       // Path path = Paths.get(UPLOAD_DIR, file.getOriginalFilename());
-
-        // save the file to `UPLOAD_DIR`
-        // make sure you have permission to write
-        //Files.write(path, file.getBytes());
-		
-        
-        Cloudinary cloudinary = new Cloudinary(ObjectUtils.asMap(
-				"cloud_name", "olgam",
-				"api_key", "236159187479245",
-				"api_secret", "6SAYa9LDdLPfqYCHSTzM5wmiIXI"));
-		Map upload=cloudinary.uploader().upload("crno_mece1.jpg", ObjectUtils.asMap("public_id", "mece" ));
-		URL imageURL = new URL((String) upload.get("url"));
-		
-		
-		
-
-		
-			System.out.println("dobavio je nesto?: "+ upload.get("url").toString());
+	    	
+	        
+	        Cloudinary cloudinary = new Cloudinary(ObjectUtils.asMap(
+					"cloud_name", "olgam",
+					"api_key", "236159187479245",
+					"api_secret", "6SAYa9LDdLPfqYCHSTzM5wmiIXI"));
+			Map upload=cloudinary.uploader().upload(file.getBytes(), ObjectUtils.asMap("public_id", file.getOriginalFilename() ));
+			//URL imageURL = new URL((String) upload.get("url"));
+	        
+			Agent agent = agentService.findOne(id);
+			Iterator<Oglas> it = agent.getOglas().iterator();
+			List<Oglas> oglasi = new ArrayList<Oglas>();
+			while(it.hasNext()) {
+				oglasi.add(it.next());
+			}
+			ArrayList<Long> idevi = new ArrayList<>();
+			for(int i=0; i<oglasi.size(); i++) {
+				
+				idevi.add(oglasi.get(i).getIdentifikacioniBroj());
+				
+			}
+ 			Oglas oglas = null;
+            for(int i=0; i<oglasi.size(); i++) {
+			if(Collections.max(idevi)==oglasi.get(i).getIdentifikacioniBroj()) {
+				oglas = oglasi.get(i);
+				
+			}
+				
+			}
+				
+				
 			
-        
-		
-		Oglas oglasNovi = new Oglas();
-		Cenovnik cenovnik1 = cenovnik.findOne(id);
-		oglasNovi.setCenovnik(cenovnik1);
-		oglasNovi.setVozilo(vozilo);
-		oglasNovi.setAgent(agentService.findOne(id1));
-		
-		vozilo.setSlike("slike/crno_mece1.jpg;slike/crno_mece.jpg");
-		voziloService.save(vozilo);
-		oglasService.save(oglasNovi);
-		
-		
-		 final String uri = "http://localhost:2020/pretragaapp/oglasi/dodajOglas/" + id1 + "/" + id + "/"  + collision;
-		 
+			oglas.getVozilo().setSlike((String)upload.get("url"));
+			Long id1 = oglas.getIdentifikacioniBroj();
+			boolean collision = oglas.getVozilo().isCollisiondamageWaiver();
+			voziloService.save(oglas.getVozilo());
+			
+			final String uri = "http://localhost:2020/pretragaapp/oglasi/dodajOglas/" + id + "/" + id1 + "/"  + collision;
+			 
 			ObjectMapper mapper= new ObjectMapper();
 			String json = null;
 			
 			try {
-				json= mapper.writeValueAsString(vozilo);
+				json= mapper.writeValueAsString(oglas.getVozilo());
 			} catch (JsonProcessingException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -146,6 +156,21 @@ public class OglasController {
 			
 			HttpEntity<String> entity = new HttpEntity<String>(json,headers);
 			restTemplate.postForObject(uri, entity, Vozilo.class);
+	   
+	    return new ResponseEntity<>("File uploaded!!", HttpStatus.OK);
+	}
+	@RequestMapping(method=RequestMethod.POST, value = "/dodajOglas/{agent}/{cenovnik}/{collisiondamageWaiver}",  consumes = "application/json")
+	public ResponseEntity<Oglas> addAd(@RequestBody Vozilo vozilo, @PathVariable("agent") Long id1,@PathVariable("cenovnik") Long id, @PathVariable("collisiondamageWaiver") boolean collision){
+		
+		Oglas oglasNovi = new Oglas();
+		Cenovnik cenovnik1 = cenovnik.findOne(id);
+		oglasNovi.setCenovnik(cenovnik1);
+		oglasNovi.setVozilo(vozilo);
+		oglasNovi.setAgent(agentService.findOne(id1));
+		
+		voziloService.save(vozilo);
+		oglasService.save(oglasNovi);
+		
 			
 		return new ResponseEntity<>( oglasNovi, HttpStatus.OK);
 	}

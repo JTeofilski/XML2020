@@ -24,5 +24,31 @@ insert into "public"."korpa" ("identifikacioni_broj") values(1);
 
 insert into "public"."registrovani_korisnik" ("adresa", "email", "ime", "korisnicko_ime", "lozinka", "prezime", "status", "korpa_id") values ('Zrenjanin', 'ee.gmail', 'Dragana', 'draga', '1155','Misic', 'aktivan', 1);
 
-insert into "public"."zahtev_za_iznajmljivanje" ("agent_firmaid","bundle","datumod","datumdo","registrovani_korisnkid","status_iznajmljivanja","ukupna_cena") values (1, true, '8/12/2020', '8/14/2020', 1, 'RESERVED', 100);
+insert into "public"."zahtev_za_iznajmljivanje" ("agent_firmaid","bundle","datumod","datumdo","registrovani_korisnkid","status_iznajmljivanja","ukupna_cena") values (1, true, '8/12/2020', '8/14/2020', 1, 'PAID', 100);
+
+insert into "public"."korpa" ("identifikacioni_broj") values(2);
+insert into "public"."registrovani_korisnik" ("identifikacioni_broj", "adresa", "email", "ime", "korisnicko_ime", "lozinka", "prezime", "status", "korpa_id") values(2, 'adr', 'mail', 'Perica', 'perazdera', '123', 'Peric', 'ulogovan', 2);
+
+insert into "public"."marka_vozila" ("marka") values ('BMW');
+insert into "public"."marka_vozila" ("marka") values ('Audi');
+insert into "public"."marka_vozila" ("marka") values ('Mercedes');
+insert into "public"."marka_vozila" ("marka") values ('Tesla');
+insert into "public"."marka_vozila" ("marka") values ('Yugo');
+
+insert into "public"."model_vozila" ("model") values ('M5');
+insert into "public"."model_vozila" ("model") values ('R8');
+
+insert into "public"."vrsta_goriva" ("gorivo") values ('benzin');
+insert into "public"."vrsta_goriva" ("gorivo") values ('plin');
+insert into "public"."vrsta_goriva" ("gorivo") values ('dizel');
+
+insert into "public"."tip_menjaca" ("menjac") values ('automatski');
+insert into "public"."tip_menjaca" ("menjac") values ('manuelni');
+insert into "public"."tip_menjaca" ("menjac") values ('poluautomatski');
+
+insert into "public"."klasa_automobila" ("klasa") values ('SUV');
+insert into "public"."klasa_automobila" ("klasa") values ('old tajmer');
+insert into "public"."klasa_automobila" ("klasa") values ('gradski auto');
+
+insert into "public"."administrator" ("korisnicko_ime", "lozinka", "ime", "prezime", "email", "adresa") values('Violeta', '111', 'Violeta', 'Marceta', 'violetamarceta1995@gmail.com', 'Ruma');
 
