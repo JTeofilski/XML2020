@@ -95,8 +95,13 @@ public class OglasController {
 		
 		Agent agent = agentService.findOne(id1);
 		oglasNovi.setAgent(agent);
-		vozilo.setSlike("slike/crno_mece1.jpg;slike/crno_mece.jpg");
+		vozilo.setCollisiondamageWaiver(collision);
+		//vozilo.setSlike("slike/crno_mece1.jpg;slike/crno_mece.jpg");
+		if(vozilaSort.size()>0) {
 		vozilo.setIdentifikacioniBroj(Collections.max(vozilaSort)+1);
+		}else {
+			vozilo.setIdentifikacioniBroj(1);
+		}
 		voziloService.save(vozilo);
 		oglasNovi.setVozilo(vozilo);
 		oglasService.save(oglasNovi);	
@@ -201,6 +206,15 @@ public class OglasController {
 			Oglas oglas = oglasService.findOne(id);	
 			return new ResponseEntity<Oglas>(oglas, HttpStatus.OK);
 		}
+		
+		@RequestMapping(method=RequestMethod.POST, value = "/izmeniOglas/{idOglasa}/{km}", consumes="application/json")
+		public ResponseEntity<Oglas> izmeniOglas(@PathVariable("id") Long idOglasa, @PathVariable("km") int km){
+			Oglas oglas = oglasService.findOne(idOglasa);
+			oglas.getVozilo().setPredjenaKilometraza(oglas.getVozilo().getPredjenaKilometraza() + km);
+			oglasService.save(oglas);
+			return new ResponseEntity<>(oglas, HttpStatus.OK);
+		}
+		
 		
 		/*
 		@RequestMapping(method=RequestMethod.GET, value="/korpa/{id}/{korid}")

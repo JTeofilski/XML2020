@@ -67,7 +67,7 @@ import javax.xml.bind.annotation.XmlType;
     "nazivModela",
     "nazivVrsteGoriva",
     "nazivTipaMenjaca",
-    "slika",
+    "slike",
     "predjenaKilometraza",
     "brojSedistaZaDecu",
     "ogranicenjeKilometraze",

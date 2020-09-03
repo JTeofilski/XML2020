@@ -40,18 +40,18 @@ public class AgentApplication {
     
 	public static void main(String[] args) throws SQLException, IOException {
 		
-		Cloudinary cloudinary = new Cloudinary(ObjectUtils.asMap(
+		/*Cloudinary cloudinary = new Cloudinary(ObjectUtils.asMap(
 				"cloud_name", "olgam",
 				"api_key", "236159187479245",
 				"api_secret", "6SAYa9LDdLPfqYCHSTzM5wmiIXI"));
 		Map upload=cloudinary.uploader().upload("C:\\Users\\OlgaM\\Desktop\\rent-a-car\\crno_mece.jpg", ObjectUtils.asMap("public_id", "mece" ));
 		URL imageURL = new URL((String) upload.get("url"));
 		
-		
+		*/
 		
 
 		
-			System.out.println("dobavio je nesto?: "+ upload.get("url").toString());
+			//System.out.println("dobavio je nesto?: "+ upload.get("url").toString());
 			
         
 		
@@ -238,7 +238,7 @@ while(assets6.next()){
 
 
 }
-/*
+
 String sqlToExecute7 = "SELECT * FROM " + tableToMerge7;
 ResultSet assets7 = dbOriginStat.executeQuery(sqlToExecute7);
 ResultSetMetaData rsMeta7 = assets7.getMetaData();
@@ -264,7 +264,7 @@ while(assets7.next()){
 
 
 }
-*/
+
 String sqlToExecute8 = "SELECT * FROM " + tableToMerge8;
 ResultSet assets8 = dbOriginStat.executeQuery(sqlToExecute8);
 ResultSetMetaData rsMeta8 = assets8.getMetaData();

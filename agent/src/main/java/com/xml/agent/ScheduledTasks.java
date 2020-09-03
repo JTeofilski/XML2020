@@ -210,7 +210,7 @@ public class ScheduledTasks {
 		}	
 	
 		
-		// *** provera za cenovnike
+		/*// *** provera za cenovnike
 				List<Cenovnik> cenovnici= cenovnikRepo.findAll();	
 				
 				String url1 = "http://localhost:2020/adminservisapp/cenovnici/bazaAdminCenovnik";
@@ -249,7 +249,7 @@ public class ScheduledTasks {
 						
 						cenovnikRepo.save(c);
 					}
-				}
+				}*/
 				
 				// *** kraj provere za cenovnike
 				

@@ -68,7 +68,7 @@
 									"<tr>"
 										+ "<td>" + "<a id='link' href='#' onclick='Fja("+data[i].identifikacioniBroj+")'>" + data[i].identifikacioniBroj+"</a>"+"</td>"
 										+ "<td>" + data[i].vozilo.identifikacioniBroj + "</td>"
-										+ "<td>" + data[i].vozilo.klasaVozila + "</td>"
+										+ "<td>" + data[i].vozilo.nazivKlase + "</td>"
 										+ "<td>" + data[i].vozilo.nazivMarke + "</td>"
 										+ "<td>" + data[i].vozilo.nazivModela + "</td>"
 										+ "<td>" + data[i].vozilo.predjenaKilometraza + "</td>"
@@ -112,16 +112,16 @@
     		  	    mm = String(today.getMonth() + 2).padStart(2, '0');	
                 }
                 
-		  		today = yyyy + '-' + mm + '-' + dd;
+		  		/*today = yyyy + '-' + mm + '-' + dd;
 		  		console.log(today)
-		  		console.log(voziloSlobodnoOd)
+		  		console.log(voziloSlobodnoOd)*/
 		  		
 		  		if(adresa==""){
 		  			adresa="0";
 		  		}
-		  		if(voziloSlobodnoOd<today){
+		  		/*if(voziloSlobodnoOd<today){
 		  			alert("greska! Morate uneti datum najmanje 48h pre rezervacije.");
-		  		}else
+		  		}else*/
 		  		if(voziloSlobodnoOd>voziloSlobodnoDo){
 		  			alert("Greska! Unesite datum povratka vozila veci od datuma preuzimanja.");
 		  		}else{
