@@ -197,12 +197,21 @@ public class ScheduledTasks {
 								k.setOglas(oglas);
 								System.out.println("sacuva za id ocene: "+k.getIdentifikacioniBroj());
 								komentarRepo.save(k);
-								
-								
-
-								
+														
 							}
 						}
+					}
+					// za izmenjen status komentara
+					else {
+						for(Komentar komAgent:oglas.getKomentar()) {
+							for (Komentar komMikro:oglasMikro.getKomentar()) {
+								if(komAgent.getIdentifikacioniBroj()==komMikro.getIdentifikacioniBroj()&& (!komAgent.getStatusKomentara().equals(komMikro.getStatusKomentara()))) {
+									komAgent.setStatusKomentara(komMikro.getStatusKomentara());
+									komentarRepo.save(komAgent);
+								}
+							}
+						}
+						
 					}
 					
 				}

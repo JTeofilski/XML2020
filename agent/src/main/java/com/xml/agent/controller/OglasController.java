@@ -257,10 +257,15 @@ public class OglasController {
 	}
 
 	@RequestMapping(method=RequestMethod.GET, value ="/komentari/{oglasId}" )
-	public ResponseEntity<Set<Komentar>> dobaviKomentare(@PathVariable("oglasId") long oglasId){
+	public ResponseEntity<List<Komentar>> dobaviKomentare(@PathVariable("oglasId") long oglasId){
 		Oglas oglas= oglasService.findOne(oglasId);
-		
-		return new  ResponseEntity<Set<Komentar>>(oglas.getKomentar(), HttpStatus.OK);
+		ArrayList<Komentar> odobreniKomentari= new ArrayList<Komentar>();
+		for(Komentar k:oglas.getKomentar()) {
+			if(k.getStatusKomentara().equals("ODOBREN")) {
+				odobreniKomentari.add(k);
+			}
+		}
+		return new  ResponseEntity<List<Komentar>>(odobreniKomentari, HttpStatus.OK);
 	}
 		
 }

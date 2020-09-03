@@ -117,12 +117,26 @@ public class ZahtevZaIznajmljivanjeController {
 							zahtevi.get(k).setStatusIznajmljivanja("PENDING");
 							zahtevi.get(k).setBundle(false);
 							zahtevi.get(k).setRegistrovaniKorisnkID(korid);
-							zahtevi.get(k).setUkupnaCena(zahtevi.get(k).getUkupnaCena()+(ChronoUnit.DAYS.between(LocalDate.parse(narudzbenice.get(i).getRentiranjeOd().toString()),LocalDate.parse(narudzbenice.get(i).getRentiranjeDo().toString()))+1)*cenovnik.getCenaZaDan().floatValue());
+							long dani=ChronoUnit.DAYS.between(LocalDate.parse(narudzbenice.get(i).getRentiranjeOd().toString()),LocalDate.parse(narudzbenice.get(i).getRentiranjeDo().toString()));
+							if(dani>30) {
+								System.out.println("vise od 30 bundle");
+								zahtevi.get(k).setUkupnaCena(zahtevi.get(k).getUkupnaCena()+cenovnik.getCenaViseOd30().floatValue());
+							}
+							else {
+								zahtevi.get(k).setUkupnaCena(zahtevi.get(k).getUkupnaCena()+(ChronoUnit.DAYS.between(LocalDate.parse(narudzbenice.get(i).getRentiranjeOd().toString()),LocalDate.parse(narudzbenice.get(i).getRentiranjeDo().toString()))+1)*cenovnik.getCenaZaDan().floatValue());
+							}
 						}
 						else {
 							System.out.println("isti agenti");
-							zahtevi.get(k).getNarudzbenica().add(narudzbenice.get(i));			
-							zahtevi.get(k).setUkupnaCena(zahtevi.get(k).getUkupnaCena()+(ChronoUnit.DAYS.between(LocalDate.parse(narudzbenice.get(i).getRentiranjeOd().toString()),LocalDate.parse(narudzbenice.get(i).getRentiranjeDo().toString()))+1)*cenovnik.getCenaZaDan().floatValue());
+							zahtevi.get(k).getNarudzbenica().add(narudzbenice.get(i));	
+							long dani=ChronoUnit.DAYS.between(LocalDate.parse(narudzbenice.get(i).getRentiranjeOd().toString()),LocalDate.parse(narudzbenice.get(i).getRentiranjeDo().toString()));
+							if(dani>30) {
+								System.out.println("vise od 30 bundle");
+								zahtevi.get(k).setUkupnaCena(zahtevi.get(k).getUkupnaCena()+cenovnik.getCenaViseOd30().floatValue());
+							}
+							else {
+								zahtevi.get(k).setUkupnaCena(zahtevi.get(k).getUkupnaCena()+(ChronoUnit.DAYS.between(LocalDate.parse(narudzbenice.get(i).getRentiranjeOd().toString()),LocalDate.parse(narudzbenice.get(i).getRentiranjeDo().toString()))+1)*cenovnik.getCenaZaDan().floatValue());
+							}
 							zahtevi.get(k).setBundle(bundle);
 
 						}
@@ -192,7 +206,12 @@ public class ZahtevZaIznajmljivanjeController {
 					
 					long dani=ChronoUnit.DAYS.between(LocalDate.parse(narudzbenice.get(i).getRentiranjeOd().toString()),LocalDate.parse(narudzbenice.get(i).getRentiranjeDo().toString()));
 					//System.out.println(dani);
-					z.setUkupnaCena((dani+1)*cenovnik.getCenaZaDan().floatValue()); //za isti datum racuna 0, a mi vrv kao jedan dan?
+					if(dani>30) {
+						z.setUkupnaCena(cenovnik.getCenaViseOd30().floatValue());
+					}
+					else {
+						z.setUkupnaCena((dani+1)*cenovnik.getCenaZaDan().floatValue()); //za isti datum racuna 0, a mi vrv kao jedan dan?
+					}
 					z.setVremeKreiranja(date);
 					zahtevService.save(z);
 					
