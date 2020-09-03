@@ -49,7 +49,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
     "identifikacioniBroj",
     "vrednostOcene",
     "kreatorOceneID",
-    "pomocnoPoljeZaOglas"
+    "oglas"
 })
 @XmlRootElement(name = "Ocena", namespace = "http://www.ftn.uns.ac.rs/ocenakomentarporuka")
 @Entity

@@ -65,17 +65,15 @@ import javax.xml.bind.annotation.XmlType;
     "email",
     "adresa",
     "status",
-    "oglas",
-    "izvestaj",
-    "komentar",
-    "poruka"
+    "poslovniMaticniBroj",
+    "oglasi"
 })
 @XmlRootElement(name = "Agent")
 @Entity
 public class Agent {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	//@GeneratedValue(strategy = GenerationType.IDENTITY)
     protected long identifikacioniBroj;
     @XmlElement(required = true)
     protected String korisnickoIme;

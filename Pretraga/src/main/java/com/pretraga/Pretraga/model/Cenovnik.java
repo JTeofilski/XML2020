@@ -65,7 +65,7 @@ public class Cenovnik {
 
     @XmlElement(namespace = "http://www.ftn.uns.ac.rs/cenovnik")
     @Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	//@GeneratedValue(strategy = GenerationType.IDENTITY)
     protected long identifikacioniBroj;
     @XmlElement(namespace = "http://www.ftn.uns.ac.rs/cenovnik", required = true)
     @XmlSchemaType(name = "positiveInteger")

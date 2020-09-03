@@ -37,7 +37,7 @@ public class AgentController {
 		
 		return new ResponseEntity<List<Agent>>(agenti, HttpStatus.OK);
 	}
-	@RequestMapping(value="registruj/{id}", method=RequestMethod.PUT)
+	@RequestMapping(value="registruj/{id}", method=RequestMethod.PUT, consumes="application/json", produces="application/json")
 	public ResponseEntity<Agent> block(@PathVariable("id") Long id, @RequestBody Agent agent) {
 		Agent agent1 = agentService.findOne(id);
 		agent1.setIme(agent.getIme());
@@ -46,13 +46,13 @@ public class AgentController {
 		agent1.setStatus("registrovan");
 		agentService.save(agent1);
 		
-	/*	final String uri = "http://localhost:8090//" + id + "/" + id1 + "/"  + collision;
+		final String uri = "http://localhost:8099/agenti/dodajRegistrovanog";
 		 
 		ObjectMapper mapper= new ObjectMapper();
 		String json = null;
 		
 		try {
-			json= mapper.writeValueAsString(oglas.getVozilo());
+			json= mapper.writeValueAsString(agent1);
 		} catch (JsonProcessingException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -64,7 +64,7 @@ public class AgentController {
 		headers.setContentType(MediaType.APPLICATION_JSON);
 		
 		HttpEntity<String> entity = new HttpEntity<String>(json,headers);
-		restTemplate.postForObject(uri, entity, Vozilo.class);*/
+		restTemplate.postForObject(uri, entity, Agent.class);
 		return new ResponseEntity<Agent>(agent1, HttpStatus.OK);
 	}
 }

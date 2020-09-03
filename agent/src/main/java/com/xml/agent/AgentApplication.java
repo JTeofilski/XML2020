@@ -40,22 +40,6 @@ public class AgentApplication {
     
 	public static void main(String[] args) throws SQLException, IOException {
 		
-		/*Cloudinary cloudinary = new Cloudinary(ObjectUtils.asMap(
-				"cloud_name", "olgam",
-				"api_key", "236159187479245",
-				"api_secret", "6SAYa9LDdLPfqYCHSTzM5wmiIXI"));
-		Map upload=cloudinary.uploader().upload("C:\\Users\\OlgaM\\Desktop\\rent-a-car\\crno_mece.jpg", ObjectUtils.asMap("public_id", "mece" ));
-		URL imageURL = new URL((String) upload.get("url"));
-		
-		*/
-		
-
-		
-			//System.out.println("dobavio je nesto?: "+ upload.get("url").toString());
-			
-        
-		
-		
 		SpringApplication.run(AgentApplication.class, args);
 		
 		 Connection dbConnOrigin = DriverManager.getConnection(dbOrigin, "postgres", "postgres");
@@ -264,6 +248,32 @@ while(assets7.next()){
 
 
 }
+/*
+String sqlToExecute9 = "SELECT * FROM " + tableToMerge9;
+ResultSet assets9 = dbOriginStat.executeQuery(sqlToExecute9);
+ResultSetMetaData rsMeta9 = assets9.getMetaData();
+
+while(assets9.next()){
+    String insertSQL  = "INSERT INTO " + tableToMerge9 + " VALUES(";
+
+    for(int i = 1; i <= rsMeta9.getColumnCount(); i++){
+        String value = assets9.getString(i);
+        if(assets9.wasNull()){
+            insertSQL += "NULL,";
+        }else{
+            insertSQL += "'" + value + "',";
+        }               
+    }
+    insertSQL =insertSQL.substring(0, insertSQL.length()-1) + ")";
+
+    try{
+        dbDestStat.executeUpdate(insertSQL);
+    }catch(SQLException e){
+        //TODO: attempt to update the row in the event of duplicate key
+    }
+
+
+}
 
 String sqlToExecute8 = "SELECT * FROM " + tableToMerge8;
 ResultSet assets8 = dbOriginStat.executeQuery(sqlToExecute8);
@@ -290,32 +300,8 @@ while(assets8.next()){
 
 
 }
-/*
-String sqlToExecute9 = "SELECT * FROM " + tableToMerge9;
-ResultSet assets9 = dbOriginStat.executeQuery(sqlToExecute9);
-ResultSetMetaData rsMeta9 = assets9.getMetaData();
+*/
 
-while(assets9.next()){
-    String insertSQL  = "INSERT INTO " + tableToMerge9 + " VALUES(";
-
-    for(int i = 1; i <= rsMeta9.getColumnCount(); i++){
-        String value = assets9.getString(i);
-        if(assets9.wasNull()){
-            insertSQL += "NULL,";
-        }else{
-            insertSQL += "'" + value + "',";
-        }               
-    }
-    insertSQL =insertSQL.substring(0, insertSQL.length()-1) + ")";
-
-    try{
-        dbDestStat.executeUpdate(insertSQL);
-    }catch(SQLException e){
-        //TODO: attempt to update the row in the event of duplicate key
-    }
-
-
-}*/
 
 
 

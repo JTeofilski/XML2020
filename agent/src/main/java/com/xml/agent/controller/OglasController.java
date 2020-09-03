@@ -96,7 +96,7 @@ public class OglasController {
 	private ZahtevZaIznajmljivanjeService zahtevService;
 	
 	
-	@RequestMapping(method=RequestMethod.POST, value = "/file-upload/{id}",  consumes = "multipart/form-data")
+	@RequestMapping(method=RequestMethod.POST, value = "/file-upload/{id}",  consumes = "multipart/form-data", produces="application/json")
 	public ResponseEntity<String> fileUpload(MultipartFile file, @PathVariable("id") Long id) throws Exception {
 	 
 
