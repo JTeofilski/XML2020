@@ -52,7 +52,7 @@ public class IzvestajController {
 		oglas.getVozilo().setPredjenaKilometraza(oglas.getVozilo().getPredjenaKilometraza()+izvestaj.getBrKilometara());  
 		oglasService.save(oglas);
 		int km = izvestaj.getBrKilometara();
-		 final String uri = "http://localhost:2020/pretragaapp/oglasi/izmeniOglas/" + km;
+		 final String uri = "http://localhost:2020/pretragaapp/oglasi/izmeniOglas/" +idOglasa+"/"+ km;
 		 
 		 ObjectMapper mapper= new ObjectMapper();
 			String json = null;
@@ -70,7 +70,7 @@ public class IzvestajController {
 			headers.setContentType(MediaType.APPLICATION_JSON);
 			
 			HttpEntity<String> entity = new HttpEntity<String>(json,headers);
-			restTemplate.postForObject(uri, entity, Oglas.class);
+			Oglas og=restTemplate.postForObject(uri, entity, Oglas.class);
 			
 		return new ResponseEntity<Izvestaj>(izvestaj, HttpStatus.OK);
 	}

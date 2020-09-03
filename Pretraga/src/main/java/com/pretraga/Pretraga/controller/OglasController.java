@@ -207,12 +207,12 @@ public class OglasController {
 			return new ResponseEntity<Oglas>(oglas, HttpStatus.OK);
 		}
 		
-		@RequestMapping(method=RequestMethod.POST, value = "/izmeniOglas/{idOglasa}/{km}", consumes="application/json")
-		public ResponseEntity<Oglas> izmeniOglas(@PathVariable("id") Long idOglasa, @PathVariable("km") int km){
+		@RequestMapping(method=RequestMethod.POST, value = "/izmeniOglas/{idOglasa}/{km}", consumes="application/json", produces="application/json")
+		public Oglas izmeniOglas(@PathVariable("idOglasa") Long idOglasa, @PathVariable("km") int km){
 			Oglas oglas = oglasService.findOne(idOglasa);
 			oglas.getVozilo().setPredjenaKilometraza(oglas.getVozilo().getPredjenaKilometraza() + km);
 			oglasService.save(oglas);
-			return new ResponseEntity<>(oglas, HttpStatus.OK);
+			return oglas;
 		}
 		
 		
